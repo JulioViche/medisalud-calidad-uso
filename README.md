@@ -18,17 +18,17 @@ docs/                  Análisis inicial e instrucciones del taller
 
 | Archivo | Contenido |
 |---------|-----------|
-| `docs/analisis_inicial.md` | Análisis del caso y 4 preguntas del taller |
-| `reportes/escenario02_clasificacion_incidentes.md` | 3,000 incidentes clasificados en 5 características |
-| `reportes/escenario03_calidad_square.md` | Mapa SQuaRE y 3 niveles de calidad |
-| `reportes/escenario04_atributos_utc.md` | 12 atributos UTC para MediSalud |
-| `reportes/escenario05_matriz_prioridades.md` | Matriz tarea–característica–prioridad |
-| `reportes/escenario06_catalogo_metricas.md` | Catálogo de 10 métricas ISO/IEC 25022 |
-| `reportes/escenario10_interpretacion_causa_raiz.md` | Análisis de causa raíz |
-| `reportes/escenario11_presentacion_ejecutiva.md` | Resumen para dirección de TI |
-| `reportes/escenario12_plan_mejora_continua.md` | Ciclo PDCA con metas a Jul/Dic 2025 |
-| `reportes/reto_final_telemedicina_2_0.md` | Extensión Telemedicina (10 métricas + roadmap) |
-| `dashboards/dashboard_calidad_uso.html` | Dashboard interactivo con 7 KPI |
+| [`docs/analisis_inicial.md`](docs/analisis_inicial.md) | Análisis del caso y 4 preguntas del taller |
+| [`reportes/escenario02_clasificacion_incidentes.md`](reportes/escenario02_clasificacion_incidentes.md) | 3,000 incidentes clasificados en 5 características |
+| [`reportes/escenario03_calidad_square.md`](reportes/escenario03_calidad_square.md) | Mapa SQuaRE y 3 niveles de calidad |
+| [`reportes/escenario04_atributos_utc.md`](reportes/escenario04_atributos_utc.md) | 12 atributos UTC para MediSalud |
+| [`reportes/escenario05_matriz_prioridades.md`](reportes/escenario05_matriz_prioridades.md) | Matriz tarea–característica–prioridad |
+| [`reportes/escenario06_catalogo_metricas.md`](reportes/escenario06_catalogo_metricas.md) | Catálogo de 10 métricas ISO/IEC 25022 |
+| [`reportes/escenario10_interpretacion_causa_raiz.md`](reportes/escenario10_interpretacion_causa_raiz.md) | Análisis de causa raíz |
+| [`reportes/escenario11_presentacion_ejecutiva.md`](reportes/escenario11_presentacion_ejecutiva.md) | Resumen para dirección de TI |
+| [`reportes/escenario12_plan_mejora_continua.md`](reportes/escenario12_plan_mejora_continua.md) | Ciclo PDCA con metas a Jul/Dic 2025 |
+| [`reportes/reto_final_telemedicina_2_0.md`](reportes/reto_final_telemedicina_2_0.md) | Extensión Telemedicina (10 métricas + roadmap) |
+| [`dashboards/dashboard_calidad_uso.html`](dashboards/dashboard_calidad_uso.html) | Dashboard interactivo con 7 KPI |
 
 ## Stack
 
