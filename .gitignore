@@ -1,0 +1,22 @@
+# Virtual environment
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Auto-generated data (produced by scripts)
+data/incidentes_clasificados.csv
+data/logs_hce.csv
+data/encuestas_satisfaccion.csv
+data/resultados_metricas.csv
+
+# Auto-generated dashboard
+dashboards/dashboard_calidad_uso.html
+
+# IDE / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db

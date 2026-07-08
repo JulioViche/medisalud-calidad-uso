@@ -1,1 +1,44 @@
-# calidad-sistema-medico
+# MediSalud HIS — Taller de Calidad en Uso ISO/IEC 25022
+
+Evaluación de calidad en uso del sistema MediSalud HIS (historia clínica electrónica) aplicando el estándar **ISO/IEC 25022** sobre incidentes reales, logs de rendimiento y encuestas de satisfacción del período Ene–Feb 2025.
+
+**Semáforo general:** 🟢 2 VERDE · 🟡 6 AMARILLO · 🔴 1 ROJO
+
+## Estructura
+
+```
+data/                  Datasets (originales y generados)
+scripts/               Scripts Python (clasificación, pipeline, dashboard)
+reportes/              Reportes en markdown (escenarios 2–12 + reto final)
+dashboards/            Dashboard interactivo HTML (plotly)
+docs/                  Análisis inicial e instrucciones del taller
+```
+
+## Entregables
+
+| Archivo | Contenido |
+|---------|-----------|
+| `docs/analisis_inicial.md` | Análisis del caso y 4 preguntas del taller |
+| `reportes/escenario02_clasificacion_incidentes.md` | 3,000 incidentes clasificados en 5 características |
+| `reportes/escenario03_calidad_square.md` | Mapa SQuaRE y 3 niveles de calidad |
+| `reportes/escenario04_atributos_utc.md` | 12 atributos UTC para MediSalud |
+| `reportes/escenario05_matriz_prioridades.md` | Matriz tarea–característica–prioridad |
+| `reportes/escenario06_catalogo_metricas.md` | Catálogo de 10 métricas ISO/IEC 25022 |
+| `reportes/escenario10_interpretacion_causa_raiz.md` | Análisis de causa raíz |
+| `reportes/escenario11_presentacion_ejecutiva.md` | Resumen para dirección de TI |
+| `reportes/escenario12_plan_mejora_continua.md` | Ciclo PDCA con metas a Jul/Dic 2025 |
+| `reportes/reto_final_telemedicina_2_0.md` | Extensión Telemedicina (10 métricas + roadmap) |
+| `dashboards/dashboard_calidad_uso.html` | Dashboard interactivo con 7 KPI |
+
+## Stack
+
+- Python 3.12 + pandas, numpy, plotly
+- ISO/IEC 25022 (SQuaRE — Quality in Use)
+- Ciclo PDCA para mejora continua
+
+## Cómo re-ejecutar
+
+```bash
+venv\Scripts\python scripts\pipeline_medicion.py      # Calcular métricas
+venv\Scripts\python scripts\generar_dashboard.py       # Regenerar dashboard
+```
