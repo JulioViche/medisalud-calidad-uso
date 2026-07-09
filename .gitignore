@@ -12,7 +12,7 @@ data/encuestas_satisfaccion.csv
 data/resultados_metricas.csv
 
 # Auto-generated dashboard
-dashboards/dashboard_calidad_uso.html
+dashboards/*.html
 
 # IDE / OS
 .vscode/

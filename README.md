@@ -2,7 +2,7 @@
 
 Evaluación de calidad en uso del sistema MediSalud HIS (historia clínica electrónica) aplicando el estándar **ISO/IEC 25022** sobre incidentes reales, logs de rendimiento y encuestas de satisfacción del período Ene–Feb 2025.
 
-**Semáforo general:** 🟢 2 VERDE · 🟡 6 AMARILLO · 🔴 1 ROJO
+**Semáforo general:** *(ejecutar `python scripts/pipeline_medicion.py` para ver resultados)*
 
 ## Estructura
 
@@ -36,9 +36,21 @@ docs/                  Análisis inicial e instrucciones del taller
 - ISO/IEC 25022 (SQuaRE — Quality in Use)
 - Ciclo PDCA para mejora continua
 
-## Cómo re-ejecutar
+## Instalación
 
 ```bash
-venv\Scripts\python scripts\pipeline_medicion.py      # Calcular métricas
-venv\Scripts\python scripts\generar_dashboard.py       # Regenerar dashboard
+python3 -m venv venv
+source venv/bin/activate                  # En Windows: venv\Scripts\activate
+pip install -r requirements.txt
 ```
+
+## Ejecución del pipeline
+
+Los scripts deben ejecutarse en orden debido a las dependencias entre ellos:
+
+| Orden | Comando | Genera |
+|---|---|---|
+| 1 | `python scripts/generar_datos_simulados.py` | `data/logs_hce.csv`, `data/encuestas_satisfaccion.csv` |
+| 2 | `python scripts/clasificar_incidentes.py` | `data/incidentes_clasificados.csv` |
+| 3 | `python scripts/pipeline_medicion.py` | `data/resultados_metricas.csv` |
+| 4 | `python scripts/generar_dashboard.py` | `dashboards/dashboard_calidad_uso.html` |
