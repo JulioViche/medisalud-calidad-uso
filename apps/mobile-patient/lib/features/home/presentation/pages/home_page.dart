@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../shared/presentation/molecules/service_tile.dart';
+import '../../../auth/presentation/providers/auth_controller.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends ConsumerWidget {
   const HomePage({super.key});
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final services = [
       ('Citas', Icons.calendar_month, AppTheme.teal, '/appointments'),
       ('Resultados', Icons.biotech, const Color(0xFF377C9D), '/results'),
@@ -19,6 +21,7 @@ class HomePage extends StatelessWidget {
         const SizedBox(width: 10),
         const Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text('Buenos dias', style: TextStyle(fontSize: 11, color: Colors.black54)), Text('Ana Torres', style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16))])),
         IconButton(onPressed: () => context.push('/notifications'), icon: const Icon(Icons.notifications_none), tooltip: 'Notificaciones'),
+        IconButton(onPressed: () => ref.read(authControllerProvider.notifier).signOut(), icon: const Icon(Icons.logout), tooltip: 'Cerrar sesión'),
       ]),
       const SizedBox(height: 22),
       Container(padding: const EdgeInsets.all(18), decoration: BoxDecoration(color: const Color(0xFF173F3B), borderRadius: BorderRadius.circular(8)), child: const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text('Proxima cita', style: TextStyle(color: Color(0xFF8CD2C7), fontSize: 11, fontWeight: FontWeight.w700)), SizedBox(height: 8), Text('Medicina interna', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800)), SizedBox(height: 4), Text('12 dic · 09:30 · Sede Quito', style: TextStyle(color: Color(0xFFD5E6E3), fontSize: 12))])),
@@ -33,4 +36,3 @@ class HomePage extends StatelessWidget {
     ])));
   }
 }
-

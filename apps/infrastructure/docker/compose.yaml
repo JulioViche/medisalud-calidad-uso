@@ -1,0 +1,276 @@
+name: medisalud-local
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ../postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    networks: [medisalud]
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer
+      MSSQL_SA_PASSWORD: ${SQLSERVER_PASSWORD}
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P '${SQLSERVER_PASSWORD}' -C -Q 'SELECT 1' >/dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+    networks: [medisalud]
+
+  sqlserver-init:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    environment:
+      SQLSERVER_PASSWORD: ${SQLSERVER_PASSWORD}
+    entrypoint: ["/bin/bash", "/init/create-database.sh"]
+    volumes:
+      - ../sqlserver/init:/init:ro
+    networks: [medisalud]
+    restart: "no"
+
+  rabbitmq:
+    image: rabbitmq:4-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+      - ../rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins:ro
+    ports:
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+    networks: [medisalud]
+
+  measurement-api:
+    build:
+      context: ../../..
+      dockerfile: apps/backend/measurement-api/Dockerfile
+    environment:
+      MEDISALUD_ROOT: /workspace
+    volumes:
+      - ../../data/processed:/workspace/apps/data/processed
+      - ../../data/simulated:/workspace/apps/data/simulated
+      - ../../../reportes/evidencias/resultados:/workspace/reportes/evidencias/resultados
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    networks: [medisalud]
+
+  hce-service:
+    build:
+      context: ../../..
+      dockerfile: apps/backend/hce-service/Dockerfile
+    environment:
+      POSTGRES_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_USER: ${RABBITMQ_USER}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
+    depends_on:
+      postgres: {condition: service_healthy}
+      rabbitmq: {condition: service_healthy}
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8081/actuator/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    networks: [medisalud]
+
+  appointments-service:
+    build:
+      context: ../../..
+      dockerfile: apps/backend/appointments-service/Dockerfile
+    environment:
+      POSTGRES_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    depends_on:
+      postgres: {condition: service_healthy}
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8082/actuator/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    networks: [medisalud]
+
+  billing-service:
+    build:
+      context: ../../..
+      dockerfile: apps/backend/billing-service/Dockerfile
+    environment:
+      SQLSERVER_URL: jdbc:sqlserver://sqlserver:1433;databaseName=medisalud_finance;encrypt=false;trustServerCertificate=true
+      SQLSERVER_USER: ${SQLSERVER_USER}
+      SQLSERVER_PASSWORD: ${SQLSERVER_PASSWORD}
+    depends_on:
+      sqlserver-init: {condition: service_completed_successfully}
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8083/actuator/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    networks: [medisalud]
+
+  api-gateway:
+    build:
+      context: ../../..
+      dockerfile: apps/backend/api-gateway/Dockerfile
+    environment:
+      MEASUREMENT_API_URL: http://measurement-api:8000
+      HCE_SERVICE_URL: http://hce-service:8081
+      APPOINTMENTS_SERVICE_URL: http://appointments-service:8082
+      BILLING_SERVICE_URL: http://billing-service:8083
+    depends_on:
+      measurement-api: {condition: service_healthy}
+      hce-service: {condition: service_healthy}
+      appointments-service: {condition: service_healthy}
+      billing-service: {condition: service_healthy}
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/actuator/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    networks: [medisalud]
+
+  web-his:
+    build:
+      context: ../../..
+      dockerfile: apps/web-his/Dockerfile
+    environment:
+      VITE_API_URL: ${VITE_API_URL}
+    depends_on:
+      api-gateway: {condition: service_healthy}
+    ports:
+      - "5173:5173"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:5173"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    networks: [medisalud]
+
+  sonar-db:
+    image: postgres:16-alpine
+    profiles: [quality]
+    environment:
+      POSTGRES_DB: ${SONAR_DB:-sonarqube}
+      POSTGRES_USER: ${SONAR_DB_USER:-sonarqube}
+      POSTGRES_PASSWORD: ${SONAR_DB_PASSWORD:-sonarqube_local}
+    volumes:
+      - sonar-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${SONAR_DB_USER:-sonarqube} -d ${SONAR_DB:-sonarqube}"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    networks: [medisalud]
+
+  sonarqube:
+    image: sonarqube:community
+    profiles: [quality]
+    environment:
+      SONAR_JDBC_URL: jdbc:postgresql://sonar-db:5432/${SONAR_DB:-sonarqube}
+      SONAR_JDBC_USERNAME: ${SONAR_DB_USER:-sonarqube}
+      SONAR_JDBC_PASSWORD: ${SONAR_DB_PASSWORD:-sonarqube_local}
+    depends_on:
+      sonar-db: {condition: service_healthy}
+    ports:
+      - "127.0.0.1:9000:9000"
+    volumes:
+      - sonarqube-data:/opt/sonarqube/data
+      - sonarqube-extensions:/opt/sonarqube/extensions
+      - sonarqube-logs:/opt/sonarqube/logs
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:9000/api/system/status | grep -q '\"status\":\"UP\"'"]
+      interval: 10s
+      timeout: 5s
+      retries: 60
+      start_period: 40s
+    networks: [medisalud]
+
+  sonar-scanner-billing:
+    image: maven:3.9.9-eclipse-temurin-21
+    profiles: [quality]
+    working_dir: /workspace
+    environment:
+      SONAR_HOST_URL: http://sonarqube:9000
+      SONAR_TOKEN: ${SONAR_TOKEN:-}
+    volumes:
+      - ../../backend/billing-service:/workspace
+      - maven-cache:/root/.m2
+    depends_on:
+      sonarqube: {condition: service_healthy}
+    command:
+      - mvn
+      - -B
+      - clean
+      - verify
+      - org.sonarsource.scanner.maven:sonar-maven-plugin:5.1.0.4751:sonar
+      - -Dsonar.projectKey=medisalud-billing
+      - -Dsonar.projectName=MediSalud Billing Service
+      - -Dsonar.host.url=http://sonarqube:9000
+    networks: [medisalud]
+
+  jmeter:
+    build:
+      context: ../../..
+      dockerfile: apps/infrastructure/jmeter/Dockerfile
+    profiles: [quality]
+    depends_on:
+      api-gateway: {condition: service_healthy}
+    volumes:
+      - ../../tests/performance:/tests:ro
+      - ../../../reportes/evidencias/calidad/jmeter/raw:/results
+    command:
+      - -n
+      - -t
+      - /tests/citas-500-usuarios.jmx
+      - -l
+      - /results/citas-500-usuarios.jtl
+      - -j
+      - /results/jmeter.log
+      - -Jtarget_host=api-gateway
+      - -Jtarget_port=8080
+      - -Jthreads=500
+      - -Jrampup=5
+    networks: [medisalud]
+
+networks:
+  medisalud:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  sqlserver-data:
+  rabbitmq-data:
+  sonar-db-data:
+  sonarqube-data:
+  sonarqube-extensions:
+  sonarqube-logs:
+  maven-cache:

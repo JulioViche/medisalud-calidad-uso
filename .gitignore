@@ -38,8 +38,8 @@ target/
 .gradle/
 *.class
 
-# LaTeX intermediates (the final PDF in informe/entrega is versioned)
-informe/build/
+# LaTeX intermediates (the final PDF in reportes/entrega is versioned)
+reportes/build/
 *.aux
 *.bbl
 *.bcf
@@ -55,10 +55,10 @@ informe/build/
 *.toc
 
 # Reproducible generated data; curated evidence remains versioned
-data/simulated/*
-!data/simulated/.gitkeep
-data/processed/*
-!data/processed/.gitkeep
+apps/data/simulated/*
+!apps/data/simulated/.gitkeep
+apps/data/processed/*
+!apps/data/processed/.gitkeep
 
 # Docker runtime data, logs and temporary files
 .docker-data/
@@ -66,11 +66,13 @@ data/processed/*
 *.tmp
 *.log.*
 tmp/
+reportes/evidencias/calidad/jmeter/raw/
 
 # IDE / OS
 .idea/
 .vscode/
 *.iml
 *.swp
+.~lock.*#
 .DS_Store
 Thumbs.db

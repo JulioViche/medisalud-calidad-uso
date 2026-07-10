@@ -10,13 +10,13 @@ export function Dashboard({ summary, incidents, demo, onRefresh }: { summary: Da
   return (
     <>
       <header className="page-header">
-        <div><p className="eyebrow">GERENCIA Y CALIDAD</p><h1>Calidad y reportes</h1><span>Seguimiento institucional · Periodo {summary.period} · 3.000 incidentes auditados</span></div>
+        <div><p className="eyebrow">GESTIÓN HOSPITALARIA</p><h1>Reportes operativos</h1><span>Seguimiento institucional · Periodo {summary.period}</span></div>
         <div className="header-actions"><span className={demo ? 'connection demo' : 'connection'}>{demo ? 'Datos locales' : 'API conectada'}</span><button className="icon-button" onClick={onRefresh} title="Actualizar datos"><RefreshCw size={18} /></button></div>
       </header>
       <section className="metrics-grid">{summary.metrics.slice(0, 4).map((metric, index) => <MetricPanel key={metric.code} metric={metric} index={index} />)}</section>
       <section className="dashboard-grid">
         <article className="panel chart-panel">
-          <div className="panel-title"><div><h2>Incidentes por modulo</h2><p>Distribucion del dataset original</p></div><Database size={19} /></div>
+          <div className="panel-title"><div><h2>Incidentes por módulo</h2><p>Distribución de reportes operativos</p></div><Database size={19} /></div>
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={moduleData} margin={{ top: 12, right: 8, left: -24, bottom: 28 }}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e9e8" />
@@ -27,7 +27,7 @@ export function Dashboard({ summary, incidents, demo, onRefresh }: { summary: Da
           </ResponsiveContainer>
         </article>
         <article className="panel incident-panel">
-          <div className="panel-title"><div><h2>Incidentes recientes</h2><p>Casos priorizados para revision</p></div><AlertTriangle size={19} /></div>
+          <div className="panel-title"><div><h2>Incidentes recientes</h2><p>Casos priorizados para revisión</p></div><AlertTriangle size={19} /></div>
           <div className="incident-list">
             {incidents.slice(0, 5).map((incident) => <div className="incident-row" key={incident.id}><span className="incident-dot" /><div><b>{incident.modulo}</b><p>{incident.descripcion}</p><small>{incident.sede} · {incident.rol_usuario}</small></div><span className="incident-id">#{incident.id}</span></div>)}
           </div>

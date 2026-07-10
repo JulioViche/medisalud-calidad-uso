@@ -1,5 +1,6 @@
 import { ArrowRight, CalendarCheck, ClipboardClock, FileHeart, FlaskConical, UserRoundCheck, UsersRound } from 'lucide-react'
 import type { View } from '../components/Sidebar'
+import { allowedViews, type SessionUser } from '../auth'
 
 const appointments = [
   { time: '08:30', patient: 'Ana Torres', id: 'PAC-001', reason: 'Control de hipertensión', status: 'En espera', tone: 'waiting' },
@@ -8,7 +9,23 @@ const appointments = [
   { time: '10:20', patient: 'Jorge Almeida', id: 'PAC-227', reason: 'Seguimiento metabólico', status: 'Confirmada', tone: 'confirmed' },
 ]
 
-export function Home({ onNavigate }: { onNavigate: (view: View) => void }) {
+const viewLabels: Partial<Record<View, string>> = {
+  appointments: 'Citas y admisión', hce: 'Historia clínica', nursing: 'Enfermería',
+  pharmacy: 'Farmacia', billing: 'Facturación', telemedicine: 'Telemedicina', quality: 'Reportes operativos',
+}
+
+export function Home({ user, onNavigate }: { user: SessionUser; onNavigate: (view: View) => void }) {
+  if (user.role !== 'doctor') {
+    const modules = allowedViews(user.role).filter((view) => view !== 'home')
+    return (
+      <>
+        <header className="page-header home-header"><div><p className="eyebrow">SEDE {user.site.toUpperCase()}</p><h1>Buenos días, {user.name}</h1><span>Accesos habilitados para el perfil de {user.roleLabel.toLowerCase()}.</span></div></header>
+        <section className="role-home" aria-label="Módulos habilitados">
+          {modules.map((view) => <button key={view} onClick={() => onNavigate(view)}><span>{viewLabels[view]}</span><ArrowRight size={18} /></button>)}
+        </section>
+      </>
+    )
+  }
   return (
     <>
       <header className="page-header home-header">

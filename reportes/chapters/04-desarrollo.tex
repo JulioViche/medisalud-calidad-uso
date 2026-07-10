@@ -1,0 +1,287 @@
+\section{Desarrollo del taller}
+
+\subsection{Diagnóstico inicial del caso}
+
+\scenario{1}{Análisis dirigido de MediSalud · fuente literal}
+
+La revisión del caso identifica tres procesos de máxima criticidad. Primero, la atención médica y el registro HCE, porque cualquier demora o pérdida de información afecta la continuidad clínica. Segundo, la prescripción y dispensación, donde un error puede causar daño directo. Tercero, la admisión y facturación, que constituyen la entrada del paciente y sostienen la operación financiera.
+
+Los perfiles más expuestos son el médico, que necesita información completa durante una consulta; el paciente, que agenda, consulta resultados y usa telemedicina; y el personal de admisión, que resuelve disponibilidad, cobertura y cobro. Enfermería y farmacia también requieren sincronización oportuna con la HCE. Gerencia y calidad necesitan una vista agregada, pero no sustituyen la experiencia de los perfiles operativos.
+
+\begin{table}[H]
+\centering
+\caption{Matriz de análisis inicial}
+\begin{tabularx}{\textwidth}{p{3.4cm}Y}
+\toprule
+Pregunta guía & Respuesta consolidada \\
+\midrule
+Procesos críticos & Atención y HCE; prescripción y dispensación; agenda, admisión y facturación. \\
+Usuarios afectados & Médicos, pacientes y admisión como grupos principales; enfermería y farmacia por dependencia clínica. \\
+Evidencia disponible & Incidentes con fecha, módulo, descripción, rol y sede; contexto tecnológico y requisitos no funcionales. \\
+Evidencia faltante & Resultados de tarea, duraciones, encuestas, escenarios de red/dispositivo y criterios uniformes de decisión. \\
+Decisión metodológica & Preservar incidentes y complementar la observación con datos simulados identificados. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{Preguntas de discusión}
+
+\textbf{1. ¿Por qué la disponibilidad de servidores no demuestra por sí sola una buena calidad en uso?}
+
+Porque un sistema puede permanecer disponible y, aun así, impedir que la persona complete su tarea, exigir tiempos excesivos, producir resultados inseguros o generar una experiencia insatisfactoria. La disponibilidad describe continuidad técnica; la calidad en uso exige observar objetivos, recursos, percepción, riesgos y contexto.
+
+\textbf{2. ¿Qué diferencia existe entre calidad interna, externa y en uso?}
+
+La calidad interna examina estáticamente código y arquitectura; la externa observa el comportamiento del producto ejecutado bajo pruebas controladas; y la calidad en uso mide lo que usuarios concretos consiguen al realizar tareas reales dentro de un contexto definido.
+
+\textbf{3. ¿Qué stakeholder se beneficiaría más del programa de medición?}
+
+El paciente obtiene el beneficio final más importante porque una atención más efectiva, oportuna y segura protege su salud. Sin embargo, el programa debe medir también al médico, cuya interacción con la HCE condiciona directamente la atención, y proporcionar a gerencia evidencia para decidir. Por ello se prioriza al paciente sin aislarlo de los demás perfiles.
+
+\subsubsection{Conclusión parcial}
+
+El diagnóstico confirma que los incidentes disponibles no bastan para explicar la experiencia completa. Se requiere complementar esa evidencia con resultados de tareas, tiempos, percepción y contexto, manteniendo una relación trazable entre cada problema y su efecto sobre usuarios y negocio.
+
+\subsection{Clasificación según ISO/IEC 25022}
+
+\scenario{2}{Clasificación de 3.000 incidentes · fuente literal}
+
+La clasificación de la actividad asignó 1.849 casos a efectividad, 347 a eficiencia, 103 a satisfacción, 361 a libertad de riesgo y 340 a cobertura del contexto. Efectividad concentra el 61,63\% de los registros; sin embargo, la frecuencia no equivale a prioridad. Los 361 casos de libertad de riesgo requieren evaluación inmediata por la gravedad de sus consecuencias potenciales.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=0.0038cm,y=0.72cm]
+  \foreach \label/\value/\y/\barcolor in {Efectividad/1849/5/mediteal,Eficiencia/347/4/mediblue,Satisfacción/103/3/medigold,Libertad de riesgo/361/2/medicoral,Cobertura del contexto/340/1/medigrey}{
+    \fill[\barcolor!18] (0,\y-.22) rectangle (2000,\y+.22);
+    \fill[\barcolor] (0,\y-.22) rectangle (\value,\y+.22);
+    \node[anchor=east,font=\small] at (-25,\y) {\label};
+    \node[anchor=west,font=\small\bfseries,text=\barcolor] at (\value+25,\y) {\value};
+  }
+  \draw[medigrey!50] (0,.45) -- (0,5.55);
+\end{tikzpicture}
+\caption{Distribución de incidentes por característica de calidad en uso.}
+\label{fig:classification}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Criterio y ejemplo de clasificación}
+\begin{tabularx}{\textwidth}{p{3.2cm}YY}
+\toprule
+Característica & Pregunta de decisión & Ejemplo de efecto \\
+\midrule
+Efectividad & ¿La tarea no se completa o su resultado es incorrecto? & Una cita no queda confirmada pese a finalizar el formulario. \\
+Eficiencia & ¿El resultado se alcanza con tiempo o pasos excesivos? & El guardado de la nota supera ocho segundos. \\
+Satisfacción & ¿La experiencia reduce confianza, agrado o disposición de uso? & El paciente abandona una encuesta o reporta confusión. \\
+Libertad de riesgo & ¿Existe daño clínico, financiero o de privacidad? & Una dosis incorrecta, factura duplicada o dato de otro paciente. \\
+Cobertura del contexto & ¿El fallo depende de sede, dispositivo o conectividad? & Una teleconsulta cae bajo una red doméstica limitada. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+La justificación se almacena junto a cada fila procesada. Esta práctica es necesaria porque una descripción puede admitir más de una lectura. Una receta que no se guarda afecta efectividad; una receta guardada con dosis errónea se clasifica principalmente como libertad de riesgo. La característica principal expresa el efecto dominante, aunque el análisis pueda reconocer impactos secundarios.
+
+\begin{longtable}{p{0.9cm}p{2.7cm}p{8.4cm}}
+\caption{Clasificación de los incidentes propuestos en la actividad}\label{tab:incidentes-seis}\\
+\toprule
+ID & Característica principal & Justificación técnica \\
+\midrule
+\endfirsthead
+\toprule
+ID & Característica principal & Justificación técnica \\
+\midrule
+\endhead
+1001 & Eficiencia & La nota sí puede guardarse, pero consume 22 segundos; el problema dominante es el tiempo utilizado para alcanzar el resultado. \\
+1002 & Efectividad & Después de tres intentos el paciente no consigue agendar, por lo que el objetivo de la tarea no se alcanza. \\
+1003 & Libertad de riesgo & La factura duplicada puede ocasionar cobros indebidos y daño financiero, aunque el proceso haya producido una factura. \\
+1004 & Cobertura del contexto & La interrupción de la videollamada evidencia que la tarea no se sostiene en el contexto tecnológico de la teleconsulta remota. \\
+1005 & Libertad de riesgo & Mostrar datos de otro paciente expone información clínica confidencial y crea un riesgo de privacidad y de decisión médica. Se prioriza el daño potencial sobre el fallo funcional. \\
+1006 & Satisfacción & La confusión y el abandono expresan una experiencia negativa y reducen la disposición del paciente para continuar usando el portal. \\
+\bottomrule
+\end{longtable}
+
+\evidence{La Tabla 2.2 completada se conserva en
+\texttt{data/clasificacion/}\allowbreak\texttt{incidentes\_clasificados.csv}.
+Este archivo clasifica los 3.000 incidentes del dataset ampliado; las filas 1001--1006 corresponden a los casos mostrados en la plantilla de la actividad.}
+
+\subsubsection{Preguntas de discusión}
+
+\textbf{1. ¿Puede un sistema ser efectivo pero no eficiente?}
+
+Sí. El médico puede guardar correctamente una nota clínica y completar su objetivo, pero tardar 22 segundos. La tarea es efectiva porque obtiene el resultado esperado, aunque no es eficiente porque consume más tiempo que la meta de ocho segundos.
+
+\textbf{2. ¿Por qué la cobertura del contexto es relevante para una red con cinco sedes?}
+
+Porque una función útil en Quito puede degradarse en Manta, Ambato, Cuenca o Guayaquil debido a conectividad, equipos, carga o condiciones operativas diferentes. Evaluar una sola sede no demuestra que el HIS mantenga su calidad para toda la población prevista.
+
+\subsubsection{Conclusión parcial}
+
+La clasificación convierte reportes ambiguos en evidencia comparable. Distinguir el resultado, los recursos, la percepción, el riesgo y el contexto evita concentrar todos los problemas en efectividad y permite asignar prioridades coherentes con su impacto.
+
+\evidence{La salida completa se encuentra en \texttt{apps/data/processed/}\allowbreak\texttt{incidentes\_clasificados.csv}; el resumen de conteos está en \texttt{reportes/evidencias/resultados/}\allowbreak\texttt{clasificacion\_resumen.json}.}
+
+\subsection{Comprensión del modelo SQuaRE}
+
+\scenario{3}{Diferenciación de los niveles de calidad · fuente literal}
+
+\subsubsection{Investigación dirigida}
+
+La \textbf{calidad interna} observa el código y la arquitectura sin ejecutar el producto: complejidad, duplicación, mantenibilidad y estructura. La \textbf{calidad externa} estudia el comportamiento del sistema ejecutado en un entorno controlado: respuesta, estabilidad y errores bajo una carga definida. Ambas perspectivas se relacionan con el modelo de calidad de ISO/IEC 25010 \cite{iso25010}.
+
+La \textbf{calidad en uso} observa lo que consigue una persona al realizar una tarea dentro de un contexto. Considera efectividad, eficiencia, satisfacción, libertad de riesgo y cobertura del contexto; ISO/IEC 25022 proporciona medidas para esta perspectiva \cite{iso25022}. ISO/IEC 25040 conecta las evidencias y medidas con un proceso de evaluación y decisión \cite{iso25040}.
+
+En esta relación, ISO/IEC 25010 define \emph{qué} características conforman el modelo de calidad, mientras ISO/IEC 25022 establece \emph{cómo} medir la calidad en uso mediante medidas, fórmulas y escalas aplicadas a usuarios, tareas y contextos.
+
+\subsubsection{Aplicación al caso MediSalud}
+
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{\input{figures/mapa-square.tex}}
+\caption{Mapa conceptual de la familia SQuaRE aplicado a MediSalud HIS.}
+\label{fig:square}
+\end{figure}
+
+\evidence{El mapa también se entrega como archivo independiente en
+\texttt{reportes/mapa-conceptual/}\allowbreak\texttt{mapa\_conceptual\_square.pdf}
+y como vista previa PNG en la misma carpeta y en \texttt{docs/mapa-conceptual}.}
+
+\begin{table}[H]
+\centering
+\caption{Los tres niveles de calidad aplicados a MediSalud HIS}
+\begin{tabularx}{\textwidth}{p{2.4cm}YY}
+\toprule
+Nivel & Actividad ejecutada & Evidencia obtenida \\
+\midrule
+Calidad interna & SonarQube Community Build sobre el servicio de facturación. & Complejidad ciclomática 8; cognitiva 3; 54 líneas; 0 bugs y 0 vulnerabilidades. \\
+Calidad externa & JMeter con 500 usuarios sincronizados consultando citas por el Gateway. & 500 respuestas correctas; 0\% de error; promedio 1.602 ms; P90 2.002 ms. \\
+Calidad en uso & Medición del registro HCE durante la simulación de consulta externa. & P90 de 11,71 s frente a la meta de 8 s; resultado amarillo. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\evidence{Las respuestas reproducibles se conservan en
+\texttt{reportes/evidencias/calidad/}\allowbreak\texttt{sonarqube/}\allowbreak\texttt{metricas.json} y
+\texttt{reportes/evidencias/calidad/}\allowbreak\texttt{jmeter/}\allowbreak\texttt{resumen.json}.
+Los resultados JTL son regenerables y permanecen fuera del control de versiones.}
+
+\subsubsection{Preguntas de discusión}
+
+\textbf{1. ¿Puede un sistema tener excelente calidad interna y mala calidad en uso?}
+
+Sí. Un módulo puede presentar baja complejidad, ausencia de problemas detectados y una arquitectura ordenada, pero aun así obligar al usuario a esperar o repetir acciones. En MediSalud, SonarQube no detectó bugs ni vulnerabilidades en facturación y reportó complejidad ciclomática 8; sin embargo, la calidad en uso del conjunto conserva un P90 de 11,71 segundos al registrar HCE y un éxito de agendamiento de 87,86\%. La estructura del código no garantiza que la tarea resulte rápida, completa o satisfactoria.
+
+\textbf{2. ¿Por qué SonarQube no es suficiente para resolver la lentitud percibida por los médicos?}
+
+Porque SonarQube analiza propiedades estáticas y defectos del código, pero no reproduce la consulta clínica ni mide tiempo de red, base de datos, concurrencia, integración o esfuerzo del usuario. Para comprender la lentitud se necesitan pruebas dinámicas, trazas operativas y medidas de calidad en uso. JMeter aporta comportamiento externo bajo carga e ISO/IEC 25022 aporta la relación entre usuario, tarea, contexto y resultado.
+
+\subsubsection{Conclusión parcial}
+
+La calidad en uso es la perspectiva más próxima al negocio y al paciente, pero se sostiene sobre la calidad interna y externa. SonarQube ayuda a conocer el estado estático del producto; JMeter muestra su comportamiento controlado; y las medidas ISO/IEC 25022 determinan si las personas logran sus objetivos en condiciones de uso. Ninguna de estas vistas sustituye a las demás.
+
+\subsection{Atributos, tareas y prioridades}
+
+\scenario{4--5}{Atributos UTC y mapeo tarea--característica · reconstrucción declarada}
+
+Se seleccionaron tareas observables que cubren los perfiles del caso y pueden producir evidencia. La prioridad combina impacto clínico, financiero, operativo y reputacional con la urgencia sugerida por los incidentes.
+
+\begin{longtable}{p{2.0cm}p{3.2cm}p{3.7cm}p{2.7cm}p{1.6cm}}
+\caption{Catálogo de tareas, contextos y atributos}\label{tab:utc}\\
+\toprule
+Usuario & Tarea & Contexto & Atributo observable & Prioridad \\
+\midrule
+\endfirsthead
+\toprule
+Usuario & Tarea & Contexto & Atributo observable & Prioridad \\
+\midrule
+\endhead
+Médico & Guardar nota HCE & Consulta, hora pico & P90 de duración & Crítica \\
+Médico & Revisar alergias & Antes de prescribir & Disponibilidad correcta & Crítica \\
+Paciente & Agendar cita & Móvil y 4G & Tasa de éxito & Alta \\
+Paciente & Realizar teleconsulta & WiFi doméstico & Tasa de caídas & Alta \\
+Admisión & Emitir factura & Seguro y cierre mensual & Tasa de error & Crítica \\
+Farmacia & Validar receta & Turno nocturno & Recetas correctas & Crítica \\
+Enfermería & Registrar signos & Tableta y red hospitalaria & Sincronización & Alta \\
+Médico & Cargar imagen & Dispositivo clínico & P90 de carga & Alta \\
+Paciente & Responder encuesta & Aplicación móvil & Abandono y CSAT & Media \\
+Gerencia & Revisar KPI & Consolidado multisede & Cobertura de datos & Alta \\
+\bottomrule
+\end{longtable}
+
+Las tareas críticas no son necesariamente las más frecuentes. La prescripción se prioriza por severidad; la HCE por su relación con la decisión clínica; y la facturación por el riesgo de cobros incorrectos. El portal de citas y la telemedicina tienen prioridad alta porque son puntos de acceso directo del paciente y dependen de contextos heterogéneos.
+
+\subsection{Diseño de métricas}
+
+\scenario{6}{Fichas de medida y criterios de decisión · reconstrucción declarada}
+
+Cada ficha incluye código, nombre, característica, objetivo, fórmula, unidad, fuente, periodicidad, meta y semáforo. El valor no se interpreta sin su meta: 96,52\% puede parecer alto para una función general, pero es rojo cuando el resultado restante representa recetas incorrectas.
+
+Las fórmulas principales son:
+
+\begin{align}
+\text{Éxito}(T) &= \frac{\text{tareas exitosas}}{\text{tareas iniciadas}}\times 100, \\
+\text{Error}(T) &= \frac{\text{tareas no exitosas}}{\text{tareas iniciadas}}\times 100, \\
+\text{Abandono} &= \frac{\text{encuestas no completadas}}{\text{encuestas iniciadas}}\times 100, \\
+\text{CSAT} &= \frac{\sum_{i=1}^{n} \text{puntuación}_{i}}{n}, \\
+\text{Variabilidad} &= \sigma\left(\overline{t}_{\text{sede }1},\ldots,\overline{t}_{\text{sede }5}\right).
+\end{align}
+
+El percentil 90 se define como el menor valor que contiene al 90\% de las observaciones ordenadas. Se eligió para HCE e imagenología porque hace visible la experiencia lenta del extremo superior sin depender de un único máximo atípico.
+
+\begin{longtable}{p{1.6cm}p{3.6cm}p{2.6cm}p{2.0cm}p{2.1cm}}
+\caption{Catálogo resumido de métricas}\label{tab:catalog}\\
+\toprule
+Código & Métrica & Característica & Unidad & Meta \\
+\midrule
+\endfirsthead
+\toprule
+Código & Métrica & Característica & Unidad & Meta \\
+\midrule
+\endhead
+M-EFI-01 & P90 registro HCE & Eficiencia & segundos & $\leq 8$ \\
+M-EFE-01 & Éxito de agendamiento & Efectividad & porcentaje & $\geq 95$ \\
+M-RIE-01 & Errores de facturación & Libertad de riesgo & porcentaje & $<1$ \\
+M-SAT-01 & Abandono de encuesta móvil & Satisfacción & porcentaje & $<10$ \\
+M-CC-01 & Variabilidad HCE entre sedes & Cobertura del contexto & segundos & $\leq 2$ \\
+M-RIE-02 & Incidentes de privacidad & Libertad de riesgo & incidentes & $=0$ \\
+M-SAT-02 & CSAT promedio & Satisfacción & escala 1--5 & $\geq 4$ \\
+M-EFE-02 & Recetas correctas & Efectividad & porcentaje & $=100$ \\
+M-EFI-02 & P90 carga de imagen & Eficiencia & segundos & $\leq 10$ \\
+M-CC-02 & Caídas de teleconsulta & Cobertura del contexto & porcentaje & $<5$ \\
+\bottomrule
+\end{longtable}
+
+\subsection{Datos, automatización y KPI}
+
+\scenario{7--9}{Obtención, procesamiento y visualización · reconstrucción declarada}
+
+La simulación instrumenta cada flujo con un identificador de auditoría y un escenario. En operación normal se registra la finalización esperada; en modo defectuoso se activa una regla controlada como demora, pérdida de guardado, pasos adicionales, doble facturación, dosis incompatible o desconexión. La probabilidad y la semilla permiten repetir la distribución sin convertir el fallo en una vulnerabilidad real.
+
+El pipeline analítico ejecuta cuatro responsabilidades separadas:
+
+\begin{enumerate}
+  \item \textbf{Clasificación:} carga los incidentes, normaliza campos y asigna característica y justificación.
+  \item \textbf{Simulación:} genera eventos y encuestas con periodo, sede, rol, módulo, origen y semilla.
+  \item \textbf{Medición:} agrupa observaciones, calcula porcentajes, percentiles, medias y desviación entre sedes.
+  \item \textbf{Exportación:} guarda CSV y JSON para que API, tablero e informe consuman la misma evidencia.
+\end{enumerate}
+
+La API de medición expone salud, incidentes, métricas, resumen y ejecuciones de simulación. React y Flutter acceden mediante el Gateway. El tablero permite leer valores agregados sin incorporar métricas académicas en las tareas del paciente. Esta separación conserva el carácter realista del HIS: la persona clínica atiende; el paciente gestiona su salud; gerencia observa tendencias.
+
+\begin{table}[H]
+\centering
+\caption{Relación entre fallo, evidencia y medida}
+\begin{tabularx}{\textwidth}{p{3.4cm}YY}
+\toprule
+Fallo controlado & Evidencia generada & KPI afectado \\
+\midrule
+Guardado HCE lento & Duración y resultado de \texttt{hce\_save} & M-EFI-01 \\
+Agendamiento prolongado & Inicio, pasos y finalización de \texttt{appointment} & M-EFE-01 \\
+Factura duplicada & Estado y bandera de duplicidad de \texttt{billing} & M-RIE-01 \\
+Dosis incorrecta & Resultado de validación de \texttt{prescription} & M-EFE-02 \\
+Imagen lenta & Duración de \texttt{imaging} & M-EFI-02 \\
+Teleconsulta interrumpida & Estado de \texttt{teleconsultation} & M-CC-02 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\evidence{La automatización reside en \texttt{apps/analytics}; los datos regenerables en \texttt{apps/data/simulated} y \texttt{apps/data/processed}; y los resúmenes seleccionados en \texttt{reportes/evidencias/resultados}.}

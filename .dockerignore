@@ -7,8 +7,8 @@
 **/.dart_tool
 **/target
 **/__pycache__
-informe/build
-informe/entrega
+reportes/build
+reportes/entrega
 tmp
 venv
 .venv

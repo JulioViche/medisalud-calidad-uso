@@ -1,0 +1,75 @@
+\begin{tikzpicture}[
+  font=\sffamily,
+  >={Latex[length=2.6mm]},
+  norm/.style={rounded corners=2.5mm,minimum width=4.55cm,minimum height=1.45cm,align=center,font=\sffamily\bfseries,line width=1pt},
+  branch/.style={rounded corners=2.5mm,text width=4.2cm,minimum height=5.75cm,align=left,inner sep=8pt,line width=.9pt},
+  connector/.style={-{Latex[length=2.6mm]},line width=1.1pt}
+]
+  \node[rounded corners=3mm,fill=medidark,text=white,minimum width=7.5cm,minimum height=1.55cm,align=center] (square) at (0,13.35) {\Large\bfseries ISO/IEC 25000\\[-1mm]
+    \small\normalfont Familia SQuaRE: requisitos, modelos, medición y evaluación};
+
+  \node[norm,draw=mediblue,fill=mediblue!8,text=medidark] (n25010) at (-5.2,10.65)
+    {ISO/IEC 25010\\[-1mm]\small\normalfont Modelo de calidad};
+  \node[norm,draw=mediteal,fill=mediteal!8,text=medidark] (n25022) at (0,10.65)
+    {ISO/IEC 25022\\[-1mm]\small\normalfont Medición de calidad en uso};
+  \node[norm,draw=medicoral,fill=medicoral!8,text=medidark] (n25040) at (5.2,10.65)
+    {ISO/IEC 25040\\[-1mm]\small\normalfont Proceso de evaluación};
+
+  \draw[connector,draw=mediblue] (square.south) -- ++(0,-.48) -| (n25010.north);
+  \draw[connector,draw=mediteal] (square.south) -- (n25022.north);
+  \draw[connector,draw=medicoral] (square.south) -- ++(0,-.48) -| (n25040.north);
+
+  \node[branch,draw=mediblue!70,fill=mediblue!5] (product) at (-5.2,6.65) {
+    \textcolor{mediblue}{\fontsize{9.5}{11}\selectfont\bfseries PRODUCTO SOFTWARE}\\[-1mm]
+    {\scriptsize ISO/IEC 25010}\par\vspace{2.5mm}
+    \begin{minipage}{3.95cm}
+      \footnotesize
+      \textbf{Calidad interna}\\
+      \textcolor{mediblue}{Vista estática}\\
+      Código y arquitectura sin ejecutar.\\
+      \textit{SonarQube: complejidad 8.}\\[2.5mm]
+      \color{mediblue!45}\rule{\linewidth}{.5pt}\color{black}\\[-1mm]
+      \textbf{Calidad externa}\\
+      \textcolor{medigold!80!black}{Vista dinámica controlada}\\
+      Producto ejecutado bajo carga.\\
+      \textit{JMeter: 500 usuarios, 0\% de error.}
+    \end{minipage}
+  };
+
+  \node[branch,draw=mediteal!70,fill=mediteal!5] (use) at (0,6.65) {
+    \textcolor{mediteal}{\fontsize{9.5}{11}\selectfont\bfseries EXPERIENCIA DE USO}\\[-1mm]
+    {\scriptsize ISO/IEC 25022}\par\vspace{2.5mm}
+    \begin{minipage}{3.95cm}
+      \footnotesize
+      \textbf{Calidad en uso}\\
+      Usuario + objetivo + tarea + recursos + entorno.\\[2.5mm]
+      \colorbox{mediteal!14}{\textcolor{mediteal}{\scriptsize\bfseries Efectividad}}\quad
+      \colorbox{mediblue!13}{\textcolor{mediblue}{\scriptsize\bfseries Eficiencia}}\\[1.5mm]
+      \colorbox{medigold!18}{\textcolor{medigold!70!black}{\scriptsize\bfseries Satisfacción}}\\[1.5mm]
+      \colorbox{medicoral!13}{\textcolor{medicoral}{\scriptsize\bfseries Libertad de riesgo}}\\[1.5mm]
+      \colorbox{medigrey!13}{\textcolor{medigrey}{\scriptsize\bfseries Cobertura del contexto}}\\[2mm]
+      \textit{HCE simulada: P90 de 11,71 s; meta de 8 s.}
+    \end{minipage}
+  };
+
+  \node[branch,draw=medicoral!70,fill=medicoral!5] (evaluation) at (5.2,6.65) {
+    \textcolor{medicoral}{\fontsize{9.5}{11}\selectfont\bfseries DECISIÓN SISTEMÁTICA}\\[-1mm]
+    {\scriptsize ISO/IEC 25040}\par\vspace{2.5mm}
+    \begin{minipage}{3.95cm}
+      \footnotesize
+      \textbf{1.} Establecer requisitos\\[1.5mm]
+      \textbf{2.} Especificar la evaluación\\[1.5mm]
+      \textbf{3.} Diseñar la medición\\[1.5mm]
+      \textbf{4.} Ejecutar y comparar\\[1.5mm]
+      \textbf{5.} Concluir y recomendar\\[2.5mm]
+      Evidencia + criterio = decisión trazable.
+    \end{minipage}
+  };
+
+  \draw[connector,draw=mediblue] (n25010.south) -- (product.north);
+  \draw[connector,draw=mediteal] (n25022.south) -- (use.north);
+  \draw[connector,draw=medicoral] (n25040.south) -- (evaluation.north);
+
+  \node[rounded corners=2mm,fill=medidark,text=white,text width=14.65cm,minimum height=1.1cm,align=center,font=\small] at (0,2.35)
+    {La calidad interna facilita un producto mantenible; la calidad externa comprueba su comportamiento; la calidad en uso determina si las personas alcanzan sus objetivos en condiciones concretas.};
+\end{tikzpicture}

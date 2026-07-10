@@ -1821,7 +1821,7 @@ id,fecha,modulo,descripcion,rol_usuario,sede
 2589,8/3/2025,App Movil,Consumo elevado de datos moviles al abrir el modulo de citas,Paciente,Quito
 2687,8/3/2025,App Movil,La aplicacion se cierra inesperadamente al abrir resultados de laboratorio,Paciente,Quito
 3471,8/3/2025,HCE,Consulta anterior no se muestra en el resumen de antecedentes,Medico,Quito
-1005,8/4/2025,Portal Citas,Tiempo de espera en el portal supera los 18s en horas pico,Paciente,Quito
+1005,2025-11-05,HCE,Datos de otro paciente visibles brevemente,Medico,Quito
 1042,8/4/2025,Portal Citas,El sistema no envia la confirmacion por correo electronico,Paciente,Ambato
 1747,8/4/2025,HCE,Tiempo de carga de la ficha clinica supera los 31s en horas pico,Medico,Guayaquil
 2311,8/4/2025,HCE,El sistema se congela al adjuntar resultados de laboratorio a la HCE,Enfermeria,Guayaquil
@@ -1889,7 +1889,7 @@ id,fecha,modulo,descripcion,rol_usuario,sede
 3938,8/11/2025,HCE,Firma electronica del medico no se valida al cerrar la consulta,Enfermeria,Guayaquil
 3989,8/11/2025,Telemedicina,Grabacion de la consulta no se almacena correctamente,Paciente,Ambato
 3998,8/11/2025,HCE,Nota de evolucion tarda 21s en guardarse,Medico,Quito
-1002,8/12/2025,HCE,Orden medica no se sincroniza con el modulo de farmacia,Medico,Manta
+1002,2025-11-03,Portal Citas,Usuario no logra agendar tras 3 intentos,Paciente,Guayaquil
 1487,8/12/2025,Imagenologia,Las imagenes de rayos X no cargan en el visor DICOM,Medico,Quito
 1941,8/12/2025,HCE,Alerta de interaccion medicamentosa no se despliega correctamente,Medico,Guayaquil
 2088,8/12/2025,HCE,El campo de diagnostico CIE-10 no permite busqueda por texto,Enfermeria,Quito
@@ -2339,7 +2339,7 @@ id,fecha,modulo,descripcion,rol_usuario,sede
 3049,10/2/2025,HCE,Receta electronica se genera con la dosis incorrecta tras guardar,Enfermeria,Quito
 3508,10/2/2025,Facturacion,El modulo de facturacion se cae durante el cierre de caja,Paciente,Guayaquil
 3664,10/2/2025,Portal Citas,Notificacion de recordatorio de cita llega con la fecha incorrecta,Paciente,Quito
-1001,10/3/2025,Portal Citas,Usuario no logra agendar tras 2 intentos,Paciente,Guayaquil
+1001,2025-11-03,HCE,Nota de evolucion tarda 22s en guardarse,Medico,Quito
 1178,10/3/2025,HCE,Duplicado de historia clinica al registrar un paciente ya existente,Enfermeria,Manta
 1539,10/3/2025,App Movil,El inicio de sesion con biometria falla de forma intermitente,Paciente,Quito
 2137,10/3/2025,App Movil,El boton de teleconsulta no redirige correctamente a la videollamada,Paciente,Guayaquil
@@ -2471,7 +2471,7 @@ id,fecha,modulo,descripcion,rol_usuario,sede
 1253,10/17/2025,Telemedicina,Calidad de video muy baja pese a tener buena conexion a internet,Paciente,Quito
 2439,10/17/2025,Portal Citas,Sesion expira antes de finalizar el proceso de agendamiento,Admision,Quito
 3529,10/17/2025,Farmacia,Alerta de vencimiento de lote no se muestra en el modulo,Farmacia,Guayaquil
-1003,10/18/2025,Portal Citas,Doble reserva de un mismo cupo por dos pacientes distintos,Paciente,Quito
+1003,2025-11-04,Facturacion,Factura duplicada al reintentar pago,Admision,Cuenca
 1209,10/18/2025,Facturacion,Reembolso aprobado no se refleja en el estado de cuenta,Admision,Guayaquil
 1245,10/18/2025,HCE,Nota de evolucion tarda 35s en guardarse,Enfermeria,Ambato
 1297,10/18/2025,Portal Citas,"Formulario confuso, abandono de registro antes de completar la cita",Paciente,Cuenca
@@ -2535,7 +2535,7 @@ id,fecha,modulo,descripcion,rol_usuario,sede
 2586,10/25/2025,Facturacion,El modulo de facturacion se cae durante el cierre de caja,Admision,Ambato
 3429,10/25/2025,Portal Citas,Usuario no logra agendar tras 3 intentos,Paciente,Quito
 3753,10/25/2025,Portal Citas,Tiempo de espera en el portal supera los 13s en horas pico,Paciente,Quito
-1006,10/26/2025,HCE,Firma electronica del medico no se valida al cerrar la consulta,Medico,Guayaquil
+1006,2025-11-06,Portal Citas,"Formulario confuso, abandono de registro",Paciente,Manta
 1217,10/26/2025,HCE,Signos vitales registrados por enfermeria no aparecen en la HCE del medico,Enfermeria,Quito
 2264,10/26/2025,Portal Citas,El sistema no envia la confirmacion por correo electronico,Admision,Guayaquil
 2850,10/26/2025,HCE,Perdida de la nota de evolucion tras un cierre inesperado de sesion,Enfermeria,Ambato
@@ -2549,7 +2549,7 @@ id,fecha,modulo,descripcion,rol_usuario,sede
 2238,10/27/2025,Telemedicina,Videollamada se corta a los 3 minutos,Paciente,Guayaquil
 2974,10/27/2025,Portal Citas,El portal muestra disponibilidad para un horario ya ocupado,Admision,Ambato
 3186,10/27/2025,HCE,Nota de evolucion tarda 11s en guardarse,Medico,Cuenca
-1004,10/28/2025,HCE,Signos vitales registrados por enfermeria no aparecen en la HCE del medico,Medico,Cuenca
+1004,2025-11-05,Telemedicina,Videollamada se corta a los 4 minutos,Paciente,Ambato
 1008,10/28/2025,Telemedicina,La sesion se cierra automaticamente antes de terminar la consulta,Medico,Cuenca
 1640,10/28/2025,HCE,Nota de evolucion tarda 15s en guardarse,Enfermeria,Quito
 1644,10/28/2025,Telemedicina,Notificacion de inicio de teleconsulta llega con retraso de 27s,Paciente,Manta

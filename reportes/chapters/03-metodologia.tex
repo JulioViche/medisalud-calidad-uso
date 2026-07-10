@@ -1,0 +1,38 @@
+\section{Metodología}
+
+Se aplicó un procedimiento descriptivo y reproducible. La guía del taller se utilizó como fuente académica principal; el archivo de 3.000 incidentes se conservó en \texttt{apps/data/original}; y los eventos y encuestas necesarios para calcular las métricas se generaron mediante una simulación local con semilla 25022.
+
+El trabajo se realizó en cuatro pasos: análisis y clasificación de incidentes; definición de tareas, atributos y métricas; generación y procesamiento automatizado de evidencia; e interpretación de KPI y formulación del plan de mejora. Python se utilizó para clasificación, simulación y cálculo; React y Flutter para representar las tareas de los usuarios; y los servicios locales para registrar los fallos controlados.
+
+\begin{table}[H]
+\centering
+\caption{Fuentes empleadas en la evaluación}
+\begin{tabularx}{\textwidth}{p{3cm}p{2.2cm}YY}
+\toprule
+Fuente & Cantidad & Procedencia & Uso \\
+\midrule
+Incidentes & 3.000 & Dataset suministrado & Clasificación ISO/IEC 25022 \\
+Eventos & 6.000 & Simulación, semilla 25022 & Efectividad, eficiencia, riesgo y contexto \\
+Encuestas & 2.000 & Simulación, semilla 25022 & Satisfacción y abandono \\
+Catálogo & 10 métricas & Definición del equipo & Fórmulas, metas y semáforo \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+La integridad del dataset original se controla sobre una copia inmutable utilizada para clasificar los 3.000 casos:
+
+\begin{center}
+\small\ttfamily
+apps/data/original/incidentes\_2025.csv
+\end{center}
+
+Su SHA-256 es:
+
+\begin{center}
+\footnotesize\ttfamily
+814F3E5D8CF983A86BC125EC9C8461E3728C91DDCE1CFE8A5518ABD7A53CDC17
+\end{center}
+
+Por separado, \texttt{data/}\allowbreak\texttt{incidentes\_}\allowbreak\texttt{2025.csv} conserva 3.000 filas como dataset de trabajo e incorpora literalmente los incidentes 1001--1006 solicitados en la actividad. Esta copia pedagógica no se utiliza para demostrar la integridad del original ni comparte necesariamente su hash.
+
+Los escenarios 1 a 3 siguen el contenido suministrado; los escenarios 4 a 12 se desarrollan a partir de su índice y se identifican como reconstruidos.

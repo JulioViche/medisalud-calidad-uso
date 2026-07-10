@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop"
 $root = Resolve-Path (Join-Path $PSScriptRoot "..\..")
-$report = Join-Path $root "informe"
+$report = Join-Path $root "reportes"
 $build = Join-Path $report "build"
 $delivery = Join-Path $report "entrega"
 New-Item -ItemType Directory -Force -Path $build, $delivery | Out-Null

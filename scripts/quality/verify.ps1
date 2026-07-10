@@ -2,9 +2,9 @@ $ErrorActionPreference = "Stop"
 $root = Resolve-Path (Join-Path $PSScriptRoot "..\..")
 Push-Location $root
 try {
-    python -m unittest discover -s analytics/tests -v
-    python -m analytics.exporters.pipeline --seed 25022
-    python -m unittest discover -s tests/integration -v
+    python -m unittest discover -s apps/analytics/tests -v
+    python -m apps.analytics.exporters.pipeline --seed 25022
+    python -m unittest discover -s apps/tests/integration -v
 
     Push-Location apps/web-his
     try { npm test; npm run build } finally { Pop-Location }
@@ -16,4 +16,3 @@ try {
 } finally {
     Pop-Location
 }
-

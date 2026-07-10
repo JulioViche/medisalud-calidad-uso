@@ -1,4 +1,5 @@
-import { Activity, CalendarDays, ClipboardPlus, HeartPulse, Home, Pill, Receipt, Stethoscope, Video } from 'lucide-react'
+import { Activity, CalendarDays, ClipboardPlus, HeartPulse, Home, LogOut, Pill, Receipt, Stethoscope, Video } from 'lucide-react'
+import { allowedViews, type SessionUser } from '../auth'
 
 export type View = 'home' | 'appointments' | 'hce' | 'nursing' | 'pharmacy' | 'billing' | 'telemedicine' | 'quality'
 
@@ -10,21 +11,22 @@ const items: { id: View; label: string; icon: typeof Activity }[] = [
   { id: 'pharmacy', label: 'Farmacia', icon: Pill },
   { id: 'billing', label: 'Facturacion', icon: Receipt },
   { id: 'telemedicine', label: 'Telemedicina', icon: Video },
-  { id: 'quality', label: 'Calidad y reportes', icon: Activity },
+  { id: 'quality', label: 'Reportes operativos', icon: Activity },
 ]
 
-export function Sidebar({ view, onChange }: { view: View; onChange: (view: View) => void }) {
+export function Sidebar({ view, user, onChange, onLogout }: { view: View; user: SessionUser; onChange: (view: View) => void; onLogout: () => void }) {
+  const visibleItems = items.filter((item) => allowedViews(user.role).includes(item.id))
   return (
     <aside className="sidebar">
       <div className="brand"><span><Stethoscope size={23} /></span><div><b>MediSalud</b><small>HIS local</small></div></div>
       <nav aria-label="Modulos principales">
-        {items.map(({ id, label, icon: Icon }) => (
+        {visibleItems.map(({ id, label, icon: Icon }) => (
           <button className={view === id ? 'active' : ''} key={id} onClick={() => onChange(id)} title={label}>
             <Icon size={18} /><span>{label}</span>
           </button>
         ))}
       </nav>
-      <div className="sidebar-footer"><span className="status-dot" /><div><b>Sede Quito</b><small>Operación local</small></div></div>
+      <div className="sidebar-footer"><span className="status-dot" /><div><b>Sede {user.site}</b><small>Operación local</small></div><button onClick={onLogout} title="Cerrar sesión"><LogOut size={17} /></button></div>
     </aside>
   )
 }

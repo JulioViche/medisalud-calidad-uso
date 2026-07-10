@@ -1,0 +1,48 @@
+{
+    "component": {
+        "key": "medisalud-billing",
+        "name": "MediSalud Billing Service",
+        "description": "Parent pom providing dependency and plugin management for applications built with Maven",
+        "qualifier": "TRK",
+        "measures": [
+            {
+                "metric": "coverage",
+                "value": "0.0",
+                "bestValue": false
+            },
+            {
+                "metric": "complexity",
+                "value": "8"
+            },
+            {
+                "metric": "bugs",
+                "value": "0",
+                "bestValue": true
+            },
+            {
+                "metric": "duplicated_lines_density",
+                "value": "0.0",
+                "bestValue": true
+            },
+            {
+                "metric": "code_smells",
+                "value": "0",
+                "bestValue": true
+            },
+            {
+                "metric": "cognitive_complexity",
+                "value": "3",
+                "bestValue": false
+            },
+            {
+                "metric": "ncloc",
+                "value": "54"
+            },
+            {
+                "metric": "vulnerabilities",
+                "value": "0",
+                "bestValue": true
+            }
+        ]
+    }
+}

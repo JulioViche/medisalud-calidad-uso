@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MediSalud | Calidad en uso</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark" aria-hidden="true">M</div>
+    <div><p class="eyebrow">MediSalud HIS</p><h1>Indicadores de calidad en uso</h1></div>
+    <div class="period"><span>Periodo observado</span><strong>2025</strong></div>
+  </header>
+
+  <main>
+    <section class="summary">
+      <div><p class="eyebrow">ISO/IEC 25022</p><h2>Evaluación consolidada</h2><p id="summary-text"></p></div>
+      <div class="status-summary" id="status-summary"></div>
+    </section>
+
+    <nav class="tabs" aria-label="Vistas del dashboard">
+      <button class="tab active" data-tab="overview" aria-selected="true">Resumen ejecutivo</button>
+      <button class="tab" data-tab="incidents" aria-selected="false">Análisis de incidentes</button>
+      <button class="tab" data-tab="method" aria-selected="false">Métricas y metodología</button>
+    </nav>
+
+    <section class="tab-panel active" id="overview-panel">
+      <div class="section-heading"><div><p class="eyebrow">Escenario 9</p><h2>KPI para toma de decisiones</h2></div><p>El semáforo compara cada resultado con su meta y convierte la métrica en un indicador accionable.</p></div>
+      <section class="charts two-columns" aria-label="Gráficas ejecutivas">
+        <article class="panel">
+          <div class="panel-heading"><div><p class="eyebrow">Cumplimiento</p><h3>Distribución del semáforo</h3></div><span>10 KPI</span></div>
+          <div class="donut-layout"><div class="donut" id="status-donut"><strong>10</strong><span>indicadores</span></div><div class="legend" id="status-legend"></div></div>
+        </article>
+        <article class="panel">
+          <div class="panel-heading"><div><p class="eyebrow">ISO/IEC 25022</p><h3>Estado por característica</h3></div><span>2 KPI por dimensión</span></div>
+          <div class="bar-chart" id="characteristic-status-chart"></div>
+        </article>
+      </section>
+      <section class="metrics-grid" id="metrics-grid" aria-label="Indicadores calculados"></section>
+      <section class="decision-strip" id="decision-strip"></section>
+    </section>
+
+    <section class="tab-panel" id="incidents-panel" hidden>
+      <div class="section-heading"><div><p class="eyebrow">Dataset original clasificado</p><h2>Exploración de 3.000 incidentes</h2></div><p>Las gráficas de esta vista proceden exclusivamente de los dos CSV unidos por identificador.</p></div>
+      <section class="filters" aria-label="Filtros de incidentes">
+        <label>Sede<select id="site-filter"><option value="all">Todas</option></select></label>
+        <label>Módulo<select id="module-filter"><option value="all">Todos</option></select></label>
+        <label>Rol<select id="role-filter"><option value="all">Todos</option></select></label>
+        <label>Característica<select id="incident-characteristic-filter"><option value="all">Todas</option></select></label>
+        <label class="search-label">Buscar<input id="incident-search" type="search" placeholder="ID o descripción"></label>
+        <button id="reset-filters" class="secondary-button">Limpiar</button>
+      </section>
+      <section class="incident-stats" id="incident-stats"></section>
+      <section class="charts incident-charts">
+        <article class="panel wide-panel">
+          <div class="panel-heading"><div><p class="eyebrow">Frecuencia</p><h3>Incidentes por mes</h3></div><span id="trend-total"></span></div>
+          <div class="line-chart" id="monthly-chart" role="img" aria-label="Evolución mensual de incidentes"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-heading"><div><p class="eyebrow">Concentración</p><h3>Incidentes por módulo</h3></div><span>orden descendente</span></div>
+          <div class="ranking-chart" id="module-chart"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-heading"><div><p class="eyebrow">Clasificación</p><h3>Características afectadas</h3></div><span>ISO/IEC 25022</span></div>
+          <div class="ranking-chart" id="incident-characteristic-chart"></div>
+        </article>
+      </section>
+      <section class="table-section">
+        <div class="panel-heading"><div><p class="eyebrow">Trazabilidad</p><h3>Incidentes clasificados</h3></div><span id="incident-result-count"></span></div>
+        <div class="table-wrap"><table><thead><tr><th>ID</th><th>Fecha</th><th>Módulo</th><th>Descripción</th><th>Rol</th><th>Sede</th><th>Característica</th></tr></thead><tbody id="incident-table"></tbody></table></div>
+        <p class="table-note">Se muestran los primeros 50 resultados del filtro actual.</p>
+      </section>
+    </section>
+
+    <section class="tab-panel" id="method-panel" hidden>
+      <div class="section-heading"><div><p class="eyebrow">Trazabilidad del cálculo</p><h2>Métricas, fórmulas y procedencia</h2></div><p>La clasificación responde qué dimensión se afecta; la medición cuantifica cuánto se afecta.</p></div>
+      <section class="source-grid">
+        <article><strong>3.000</strong><span>Incidentes originales</span><p>Fecha, módulo, descripción, rol y sede.</p></article>
+        <article><strong>3.000</strong><span>Clasificaciones ISO</span><p>Característica principal y justificación individual.</p></article>
+        <article><strong>6.000</strong><span>Eventos simulados</span><p>Tareas, duración, resultado y contexto; semilla 25022.</p></article>
+        <article><strong>2.000</strong><span>Encuestas simuladas</span><p>Finalización y satisfacción para indicadores de percepción.</p></article>
+      </section>
+      <section class="formula-callout"><div><p class="eyebrow">Estructura general</p><strong>X = A / B</strong></div><p>Las proporciones se expresan como <b>(A / B) × 100</b>. P90, desviación estándar, media y conteo se utilizan cuando la naturaleza del atributo no es proporcional.</p></section>
+      <section class="table-section">
+        <div class="panel-heading"><div><p class="eyebrow">Catálogo</p><h3>Definición de los diez KPI</h3></div><span>valor + meta + criterio</span></div>
+        <div class="table-wrap"><table><thead><tr><th>Código</th><th>Métrica</th><th>Característica</th><th>A / dato observado</th><th>B / conjunto</th><th>Cálculo</th><th>Fuente</th></tr></thead><tbody id="formula-table"></tbody></table></div>
+      </section>
+      <section class="discussion-grid">
+        <article><p class="eyebrow">Discusión 1</p><h3>¿Por qué usar semáforos?</h3><p>Porque incorporan la meta al valor y permiten reconocer de inmediato cumplimiento, vigilancia o intervención, sin exigir que la dirección interprete escalas heterogéneas.</p></article>
+        <article><p class="eyebrow">Discusión 2</p><h3>¿Qué KPI debe priorizarse?</h3><p>Gerencia de Calidad debe priorizar los incidentes de privacidad por su exposición institucional. Dirección Médica debe observar primero la corrección de recetas y el tiempo de registro HCE por su efecto directo en seguridad y continuidad clínica.</p></article>
+      </section>
+    </section>
+  </main>
+
+  <footer><span>Entregable académico independiente de la aplicación HIS</span><span id="source-footer"></span></footer>
+  <script src="dashboard-data.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

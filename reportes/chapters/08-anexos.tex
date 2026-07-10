@@ -1,0 +1,79 @@
+\section{Matriz de trazabilidad de escenarios}
+
+\begin{longtable}{p{1.8cm}p{3.2cm}p{4.4cm}p{2.7cm}}
+\caption{Trazabilidad requisito--actividad--evidencia}\label{tab:trace}\\
+\toprule
+Escenario & Actividad & Evidencia principal & Condición de origen \\
+\midrule
+\endfirsthead
+\toprule
+Escenario & Actividad & Evidencia principal & Condición de origen \\
+\midrule
+\endhead
+1 & Análisis del caso & \texttt{docs/}\allowbreak\texttt{analisis\_inicial.md} & Literal \\
+2 & Clasificación ISO 25022 & CSV clasificado y resumen JSON & Literal \\
+3 & Niveles de calidad y SQuaRE & Mapa, SonarQube, JMeter y Figura \ref{fig:square} & Literal \\
+4 & Atributos UTC & Tabla \ref{tab:utc} & Reconstruido \\
+5 & Mapeo y prioridad & Matriz de tareas críticas & Reconstruido \\
+6 & Diseño de métricas & Catálogo, fórmulas y Tabla \ref{tab:catalog} & Reconstruido \\
+7 & Obtención de datos & Eventos, encuestas y manifiesto & Reconstruido \\
+8 & Automatización & Paquetes de \texttt{apps/analytics} & Reconstruido \\
+9 & KPI y tablero & Tabla \ref{tab:results} y React gerencial & Reconstruido \\
+10 & Interpretación & Hipótesis de causa y prioridades & Reconstruido \\
+11 & Comunicación ejecutiva & Síntesis de decisiones & Reconstruido \\
+12 & Mejora continua & Plan PDCA, Tabla \ref{tab:pdca} & Reconstruido \\
+Reto & Telemedicina 2.0 & Trazabilidad y casos de contexto & Reconstruido \\
+\bottomrule
+\end{longtable}
+
+\section{Ubicación de artefactos}
+
+\begin{table}[H]
+\centering
+\caption{Estructura de evidencia reproducible}
+\begin{tabularx}{\textwidth}{p{4.0cm}Y}
+\toprule
+Ruta & Responsabilidad \\
+\midrule
+\texttt{docs/}\allowbreak\texttt{analisis\_inicial.md} & Matriz de análisis solicitada en el escenario 1. \\
+\texttt{data/}\allowbreak\texttt{incidentes\_2025.csv} & Dataset solicitado por la actividad, ampliado a 3.000 registros. \\
+\texttt{data/clasificacion} & Tabla 2.2 completada para los 3.000 incidentes, incluidos 1001--1006. \\
+\texttt{apps/data/original} & Copia preservada del dataset de 3.000 incidentes. \\
+\texttt{apps/data/simulated} & Eventos, encuestas, manifiestos y ejecuciones regenerables. \\
+\texttt{apps/data/processed} & Clasificación y métricas derivadas. \\
+\texttt{apps/analytics} & Clasificación, simulación, medición y exportación en Python. \\
+\texttt{apps/mobile-patient} & Portal Flutter del paciente. \\
+\texttt{apps/web-his} & HIS operativo React y módulo gerencial de calidad. \\
+\texttt{apps/backend} & Gateway, dominios clínicos y API de medición. \\
+\texttt{reportes/evidencias/}\allowbreak\texttt{resultados} & Resúmenes seleccionados para entrega. \\
+\texttt{reportes/evidencias/}\allowbreak\texttt{calidad} & Métricas SonarQube y resumen de la prueba JMeter. \\
+\texttt{reportes/entrega} & PDF académico final. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Controles de reproducción}
+
+\begin{enumerate}
+  \item Verificar el SHA-256 registrado de \texttt{apps/}\allowbreak\texttt{data/}\allowbreak\texttt{original/}\allowbreak\texttt{incidentes\_2025.csv} sin modificar ese archivo.
+  \item Instalar las dependencias de Python y ejecutar el pipeline con semilla 25022.
+  \item Confirmar 3.000 clasificaciones, 6.000 eventos, 2.000 encuestas y 10 métricas.
+  \item Repetir la simulación y comparar manifiestos y resultados.
+  \item Levantar Docker Compose desde Ubuntu WSL y comprobar los estados de salud.
+  \item Ejecutar SonarQube sobre facturación y exportar sus métricas mediante \texttt{run-sonar-wsl.sh}.
+  \item Ejecutar JMeter con 500 usuarios y generar el resumen mediante \texttt{run-jmeter-wsl.sh}.
+  \item Probar React y Flutter contra el mismo Gateway local.
+  \item Compilar este documento con XeLaTeX mediante \texttt{latexmk}.
+  \item Renderizar todas las páginas y revisar portada, tablas, figuras, referencias y desbordamientos.
+\end{enumerate}
+
+\section{Criterio de procedencia}
+
+Para evitar ambigüedad, todo resultado debe identificarse con una de estas etiquetas:
+
+\begin{description}[style=nextline,leftmargin=2.5cm,labelwidth=2.2cm]
+  \item[Original:] contenido recibido en la guía del taller o en el dataset suministrado.
+  \item[Simulado:] observación generada artificialmente con semilla y reglas declaradas.
+  \item[Derivado:] clasificación, agregado, fórmula, gráfica o interpretación calculada a partir de una fuente.
+  \item[Propuesto:] métrica, meta, hipótesis o acción definida por el equipo para completar el taller.
+\end{description}
