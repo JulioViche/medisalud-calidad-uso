@@ -38,6 +38,7 @@
 \setlength{\parskip}{5.5pt}
 \setlist{leftmargin=*,itemsep=2pt,topsep=3pt}
 \renewcommand{\arraystretch}{1.18}
+\setcounter{tocdepth}{1}
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 \captionsetup{font=small,labelfont={bf,color=mediteal}}
 
@@ -117,13 +118,10 @@
 \pagenumbering{roman}
 \input{chapters/00-resumen}
 \tableofcontents
-\listoftables
-\listoffigures
 \clearpage
 \pagenumbering{arabic}
 
 \input{chapters/01-introduccion}
-\input{chapters/02-marco-teorico}
 \input{chapters/03-metodologia}
 \input{chapters/04-desarrollo}
 \input{chapters/05-resultados}

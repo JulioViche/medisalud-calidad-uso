@@ -65,6 +65,35 @@ La justificación se almacena junto a cada fila procesada. Esta práctica es nec
 
 \evidence{La salida completa se encuentra en \texttt{data/processed/}\allowbreak\texttt{incidentes\_clasificados.csv}; el resumen de conteos está en \texttt{evidencias/resultados/}\allowbreak\texttt{clasificacion\_resumen.json}.}
 
+\subsection{Comprensión del modelo SQuaRE}
+
+\scenario{3}{Diferenciación de los niveles de calidad · fuente literal}
+
+ISO/IEC 25000 organiza la familia SQuaRE; ISO/IEC 25010 define modelos de calidad; ISO/IEC 25022 establece medidas de calidad en uso; e ISO/IEC 25040 orienta el proceso de evaluación \cite{iso25010,iso25022,iso25040}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.76\textwidth]{figures/square.png}
+\caption{Ubicación de ISO/IEC 25022 en la familia SQuaRE.}
+\label{fig:square}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Los tres niveles de calidad aplicados a MediSalud HIS}
+\begin{tabularx}{\textwidth}{p{2.7cm}Y}
+\toprule
+Nivel & Ejemplo en MediSalud HIS \\
+\midrule
+Calidad interna & Complejidad ciclomática del módulo de facturación medida con SonarQube. \\
+Calidad externa & Pruebas de carga con JMeter simulando 500 usuarios concurrentes en el portal de citas. \\
+Calidad en uso & Tiempo real que tarda un médico en registrar una nota clínica durante consulta externa. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Estos ejemplos diferencian el objeto de evaluación. SonarQube observa propiedades internas del código; JMeter observa el comportamiento externo bajo carga; e ISO/IEC 25022 permite estudiar el resultado experimentado por el usuario. Un sistema puede tener código limpio y aun así ofrecer tiempos o flujos deficientes. Por ello SonarQube no resuelve, por sí solo, la lentitud percibida por los médicos. SonarQube y JMeter se emplean aquí como ejemplos conceptuales solicitados por el taller; no se presentan como herramientas ejecutadas en esta entrega.
+
 \subsection{Atributos, tareas y prioridades}
 
 \scenario{4--5}{Atributos UTC y mapeo tarea--característica · reconstrucción declarada}

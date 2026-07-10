@@ -1,79 +1,29 @@
 \section{Metodología}
 
-\subsection{Diseño de la evaluación}
+Se aplicó un procedimiento descriptivo y reproducible. El Documento Padre se utilizó como fuente académica principal; el archivo de 3.000 incidentes se conservó en \texttt{data/original}; y los eventos y encuestas necesarios para calcular las métricas se generaron mediante una simulación local con semilla 25022.
 
-Se utilizó un diseño descriptivo y reproducible compuesto por cuatro fuentes: el Documento Padre, el dataset original de incidentes, los eventos generados por la simulación y las encuestas simuladas. La clasificación transforma descripciones cualitativas en categorías de calidad en uso; el cálculo transforma eventos en KPI; y la interpretación compara cada valor con una meta explícita.
-
-La secuencia seguida fue: auditoría de fuentes, preservación del original, clasificación, diseño de métricas, generación determinista, cálculo automatizado, validación de resultados y análisis. Cada etapa escribe en una carpeta distinta para evitar que los datos originales, simulados y derivados se confundan.
-
-\subsection{Fuente principal y alcance documental}
-
-El archivo \texttt{docs/Documento Padre/taller\_iso\_25022\_parte1.md} es la fuente de verdad académica. Contiene el caso, el desarrollo completo de los escenarios 1 a 3 y el índice de los escenarios restantes. El README se trata como guía operativa del repositorio, no como fuente de requisitos.
-
-\evidence{Los escenarios 1--3 se identifican como contenido literal. Los escenarios 4--12 y el reto se reconstruyen desde el índice y la metodología del taller; esta limitación se mantiene visible en el informe y en \texttt{docs/trazabilidad/matriz.md}.}
-
-\subsection{Integridad del dataset}
-
-El archivo original contiene seis columnas: identificador, fecha, módulo, descripción, rol de usuario y sede. Se verificaron 3.000 filas, cinco sedes, seis roles y nueve módulos. El periodo observado inicia el 2 de enero y termina el 19 de diciembre de 2025.
-
-La copia de trabajo y el archivo del Documento Padre producen el mismo SHA-256:
-
-\begin{center}
-\small\ttfamily
-814F3E5D8CF983A86BC125EC9C8461E3728C91DDCE1CFE8A5518ABD7A53CDC17
-\end{center}
-
-Este control demuestra igualdad byte a byte. El pipeline lee desde \texttt{data/original} y escribe la clasificación en \texttt{data/processed}; nunca sobrescribe el original.
+El trabajo se realizó en cuatro pasos: análisis y clasificación de incidentes; definición de tareas, atributos y métricas; generación y procesamiento automatizado de evidencia; e interpretación de KPI y formulación del plan de mejora. Python se utilizó para clasificación, simulación y cálculo; React y Flutter para representar las tareas de los usuarios; y los servicios locales para registrar los fallos controlados.
 
 \begin{table}[H]
 \centering
-\caption{Distribución del dataset original por módulo}
-\begin{tabular}{lrr@{\hspace{1.2cm}}lrr}
+\caption{Fuentes empleadas en la evaluación}
+\begin{tabularx}{\textwidth}{p{3cm}p{2.2cm}YY}
 \toprule
-Módulo & Casos & \% & Módulo & Casos & \% \\
+Fuente & Cantidad & Procedencia & Uso \\
 \midrule
-HCE & 769 & 25,63 & Portal Citas & 545 & 18,17 \\
-Facturación & 425 & 14,17 & Telemedicina & 320 & 10,67 \\
-App Móvil & 278 & 9,27 & Farmacia & 258 & 8,60 \\
-Laboratorio & 166 & 5,53 & Imagenología & 151 & 5,03 \\
-Reportes Gerenciales & 88 & 2,93 & Total & 3.000 & 100,00 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsection{Clasificación de incidentes}
-
-La clasificación utiliza reglas deterministas sobre la descripción y asigna una característica principal. Las palabras clave facilitan una primera decisión, pero la justificación se basa en el efecto de la incidencia sobre la tarea. Los casos de privacidad, prescripción, alergias y facturación reciben una revisión conceptual especial por su potencial de daño.
-
-La decisión sigue este orden: riesgo clínico, financiero o de privacidad; imposibilidad de completar la tarea; consumo excesivo de recursos; percepción negativa; y limitación propia del contexto. El orden reduce el error de clasificar como simple efectividad un evento cuyo efecto dominante es el daño.
-
-\subsection{Generación de evidencia simulada}
-
-La simulación usa la semilla \textbf{25022}. Cada ejecución registra periodo, semilla, tipo de evento, sede, rol, módulo, escenario, duración y resultado. Los datos se declaran ficticios y se separan del dataset original. Repetir el proceso con la misma semilla produce el mismo conjunto de valores.
-
-\begin{table}[H]
-\centering
-\caption{Fuentes utilizadas en el cálculo}
-\begin{tabularx}{\textwidth}{p{3.2cm}p{2.2cm}YY}
-\toprule
-Fuente & Volumen & Procedencia & Uso \\
-\midrule
-Incidentes & 3.000 & Documento Padre & Clasificación y conteo de privacidad \\
+Incidentes & 3.000 & Documento Padre & Clasificación ISO/IEC 25022 \\
 Eventos & 6.000 & Simulación, semilla 25022 & Efectividad, eficiencia, riesgo y contexto \\
-Encuestas & 2.000 & Simulación, semilla 25022 & CSAT y abandono \\
-Catálogo & 10 métricas & Diseño del equipo & Meta, unidad y semáforo \\
+Encuestas & 2.000 & Simulación, semilla 25022 & Satisfacción y abandono \\
+Catálogo & 10 métricas & Definición del equipo & Fórmulas, metas y semáforo \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-\subsection{Arquitectura de apoyo}
+La integridad del dataset se verificó comparando el SHA-256 de la copia de trabajo con el archivo del Documento Padre. Ambos produjeron el mismo resultado:
 
-La solución local separa aplicaciones, servicios, analítica, contratos, infraestructura, datos, evidencias e informe. React recrea el HIS para perfiles clínicos y administrativos; Flutter ofrece las tareas del paciente; Spring Boot representa HCE, citas y facturación; FastAPI expone simulaciones y mediciones; y PostgreSQL, SQL Server y RabbitMQ representan persistencia e integración. Docker Compose se ejecuta en Ubuntu sobre WSL 2.
+\begin{center}
+\footnotesize\ttfamily
+814F3E5D8CF983A86BC125EC9C8461E3728C91DDCE1CFE8A5518ABD7A53CDC17
+\end{center}
 
-Esta arquitectura no se muestra como contenido funcional dentro del HIS. Su papel es permitir que una tarea de usuario produzca un evento trazable y que ese evento alimente una métrica. El tablero de calidad aparece únicamente en el perfil gerencial, mientras que el paciente no recibe indicadores ISO en su aplicación.
-
-\subsection{Criterios de validación}
-
-Se aplican controles de conteo, esquema, hash, semilla, fórmulas, pruebas automatizadas y revisión visual. Una métrica se considera reproducible si su fuente está identificada, la fórmula puede recalcularse, la meta está declarada y una segunda ejecución bajo las mismas condiciones conserva el resultado.
-
-Las conclusiones no se extienden a un hospital real. Los eventos y encuestas son sintéticos y permiten demostrar el método, no estimar el desempeño clínico de una organización existente.
+Los escenarios 1 a 3 siguen el contenido suministrado; los escenarios 4 a 12 se desarrollan a partir de su índice y se identifican como reconstruidos.
