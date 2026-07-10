@@ -1,0 +1,42 @@
+\section{Discusión}
+
+El ejercicio evidencia que la característica más frecuente no necesariamente es la más importante. Efectividad concentra la mayoría de incidentes, pero libertad de riesgo domina la prioridad por sus consecuencias. Esta observación impide ordenar el trabajo únicamente por conteos y exige combinar frecuencia, severidad, exposición y reversibilidad.
+
+También se observa que un semáforo verde debe leerse con cautela. El abandono de encuesta cumple por un margen de 0,20 puntos porcentuales y la carga de imagen cumple por 0,58 segundos. Ambos valores son aceptables bajo las reglas actuales, aunque sensibles a una pequeña variación. El tablero, por tanto, apoya la decisión; no elimina el análisis profesional.
+
+La combinación de evidencia original y simulada resulta útil siempre que su procedencia permanezca explícita. Los incidentes describen el caso; los eventos hacen calculables ciertos comportamientos; y las encuestas completan satisfacción. Mezclarlos sin etiqueta produciría una conclusión engañosa. La separación de carpetas, los manifiestos y la semilla reducen ese riesgo.
+
+La recreación del HIS contribuye a comprender el vínculo entre tarea y métrica. Sin embargo, no debe convertirse en una exhibición de la arquitectura ni en un tablero académico para todos los usuarios. La calidad se instrumenta detrás de la tarea y se presenta a quien toma decisiones. Esta distinción mejora tanto la fidelidad del prototipo como la validez de la evidencia generada.
+
+\subsection{Limitaciones}
+
+\begin{itemize}
+  \item Los escenarios 4--12 no fueron entregados con desarrollo completo; se reconstruyeron a partir del índice y se identifican como tales.
+  \item Los eventos y encuestas son simulados. Sus valores demuestran el método, pero no estiman el rendimiento de una institución real.
+  \item La clasificación automática asigna una característica principal y puede simplificar incidentes con efectos múltiples.
+  \item Las causas propuestas requieren trazas y pruebas adicionales; no pueden afirmarse únicamente desde valores agregados.
+  \item Las metas pertenecen al diseño académico y deberían validarse con responsables clínicos, legales y operativos antes de un uso real.
+\end{itemize}
+
+\section{Conclusiones}
+
+\begin{enumerate}
+  \item ISO/IEC 25022 permite transformar incidentes dispersos en una evaluación centrada en resultados de usuario, siempre que cada medida declare tarea, contexto, fuente, fórmula y meta.
+  \item El dataset original abarca prácticamente todo 2025, no solo enero y febrero. Su integridad se conserva mediante separación física y verificación SHA-256.
+  \item La clasificación de 3.000 incidentes muestra predominio de efectividad, mientras que los hallazgos de libertad de riesgo requieren la mayor prioridad por su impacto clínico, financiero y de privacidad.
+  \item La simulación con 6.000 eventos y 2.000 encuestas genera una línea base reproducible: tres KPI verdes, cuatro amarillos y tres rojos.
+  \item Los resultados críticos son privacidad, facturación y prescripción. HCE, agendamiento, satisfacción y telemedicina requieren seguimiento y confirmación de causas.
+  \item La aplicación local debe representar el trabajo real del HIS. Las métricas se reservan para gerencia y calidad; la arquitectura pertenece al informe técnico, no a la navegación clínica.
+  \item El plan de mejora debe ejecutarse después de congelar la línea base. Modificar el sistema antes de terminar la medición impediría comparar el efecto de las intervenciones.
+\end{enumerate}
+
+\section{Recomendaciones}
+
+\begin{enumerate}
+  \item Realizar revisión manual estratificada de la clasificación, con énfasis en privacidad, alergias, prescripción y facturación.
+  \item Incorporar trazas de extremo a extremo para verificar las hipótesis de causa antes de implementar optimizaciones.
+  \item Validar metas y severidades con perfiles clínicos, administrativos, legales y de seguridad.
+  \item Ejecutar las acciones PDCA en una versión posterior y repetir el pipeline sin cambiar fórmulas ni población de referencia.
+  \item Mantener en toda presentación la distinción entre datos del caso, datos simulados y resultados derivados.
+  \item Conservar el informe, los CSV, manifiestos, capturas y pruebas como paquete único de evidencia académica.
+\end{enumerate}

@@ -1,0 +1,62 @@
+\section{Reto final integrador}
+
+\subsection{Telemedicina 2.0 como caso transversal}
+
+El reto integra problema, usuario, tarea, evidencia, característica, métrica, resultado, riesgo y recomendación en una sola cadena de trazabilidad. Se eligió la teleconsulta porque combina experiencia del paciente, operación clínica, infraestructura, contexto doméstico y continuidad asistencial.
+
+El problema observado es la interrupción de sesiones. El usuario principal es el paciente, aunque el médico comparte el objetivo. La tarea consiste en completar una consulta remota con audio, video e indicaciones finales. El contexto incluye un dispositivo personal y una red fuera del control del hospital. La evidencia es el evento \texttt{teleconsultation}, que conserva inicio, sede asociada, rol, escenario, resultado y duración.
+
+\begin{table}[H]
+\centering
+\caption{Trazabilidad del reto integrador}
+\begin{tabularx}{\textwidth}{p{3.1cm}Y}
+\toprule
+Elemento & Definición aplicada \\
+\midrule
+Problemática & Sesiones interrumpidas antes de finalizar la atención. \\
+Usuarios & Paciente y médico tratante. \\
+Objetivo de tarea & Completar teleconsulta y recibir indicaciones clínicas. \\
+Contexto & Domicilio, dispositivo móvil o computador y conectividad variable. \\
+Evidencia & Eventos de sesión y resultado de finalización, con semilla 25022. \\
+Característica principal & Cobertura del contexto; impactos secundarios en efectividad y satisfacción. \\
+Métrica & M-CC-02: porcentaje de teleconsultas no completadas. \\
+Resultado & 8,68\% de caídas frente a una meta inferior al 5\%. \\
+Riesgo & Pérdida de continuidad, repetición de atención y menor confianza. \\
+Recomendación & Reconexión, canal alterno y medición segmentada por red y dispositivo. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Especificación de la medida}
+
+Sea $S$ el conjunto de teleconsultas iniciadas y $C$ el subconjunto que termina correctamente. La tasa de caída se calcula como:
+
+\begin{equation}
+M\text{-}CC\text{-}02 = \frac{|S|-|C|}{|S|}\times 100.
+\end{equation}
+
+El resultado es verde si no supera 5\%, amarillo si está entre 5\% y 10\%, y rojo por encima de 10\%. Con 8,68\%, la línea base queda en amarillo. Esta clasificación expresa una alerta, no una aceptación clínica definitiva.
+
+\subsection{Escenarios de prueba}
+
+\begin{table}[H]
+\centering
+\caption{Cobertura propuesta para Telemedicina 2.0}
+\begin{tabularx}{\textwidth}{p{2.6cm}p{2.8cm}YY}
+\toprule
+Contexto & Condición & Resultado esperado & Evidencia \\
+\midrule
+Red estable & WiFi con latencia baja & Sesión completa sin reconexión & Duración y finalización \\
+Red degradada & Pérdida breve de paquetes & Recuperación sin perder la consulta & Intentos de reconexión \\
+Cambio de red & WiFi a datos móviles & Continuidad de sesión o reingreso guiado & Cambio de contexto \\
+Interrupción larga & Sin conectividad temporal & Canal alterno y conservación del estado & Motivo y recuperación \\
+Dispositivo limitado & Cámara o audio no disponible & Diagnóstico previo y alternativa & Resultado de prechequeo \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+La recomendación no se aplica en la simulación inicial. Primero se conserva el 8,68\% como referencia. En una versión posterior se implementarían recuperación de sesión, prueba previa y canal alterno; después se repetiría la misma medida con segmentos por dispositivo, sede asociada y condición de red.
+
+\subsection{Criterio de aceptación del siguiente ciclo}
+
+La mejora se considerará válida si M-CC-02 queda por debajo del 5\%, no aumenta la duración hasta un nivel inaceptable, mantiene la privacidad de la sesión y mejora o conserva el CSAT. Así se evita resolver una dimensión perjudicando eficiencia, satisfacción o libertad de riesgo.

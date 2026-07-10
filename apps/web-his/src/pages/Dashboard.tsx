@@ -10,7 +10,7 @@ export function Dashboard({ summary, incidents, demo, onRefresh }: { summary: Da
   return (
     <>
       <header className="page-header">
-        <div><p className="eyebrow">GERENCIA DE CALIDAD</p><h1>Calidad en uso</h1><span>Periodo {summary.period} · 3.000 incidentes auditados</span></div>
+        <div><p className="eyebrow">GERENCIA Y CALIDAD</p><h1>Calidad y reportes</h1><span>Seguimiento institucional · Periodo {summary.period} · 3.000 incidentes auditados</span></div>
         <div className="header-actions"><span className={demo ? 'connection demo' : 'connection'}>{demo ? 'Datos locales' : 'API conectada'}</span><button className="icon-button" onClick={onRefresh} title="Actualizar datos"><RefreshCw size={18} /></button></div>
       </header>
       <section className="metrics-grid">{summary.metrics.slice(0, 4).map((metric, index) => <MetricPanel key={metric.code} metric={metric} index={index} />)}</section>
@@ -36,4 +36,3 @@ export function Dashboard({ summary, incidents, demo, onRefresh }: { summary: Da
     </>
   )
 }
-

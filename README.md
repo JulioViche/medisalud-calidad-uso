@@ -23,6 +23,8 @@ Laboratorio local para observar tareas de MediSalud HIS, reproducir fallos contr
 | Infraestructura | PostgreSQL, SQL Server y RabbitMQ |
 | Informe | XeLaTeX, 12 escenarios y reto integrador |
 
+El portal React abre en la jornada operativa del personal hospitalario: agenda, atención activa y pendientes. `Calidad y reportes` es un módulo secundario para Gerencia y Calidad. La arquitectura se documenta en `docs/arquitectura`, pero no aparece como una pantalla del HIS. Flutter corresponde exclusivamente al portal del paciente y no muestra indicadores ISO.
+
 ## Ejecución en Ubuntu WSL
 
 Docker Engine y Compose se ejecutan dentro de la distribución `Ubuntu` de WSL 2.

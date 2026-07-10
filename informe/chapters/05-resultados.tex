@@ -1,0 +1,138 @@
+\section{Resultados e interpretación}
+
+\subsection{Tablero consolidado}
+
+El cálculo automatizado generó diez KPI para el periodo 2025. El semáforo no representa una calificación global única: cada indicador conserva una meta ajustada a la consecuencia de la tarea. En conjunto aparecen tres verdes, cuatro amarillos y tres rojos.
+
+\begin{longtable}{p{1.55cm}p{3.65cm}p{2.7cm}p{1.7cm}p{1.6cm}p{1.7cm}}
+\caption{Resultados de calidad en uso}\label{tab:results}\\
+\toprule
+Código & Indicador & Característica & Resultado & Meta & Estado \\
+\midrule
+\endfirsthead
+\toprule
+Código & Indicador & Característica & Resultado & Meta & Estado \\
+\midrule
+\endhead
+M-EFI-01 & P90 registro HCE & Eficiencia & 11,71 s & $\leq8$ s & \statusyellow \\
+M-EFE-01 & Éxito de agendamiento & Efectividad & 87,86\% & $\geq95$\% & \statusyellow \\
+M-RIE-01 & Errores de facturación & Libertad de riesgo & 4,50\% & $<1$\% & \statusred \\
+M-SAT-01 & Abandono de encuesta móvil & Satisfacción & 9,80\% & $<10$\% & \statusgreen \\
+M-CC-01 & Variabilidad HCE entre sedes & Cobertura del contexto & 0,61 s & $\leq2$ s & \statusgreen \\
+M-RIE-02 & Incidentes de privacidad & Libertad de riesgo & 41 & $=0$ & \statusred \\
+M-SAT-02 & CSAT promedio & Satisfacción & 3,42/5 & $\geq4$ & \statusyellow \\
+M-EFE-02 & Recetas correctas & Efectividad & 96,52\% & $=100$\% & \statusred \\
+M-EFI-02 & P90 carga de imagen & Eficiencia & 9,42 s & $\leq10$ s & \statusgreen \\
+M-CC-02 & Caídas de teleconsulta & Cobertura del contexto & 8,68\% & $<5$\% & \statusyellow \\
+\bottomrule
+\end{longtable}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+  \fill[medigreenlight] (0,0) rectangle (3.2,2.15);
+  \fill[mediteal] (0,0) rectangle (.13,2.15);
+  \node[text=mediteal,font=\fontsize{28}{30}\selectfont\bfseries] at (1.6,1.35) {3};
+  \node[text=medigrey,font=\small\bfseries] at (1.6,.62) {CUMPLEN};
+  \fill[mediyellowlight] (3.65,0) rectangle (6.85,2.15);
+  \fill[medigold] (3.65,0) rectangle (3.78,2.15);
+  \node[text=medigold,font=\fontsize{28}{30}\selectfont\bfseries] at (5.25,1.35) {4};
+  \node[text=medigrey,font=\small\bfseries] at (5.25,.62) {EN ALERTA};
+  \fill[mediredlight] (7.3,0) rectangle (10.5,2.15);
+  \fill[medicoral] (7.3,0) rectangle (7.43,2.15);
+  \node[text=medicoral,font=\fontsize{28}{30}\selectfont\bfseries] at (8.9,1.35) {3};
+  \node[text=medigrey,font=\small\bfseries] at (8.9,.62) {CRÍTICOS};
+\end{tikzpicture}
+\caption{Distribución del semáforo de métricas.}
+\end{figure}
+
+\subsection{Lectura por característica}
+
+\subsubsection{Efectividad}
+
+El 87,86\% de éxito en agendamiento implica que aproximadamente doce de cada cien intentos simulados no alcanzan el objetivo. En prescripción, el 96,52\% es insuficiente porque el 3,48\% restante representa resultados potencialmente incorrectos. La interpretación demuestra que una misma escala porcentual necesita umbrales distintos según el riesgo.
+
+\subsubsection{Eficiencia}
+
+El P90 de HCE supera la meta en 3,71 segundos: al menos uno de cada diez guardados se encuentra en una zona de espera incompatible con el requisito de ocho segundos. La carga de imagen, en cambio, permanece dentro de su límite con 9,42 segundos. No se concluye que todo el sistema sea eficiente; se concluye únicamente que esta medida específica cumple su criterio.
+
+\subsubsection{Satisfacción}
+
+El abandono de encuesta queda apenas 0,20 puntos porcentuales por debajo del límite y debe vigilarse pese a estar verde. El CSAT de 3,42 no alcanza la meta de 4. La proximidad al límite del primer indicador y el incumplimiento del segundo aconsejan revisar la experiencia del paciente sin confundir satisfacción con efectividad.
+
+\subsubsection{Libertad de riesgo}
+
+Es la dimensión más crítica. La meta de privacidad es cero y se localizaron 41 incidentes compatibles con exposición de información. La tasa de error de facturación supera 4,5 veces el límite permitido. Ambos resultados exigen análisis de controles y trazas antes de cualquier interpretación de productividad.
+
+\subsubsection{Cobertura del contexto}
+
+La variabilidad media de HCE entre sedes es baja (0,61 segundos), pero este resultado no compensa las caídas de teleconsulta. El 8,68\% de sesiones interrumpidas supera la meta y muestra que el contexto domiciliario requiere mecanismos de continuidad diferentes a los de la red hospitalaria.
+
+\subsection{Análisis de causas}
+
+\scenario{10}{Interpretación y causa raíz · reconstrucción declarada}
+
+La simulación demuestra síntomas y relaciones, pero no prueba por sí sola una causa física de infraestructura o diseño. Por rigor, las causas siguientes se presentan como \textbf{hipótesis verificables}, no como hechos del dataset.
+
+\begin{table}[H]
+\centering
+\caption{Hipótesis de causa y prueba requerida}
+\begin{tabularx}{\textwidth}{p{3.4cm}YY}
+\toprule
+Hallazgo & Hipótesis prioritaria & Evidencia adicional necesaria \\
+\midrule
+HCE lenta & Consultas costosas o contención en persistencia durante carga & Trazas distribuidas, planes SQL y duración por dependencia \\
+Agendamiento incompleto & Flujo extenso o validaciones tardías & Analítica de pasos y pruebas con pacientes \\
+Facturación errónea & Idempotencia insuficiente o reintentos no controlados & Correlación de solicitudes, facturas y eventos \\
+Privacidad & Autorización contextual o caché de sesión incorrecta & Auditoría de acceso, roles y reproducción controlada \\
+Recetas incorrectas & Reglas clínicas incompletas o alertas omitidas & Casos de prueba farmacológica y trazas de validación \\
+Caídas de teleconsulta & Red variable sin recuperación de sesión & Telemetría de red, dispositivo y reconexión \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+La prioridad se determina por severidad y exposición. Privacidad y prescripción ocupan el primer nivel; facturación el segundo por impacto económico; HCE y teleconsulta el tercero por continuidad; y satisfacción se sigue en paralelo para comprobar el efecto percibido de cambios posteriores.
+
+\subsection{Síntesis ejecutiva}
+
+\scenario{11}{Comunicación para dirección · reconstrucción declarada}
+
+La dirección necesita una lectura breve, pero no simplista. El mensaje central es que la operación presenta capacidad funcional, aunque conserva riesgos incompatibles con un entorno de salud. Las decisiones propuestas son:
+
+\begin{enumerate}
+  \item Contener y auditar los incidentes de privacidad y prescripción antes de optimizar conveniencia.
+  \item Asegurar idempotencia y conciliación en facturación.
+  \item Instrumentar HCE y telemedicina por dependencia y contexto para confirmar causas.
+  \item Simplificar y probar el flujo de citas con pacientes representativos.
+  \item Repetir exactamente las diez métricas tras cada intervención y comparar con la línea base.
+\end{enumerate}
+
+La presentación ejecutiva debe indicar siempre que eventos y encuestas son simulados. Los 3.000 incidentes pertenecen al caso académico; no se presentan como registros reales de una institución existente.
+
+\subsection{Plan de mejora continua}
+
+\scenario{12}{Ciclo PDCA sin modificar la línea base · reconstrucción declarada}
+
+El plan se formula, pero no se aplica a la versión defectuosa utilizada para la medición. De esta manera la evidencia inicial se mantiene estable y puede compararse con una futura iteración.
+
+\begin{longtable}{p{1.3cm}p{3.55cm}p{2.4cm}p{2.1cm}p{2.5cm}}
+\caption{Acciones propuestas para el siguiente ciclo}\label{tab:pdca}\\
+\toprule
+Código & Acción & Responsable & Plazo & Verificación \\
+\midrule
+\endfirsthead
+\toprule
+Código & Acción & Responsable & Plazo & Verificación \\
+\midrule
+\endhead
+P-01 & Auditar acceso a expedientes y separación de sesiones & Seguridad / HCE & 15 días & Cero casos de acceso cruzado en pruebas \\
+P-02 & Completar reglas y alertas de prescripción & Clínica / Farmacia & 30 días & 100\% de casos del catálogo correctos \\
+P-03 & Incorporar idempotencia en emisión de facturas & Facturación & 30 días & Error inferior al 1\% \\
+P-04 & Instrumentar consultas y persistencia HCE & Plataforma & 20 días & Trazas completas en el 100\% de guardados \\
+P-05 & Reducir pasos y validar agenda con pacientes & Producto / UX & 30 días & Éxito igual o superior al 95\% \\
+P-06 & Diseñar reconexión y continuidad de teleconsulta & Telemedicina & 45 días & Caídas inferiores al 5\% \\
+P-07 & Repetir pipeline y revisar semáforo & Calidad & Al cierre & Comparación contra semilla y línea base \\
+\bottomrule
+\end{longtable}
+
+En \textbf{Plan} se confirman causas y criterios; en \textbf{Do} se implementan cambios en una rama o versión posterior; en \textbf{Check} se repiten pruebas y métricas; y en \textbf{Act} se estandariza únicamente aquello que demuestra mejora sin trasladar el riesgo a otra característica.

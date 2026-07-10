@@ -1,0 +1,62 @@
+\section{Introducción}
+
+\subsection{Contexto del caso}
+
+MediSalud es una red hospitalaria ecuatoriana ficticia cuya operación se apoya en un sistema de información hospitalaria (HIS). El caso académico comprende cinco sedes ---Quito, Guayaquil, Cuenca, Ambato y Manta--- y articula procesos de admisión, agenda, historia clínica electrónica, enfermería, farmacia, facturación, laboratorio, imagenología, telemedicina, portal del paciente y reportes gerenciales. En ellos participan médicos, personal de enfermería, admisión, farmacia, pacientes y responsables de gerencia y calidad.
+
+El problema no consiste solamente en determinar si los servidores están disponibles. Los incidentes describen tareas que tardan demasiado, operaciones que no finalizan, datos que no aparecen en el contexto necesario, errores con posible daño clínico o financiero y experiencias que reducen la confianza del usuario. Esta diferencia es central: la disponibilidad es una condición técnica, mientras que la calidad en uso observa si una persona concreta logra su propósito en condiciones concretas.
+
+La actividad adopta ISO/IEC 25022 como marco de medición. El estándar permite organizar la evidencia según efectividad, eficiencia, satisfacción, libertad de riesgo y cobertura del contexto \cite{iso25022}. Su aplicación exige relacionar cada problema con un usuario, una tarea, un resultado observable, una unidad y un criterio de decisión.
+
+\subsection{Planteamiento del problema}
+
+La evidencia inicial de MediSalud está fragmentada. Existen 3.000 reportes de incidentes, pero por sí solos no establecen una línea base cuantitativa de la experiencia. Tampoco indican de manera uniforme cuánto tarda una tarea, cuántas veces se completa, qué percepción deja o qué daño puede producir. Por tanto, la pregunta del estudio es:
+
+\begin{quote}
+\color{medidark}\bfseries
+¿Cómo medir de forma reproducible la calidad en uso de los procesos críticos de MediSalud HIS, conservando la evidencia original y diferenciándola de los datos generados por una simulación académica?
+\end{quote}
+
+Responderla implica resolver cuatro necesidades: clasificar los incidentes con justificación técnica; definir métricas calculables; producir datos complementarios sin presentarlos como reales; e interpretar los resultados con trazabilidad suficiente para sustentar decisiones posteriores.
+
+\subsection{Objetivos}
+
+\subsubsection{Objetivo general}
+
+Evaluar la calidad en uso de MediSalud HIS mediante ISO/IEC 25022, utilizando incidentes del caso y evidencia simulada reproducible para medir tareas clínicas, administrativas y de atención al paciente.
+
+\subsubsection{Objetivos específicos}
+
+\begin{enumerate}
+  \item Caracterizar los procesos, perfiles, tareas y contextos críticos descritos en el Documento Padre.
+  \item Clasificar los 3.000 incidentes según las cinco características de calidad en uso y conservar una justificación auditable.
+  \item Diseñar métricas con fórmula, unidad, fuente, meta, periodicidad y criterio de semáforo.
+  \item Construir una simulación local que genere eventos y encuestas con errores controlados, semilla conocida y procedencia explícita.
+  \item Automatizar el cálculo de indicadores y relacionar hallazgos, riesgos y recomendaciones.
+  \item Formular un plan de mejora continua sin alterar la línea base utilizada en la evaluación.
+\end{enumerate}
+
+\subsection{Alcance y delimitaciones}
+
+El alcance cubre el año 2025, desde el 2 de enero hasta el 19 de diciembre según el campo \texttt{fecha} del archivo original. No se limita a enero y febrero. Se analizan nueve módulos presentes en los incidentes y se simulan seis tipos de eventos: guardado de HCE, agendamiento, facturación, prescripción, carga de imagen y teleconsulta.
+
+La aplicación web recrea la operación hospitalaria para perfiles clínicos y administrativos; el portal Flutter corresponde al paciente; y el tablero de calidad se reserva para gerencia. La arquitectura sirve como medio para producir evidencia, pero no constituye un requisito literal del taller. La solución no procesa datos personales reales, no introduce vulnerabilidades auténticas y no se despliega en producción.
+
+\begin{table}[H]
+\centering
+\caption{Límites de la evaluación}
+\begin{tabularx}{\textwidth}{>{\bfseries}p{3.2cm}YY}
+\toprule
+Aspecto & Incluido & Excluido \\
+\midrule
+Datos & Incidentes académicos, eventos y encuestas simuladas & Historias clínicas o identidades reales \\
+Ejecución & Entorno local, Docker en Ubuntu WSL y clientes web/móvil & Nube, alta disponibilidad y despliegue productivo \\
+Evaluación & Calidad en uso y trazabilidad de evidencia & Certificación formal de conformidad ISO \\
+Mejora & Recomendaciones y ciclo PDCA & Aplicación de mejoras sobre la línea base \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Estructura del informe}
+
+Después de esta introducción se presenta el marco conceptual SQuaRE, la metodología de preservación y simulación, y el desarrollo integrado de los doce escenarios. Luego se exponen los KPI, el reto integrador, la discusión, las conclusiones y las recomendaciones. Los anexos reúnen trazabilidad, fórmulas, controles de reproducción y ubicación de los artefactos.

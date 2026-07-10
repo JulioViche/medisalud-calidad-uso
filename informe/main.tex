@@ -1,7 +1,8 @@
-\documentclass[11pt,letterpaper]{report}
-\usepackage[letterpaper,margin=2.5cm,headheight=15pt]{geometry}
+\documentclass[11pt,letterpaper]{article}
+\usepackage[letterpaper,top=2.4cm,bottom=2.5cm,left=2.6cm,right=2.4cm,headheight=16pt]{geometry}
 \usepackage{fontspec}
 \setmainfont{Segoe UI}
+\setsansfont{Segoe UI}
 \usepackage[spanish,es-nodecimaldot]{babel}
 \usepackage{xcolor}
 \usepackage{graphicx}
@@ -9,6 +10,7 @@
 \usepackage{tabularx}
 \usepackage{longtable}
 \usepackage{array}
+\usepackage{colortbl}
 \usepackage{enumitem}
 \usepackage{fancyhdr}
 \usepackage{hyperref}
@@ -16,87 +18,126 @@
 \usepackage{float}
 \usepackage{caption}
 \usepackage{microtype}
+\usepackage{amsmath}
+\usepackage{titlesec}
 \input{config/metadata}
 
-\definecolor{mediteal}{HTML}{0C695F}
-\definecolor{medidark}{HTML}{173F3B}
-\definecolor{medicoral}{HTML}{D45D4C}
-\definecolor{medigold}{HTML}{D59622}
-\definecolor{medilight}{HTML}{F2F5F4}
-\definecolor{medigrey}{HTML}{657B78}
-\hypersetup{colorlinks=true,linkcolor=mediteal,urlcolor=medicoral,citecolor=mediteal,pdftitle={\ReportTitle}}
+\definecolor{mediteal}{HTML}{0B7065}
+\definecolor{medidark}{HTML}{102E2C}
+\definecolor{medicoral}{HTML}{D55F4D}
+\definecolor{medigold}{HTML}{D7A12D}
+\definecolor{mediblue}{HTML}{3E7892}
+\definecolor{medilight}{HTML}{F1F6F5}
+\definecolor{medigrey}{HTML}{647B77}
+\definecolor{mediredlight}{HTML}{FAE8E4}
+\definecolor{medigreenlight}{HTML}{E4F3EC}
+\definecolor{mediyellowlight}{HTML}{FFF2D2}
+
+\hypersetup{colorlinks=true,linkcolor=mediteal,urlcolor=medicoral,citecolor=mediteal,pdftitle={\ReportTitle},pdfauthor={\AuthorsPlain}}
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt}
-\setlist{nosep,leftmargin=*}
-\renewcommand{\arraystretch}{1.2}
+\setlength{\parskip}{5.5pt}
+\setlist{leftmargin=*,itemsep=2pt,topsep=3pt}
+\renewcommand{\arraystretch}{1.18}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\captionsetup{font=small,labelfont={bf,color=mediteal}}
+
+\titleformat{\section}{\Large\bfseries\color{medidark}}{\thesection}{0.65em}{}[\vspace{2pt}\color{mediteal}\titlerule]
+\titleformat{\subsection}{\large\bfseries\color{mediteal}}{\thesubsection}{0.55em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{medidark}}{\thesubsubsection}{0.5em}{}
+\titlespacing*{\section}{0pt}{18pt}{10pt}
+\titlespacing*{\subsection}{0pt}{14pt}{6pt}
+
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small MediSalud HIS}
-\fancyhead[R]{\small ISO/IEC 25022}
-\fancyfoot[C]{\thepage}
+\fancyhead[L]{\small\color{medigrey}MediSalud HIS}
+\fancyhead[R]{\small\color{medigrey}Calidad en uso · ISO/IEC 25022}
+\fancyfoot[L]{\footnotesize\color{medigrey}Universidad de las Fuerzas Armadas ESPE}
+\fancyfoot[R]{\color{mediteal}\bfseries\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
 
-\newcommand{\sourcebadge}[1]{\par\smallskip\noindent\colorbox{medilight}{\parbox{0.95\textwidth}{\small\textbf{Trazabilidad:} #1}}\par\smallskip}
-\newcommand{\statusgreen}{\textcolor{mediteal}{\textbf{VERDE}}}
-\newcommand{\statusyellow}{\textcolor{medigold}{\textbf{AMARILLO}}}
-\newcommand{\statusred}{\textcolor{medicoral}{\textbf{ROJO}}}
+\newcommand{\scenario}[2]{%
+  \par\medskip\noindent
+  \begin{tikzpicture}
+    \node[rounded corners=2pt,fill=mediteal,text=white,inner xsep=8pt,inner ysep=4pt,font=\small\bfseries] {Escenario #1};
+    \node[anchor=west,text=medigrey,font=\small] at (2.5,0) {#2};
+  \end{tikzpicture}\par\smallskip
+}
+\newcommand{\evidence}[1]{\par\smallskip\noindent\colorbox{medilight}{\parbox{0.96\linewidth}{\small\textbf{Evidencia verificable.} #1}}\par\smallskip}
+\newcommand{\statusgreen}{\textcolor{mediteal}{\footnotesize\textbf{VERDE}}}
+\newcommand{\statusyellow}{\textcolor{medigold}{\footnotesize\textbf{AMARILLO}}}
+\newcommand{\statusred}{\textcolor{medicoral}{\footnotesize\textbf{ROJO}}}
 
 \begin{document}
+\hypersetup{pageanchor=false}
 \begin{titlepage}
+\thispagestyle{empty}
 \begin{tikzpicture}[remember picture,overlay]
-  \fill[medidark] (current page.north west) rectangle ([xshift=5.0cm]current page.south west);
-  \fill[mediteal] ([xshift=5.0cm]current page.north west) rectangle ([yshift=-1.0cm]current page.north east);
-  \fill[medicoral] ([yshift=1.1cm]current page.south west) rectangle (current page.south east);
-  \draw[medigold,line width=3pt] ([xshift=5.5cm,yshift=-1.8cm]current page.north west) -- ([xshift=-1.2cm,yshift=-1.8cm]current page.north east);
-  \node[anchor=north west,text=white,align=left,text width=3.4cm] at ([xshift=1.0cm,yshift=-2.0cm]current page.north west) {\Large\bfseries ESPE\\[0.35cm]\small Universidad de las Fuerzas Armadas\\[0.25cm]\footnotesize Departamento de\\Ciencias de la\\Computación};
-  \node[anchor=south east,text=white] at ([xshift=-1.0cm,yshift=0.38cm]current page.south east) {\large\bfseries \Location\quad |\quad \ReportDate};
+  \node[anchor=center,inner sep=0] at (current page.center) {\includegraphics[width=\paperwidth,height=\paperheight]{figures/cover-healthcare.png}};
+  \fill[medidark,opacity=.96] (current page.north west) rectangle ([xshift=12.7cm,yshift=-18.8cm]current page.north west);
+  \fill[mediteal] ([yshift=-18.8cm]current page.north west) rectangle ([xshift=12.7cm,yshift=-19.05cm]current page.north west);
+  \fill[medicoral] ([xshift=12.15cm,yshift=-3.0cm]current page.north west) rectangle ([xshift=12.7cm,yshift=-8.0cm]current page.north west);
+  \fill[white,opacity=.94] ([yshift=3.0cm]current page.south west) rectangle ([xshift=\paperwidth]current page.south west);
+
+  \node[anchor=north west,inner sep=0] at ([xshift=1.25cm,yshift=-1.05cm]current page.north west) {
+    \begin{tikzpicture}
+      \fill[mediteal,rounded corners=5pt] (0,0) rectangle (1.25,1.25);
+      \fill[white] (.50,.20) rectangle (.75,1.05);
+      \fill[white] (.20,.50) rectangle (1.05,.75);
+      \draw[white,line width=1.1pt] (1.48,.62) -- (1.78,.62) -- (1.95,.88) -- (2.13,.37) -- (2.30,.62) -- (2.70,.62);
+    \end{tikzpicture}
+  };
+  \node[anchor=north west,align=left,text=white,text width=8.9cm] at ([xshift=1.25cm,yshift=-2.65cm]current page.north west) {
+    {\fontsize{12}{15}\selectfont\bfseries UNIVERSIDAD DE LAS FUERZAS ARMADAS ESPE}\\[0.18cm]
+    {\fontsize{10}{13}\selectfont Departamento de Ciencias de la Computación}
+  };
+  \node[anchor=north west,align=left,text=white,text width=9.8cm] at ([xshift=1.25cm,yshift=-6.0cm]current page.north west) {
+    {\fontsize{10}{12}\selectfont\bfseries INFORME ACADÉMICO · ISO/IEC 25022}\\[0.42cm]
+    {\fontsize{26}{30}\selectfont\bfseries Medición de la\\calidad en uso}\\[0.28cm]
+    {\fontsize{15}{19}\selectfont Caso de estudio: MediSalud HIS}\\[0.65cm]
+    {\color{medigold}\rule{2.2cm}{2.5pt}}\\[0.58cm]
+    {\fontsize{11}{14}\selectfont Aseguramiento de la Calidad de Software}
+  };
+  \node[anchor=north west,align=left,text=white,text width=9.5cm] at ([xshift=1.25cm,yshift=-14.25cm]current page.north west) {
+    {\fontsize{9}{11}\selectfont\color{medigold}\bfseries INTEGRANTES}\\[0.18cm]
+    {\fontsize{10.5}{14}\selectfont Mesías Mariscal \quad Denise Rea\\Julio Viche \quad Gabriel Murillo}
+  };
+  \node[anchor=south west,align=left,text=medidark] at ([xshift=1.25cm,yshift=1.05cm]current page.south west) {
+    {\fontsize{9}{11}\selectfont\color{mediteal}\bfseries NRC}\\[-0.02cm]
+    {\fontsize{17}{20}\selectfont\bfseries 30733}
+  };
+  \node[anchor=south east,align=right,text=medidark] at ([xshift=-1.25cm,yshift=1.05cm]current page.south east) {
+    {\fontsize{10}{13}\selectfont\bfseries Sangolquí, Ecuador}\\
+    {\fontsize{9}{11}\selectfont 2026}
+  };
 \end{tikzpicture}
-\color{medidark}\vspace*{5.1cm}
-\hspace*{4.8cm}\begin{minipage}{0.64\textwidth}
-{\color{mediteal}\small\bfseries TALLER GUIADO INTEGRAL}\par\vspace{0.3cm}
-{\fontsize{25}{30}\selectfont\bfseries Medición de la Calidad en Uso\\[0.1cm]mediante ISO/IEC 25022}\par\vspace{0.35cm}
-{\Large\color{medicoral}\ReportSubtitle}\par\vspace{0.8cm}
-{\large\bfseries\Course}\par\vspace{1cm}
-\begin{tabular}{@{}ll@{}}
-\textbf{Integrantes} & \begin{tabular}[t]{@{}l@{}}\Authors\end{tabular}\\[0.5cm]
-\textbf{NRC} & \NRC
-\end{tabular}
-\end{minipage}
-\vfill
 \end{titlepage}
+\hypersetup{pageanchor=true}
 
 \pagenumbering{roman}
-\chapter*{Resumen ejecutivo}
-Este informe evalúa la calidad en uso de MediSalud HIS con el marco ISO/IEC 25022. Se preservaron 3.000 incidentes del caso académico y se generaron, con semilla 25022, 6.000 eventos y 2.000 encuestas ficticias para 2025. La automatización produjo diez métricas: tres verdes, cuatro amarillas y tres rojas. Los principales riesgos son los incidentes de privacidad, los errores de facturación y las recetas incorrectas.
-
-La aplicación local reproduce defectos controlados sin introducir vulnerabilidades reales. El propósito no es mejorar el sistema durante la medición, sino observar tareas, registrar evidencia y formular un plan posterior.
-
+\input{chapters/00-resumen}
 \tableofcontents
 \listoftables
 \listoffigures
 \clearpage
 \pagenumbering{arabic}
 
-\input{chapters/01-caso}
-\input{chapters/02-clasificacion}
-\input{chapters/03-square}
-\input{chapters/04-atributos}
-\input{chapters/05-mapeo}
-\input{chapters/06-metricas}
-\input{chapters/07-datos}
-\input{chapters/08-automatizacion}
-\input{chapters/09-kpi}
-\input{chapters/10-interpretacion}
-\input{chapters/11-ejecutivo}
-\input{chapters/12-mejora}
-\input{chapters/13-reto}
+\input{chapters/01-introduccion}
+\input{chapters/02-marco-teorico}
+\input{chapters/03-metodologia}
+\input{chapters/04-desarrollo}
+\input{chapters/05-resultados}
+\input{chapters/06-reto-integrador}
+\input{chapters/07-discusion-conclusiones}
 
+\addcontentsline{toc}{section}{Referencias}
 \begin{thebibliography}{9}
-\bibitem{iso25022} ISO/IEC. \textit{ISO/IEC 25022:2016 Systems and software engineering -- Systems and software quality requirements and evaluation (SQuaRE) -- Measurement of quality in use}. 2016.
-\bibitem{iso25010} ISO/IEC. \textit{ISO/IEC 25010 Systems and software Quality Requirements and Evaluation -- Product quality model}. 2011.
-\bibitem{taller} Material docente. \textit{Taller Guiado Integral: Medición de la Calidad en Uso mediante ISO/IEC 25022. Caso MediSalud Ecuador}. Versión parcial suministrada.
+\bibitem{iso25022} ISO/IEC. \textit{ISO/IEC 25022:2016 Systems and software engineering -- Systems and software Quality Requirements and Evaluation (SQuaRE) -- Measurement of quality in use}. 2016.
+\bibitem{iso25010} ISO/IEC. \textit{ISO/IEC 25010:2011 Systems and software engineering -- Systems and software Quality Requirements and Evaluation (SQuaRE) -- System and software quality models}. 2011.
+\bibitem{iso25040} ISO/IEC. \textit{ISO/IEC 25040:2011 Systems and software engineering -- Systems and software Quality Requirements and Evaluation (SQuaRE) -- Evaluation process}. 2011.
+\bibitem{taller} Material docente. \textit{Taller Guiado Integral: Medición de la Calidad en Uso mediante ISO/IEC 25022. Caso MediSalud Ecuador}. Documento Padre suministrado para la actividad.
 \end{thebibliography}
 
 \appendix
-\chapter{Artefactos reproducibles}
-El dataset original se conserva en \texttt{data/original}; los generadores están en \texttt{analytics}; los contratos en \texttt{contracts}; y las evidencias seleccionadas en \texttt{evidencias}. El CSV completo de clasificación se entrega como archivo separado para mantener legible este informe.
+\input{chapters/08-anexos}
 \end{document}

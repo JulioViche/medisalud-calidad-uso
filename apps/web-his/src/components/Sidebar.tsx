@@ -1,14 +1,16 @@
-import { Activity, CalendarDays, ClipboardPlus, FileText, LayoutDashboard, Pill, Receipt, Settings2, Stethoscope } from 'lucide-react'
+import { Activity, CalendarDays, ClipboardPlus, HeartPulse, Home, Pill, Receipt, Stethoscope, Video } from 'lucide-react'
 
-export type View = 'dashboard' | 'hce' | 'appointments' | 'billing' | 'pharmacy' | 'architecture'
+export type View = 'home' | 'appointments' | 'hce' | 'nursing' | 'pharmacy' | 'billing' | 'telemedicine' | 'quality'
 
 const items: { id: View; label: string; icon: typeof Activity }[] = [
-  { id: 'dashboard', label: 'Calidad en uso', icon: LayoutDashboard },
-  { id: 'hce', label: 'Historia clinica', icon: ClipboardPlus },
+  { id: 'home', label: 'Inicio', icon: Home },
   { id: 'appointments', label: 'Citas y admision', icon: CalendarDays },
-  { id: 'billing', label: 'Facturacion', icon: Receipt },
+  { id: 'hce', label: 'Historia clinica', icon: ClipboardPlus },
+  { id: 'nursing', label: 'Enfermeria', icon: HeartPulse },
   { id: 'pharmacy', label: 'Farmacia', icon: Pill },
-  { id: 'architecture', label: 'Arquitectura', icon: Settings2 },
+  { id: 'billing', label: 'Facturacion', icon: Receipt },
+  { id: 'telemedicine', label: 'Telemedicina', icon: Video },
+  { id: 'quality', label: 'Calidad y reportes', icon: Activity },
 ]
 
 export function Sidebar({ view, onChange }: { view: View; onChange: (view: View) => void }) {
@@ -22,8 +24,7 @@ export function Sidebar({ view, onChange }: { view: View; onChange: (view: View)
           </button>
         ))}
       </nav>
-      <div className="sidebar-footer"><FileText size={16} /><span>ISO/IEC 25022</span></div>
+      <div className="sidebar-footer"><span className="status-dot" /><div><b>Sede Quito</b><small>Operación local</small></div></div>
     </aside>
   )
 }
-
