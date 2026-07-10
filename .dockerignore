@@ -1,0 +1,15 @@
+.git
+.idea
+.vscode
+**/node_modules
+**/dist
+**/build
+**/.dart_tool
+**/target
+**/__pycache__
+informe/build
+informe/entrega
+tmp
+venv
+.venv
+

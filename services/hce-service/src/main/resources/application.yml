@@ -1,0 +1,17 @@
+server.port: 8081
+spring:
+  application.name: hce-service
+  datasource:
+    url: ${POSTGRES_URL:jdbc:postgresql://postgres:5432/medisalud}
+    username: ${POSTGRES_USER:medisalud}
+    password: ${POSTGRES_PASSWORD:medisalud_local}
+  sql.init.mode: always
+  rabbitmq:
+    host: ${RABBITMQ_HOST:rabbitmq}
+    port: 5672
+    username: ${RABBITMQ_USER:medisalud}
+    password: ${RABBITMQ_PASSWORD:medisalud_local}
+management:
+  endpoints.web.exposure.include: health,info
+  endpoint.health.probes.enabled: true
+

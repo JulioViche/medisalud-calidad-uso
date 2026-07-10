@@ -1,0 +1,12 @@
+server.port: 8082
+spring:
+  application.name: appointments-service
+  datasource:
+    url: ${POSTGRES_URL:jdbc:postgresql://postgres:5432/medisalud}
+    username: ${POSTGRES_USER:medisalud}
+    password: ${POSTGRES_PASSWORD:medisalud_local}
+  sql.init.mode: always
+management:
+  endpoints.web.exposure.include: health,info
+  endpoint.health.probes.enabled: true
+

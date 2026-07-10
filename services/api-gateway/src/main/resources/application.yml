@@ -1,0 +1,33 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:5173"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+      routes:
+        - id: measurement
+          uri: ${MEASUREMENT_API_URL:http://measurement-api:8000}
+          predicates:
+            - Path=/api/health,/api/incidentes/**,/api/metricas/**,/api/dashboard/**,/api/simulaciones/**,/api/paciente/teleconsultas/**,/api/paciente/encuestas/**,/docs,/openapi.json
+        - id: appointments
+          uri: ${APPOINTMENTS_SERVICE_URL:http://appointments-service:8082}
+          predicates:
+            - Path=/api/paciente/citas/**
+        - id: hce
+          uri: ${HCE_SERVICE_URL:http://hce-service:8081}
+          predicates:
+            - Path=/api/hce/**,/api/paciente/resultados/**
+        - id: billing
+          uri: ${BILLING_SERVICE_URL:http://billing-service:8083}
+          predicates:
+            - Path=/api/facturacion/**
+management:
+  endpoints.web.exposure.include: health,info,gateway
+  endpoint.health.probes.enabled: true

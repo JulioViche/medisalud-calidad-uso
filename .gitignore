@@ -1,22 +1,76 @@
-# Virtual environment
+# Secrets and local configuration
+.env
+**/.env
+!.env.example
+!**/.env.example
+*.local
+
+# Python
 venv/
-
-# Python cache
+.venv/
 __pycache__/
-*.pyc
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
 
-# Auto-generated data (produced by scripts)
-data/incidentes_clasificados.csv
-data/logs_hce.csv
-data/encuestas_satisfaccion.csv
-data/resultados_metricas.csv
+# Node / React
+node_modules/
+dist/
+.vite/
+coverage/
 
-# Auto-generated dashboard
-dashboards/dashboard_calidad_uso.html
+# Flutter / Dart / Android
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+**/build/
+**/android/.gradle/
+**/android/local.properties
+**/android/key.properties
+*.jks
+*.keystore
+
+# Java / Gradle / Maven
+target/
+.gradle/
+*.class
+
+# LaTeX intermediates (the final PDF in informe/entrega is versioned)
+informe/build/
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+
+# Reproducible generated data; curated evidence remains versioned
+data/simulated/*
+!data/simulated/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# Docker runtime data, logs and temporary files
+.docker-data/
+*.pid
+*.tmp
+*.log.*
+tmp/
 
 # IDE / OS
-.vscode/
 .idea/
+.vscode/
+*.iml
 *.swp
 .DS_Store
 Thumbs.db

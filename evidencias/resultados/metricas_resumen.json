@@ -1,0 +1,111 @@
+{
+  "seed": 25022,
+  "period": "2025-01-01/2025-12-31",
+  "metrics": [
+    {
+      "code": "M-EFI-01",
+      "name": "P90 registro HCE",
+      "characteristic": "Eficiencia",
+      "value": 11.71,
+      "unit": "segundos",
+      "target": "<= 8",
+      "status": "AMARILLO",
+      "source": "events:hce_save"
+    },
+    {
+      "code": "M-EFE-01",
+      "name": "Exito de agendamiento",
+      "characteristic": "Efectividad",
+      "value": 87.86,
+      "unit": "%",
+      "target": ">= 95",
+      "status": "AMARILLO",
+      "source": "events:appointment"
+    },
+    {
+      "code": "M-RIE-01",
+      "name": "Errores de facturacion",
+      "characteristic": "Libertad de Riesgo",
+      "value": 4.5,
+      "unit": "%",
+      "target": "< 1",
+      "status": "ROJO",
+      "source": "events:billing"
+    },
+    {
+      "code": "M-SAT-01",
+      "name": "Abandono de encuesta movil",
+      "characteristic": "Satisfaccion",
+      "value": 9.8,
+      "unit": "%",
+      "target": "< 10",
+      "status": "VERDE",
+      "source": "surveys"
+    },
+    {
+      "code": "M-CC-01",
+      "name": "Variabilidad HCE entre sedes",
+      "characteristic": "Cobertura de Contexto",
+      "value": 0.61,
+      "unit": "segundos",
+      "target": "<= 2",
+      "status": "VERDE",
+      "source": "events:hce_save"
+    },
+    {
+      "code": "M-RIE-02",
+      "name": "Incidentes de privacidad",
+      "characteristic": "Libertad de Riesgo",
+      "value": 41.0,
+      "unit": "incidentes",
+      "target": "= 0",
+      "status": "ROJO",
+      "source": "incidents"
+    },
+    {
+      "code": "M-SAT-02",
+      "name": "CSAT promedio",
+      "characteristic": "Satisfaccion",
+      "value": 3.42,
+      "unit": "1-5",
+      "target": ">= 4",
+      "status": "AMARILLO",
+      "source": "surveys"
+    },
+    {
+      "code": "M-EFE-02",
+      "name": "Recetas correctas",
+      "characteristic": "Efectividad",
+      "value": 96.52,
+      "unit": "%",
+      "target": "= 100",
+      "status": "ROJO",
+      "source": "events:prescription"
+    },
+    {
+      "code": "M-EFI-02",
+      "name": "P90 carga de imagen",
+      "characteristic": "Eficiencia",
+      "value": 9.42,
+      "unit": "segundos",
+      "target": "<= 10",
+      "status": "VERDE",
+      "source": "events:imaging"
+    },
+    {
+      "code": "M-CC-02",
+      "name": "Caidas de teleconsulta",
+      "characteristic": "Cobertura de Contexto",
+      "value": 8.68,
+      "unit": "%",
+      "target": "< 5",
+      "status": "AMARILLO",
+      "source": "events:teleconsultation"
+    }
+  ],
+  "status_summary": {
+    "AMARILLO": 4,
+    "ROJO": 3,
+    "VERDE": 3
+  }
+}

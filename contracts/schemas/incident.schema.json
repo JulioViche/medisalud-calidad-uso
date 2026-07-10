@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MediSaludIncident",
+  "type": "object",
+  "required": ["id", "fecha", "modulo", "descripcion", "rol_usuario", "sede"],
+  "properties": {
+    "id": {"type": "integer"},
+    "fecha": {"type": "string"},
+    "modulo": {"type": "string"},
+    "descripcion": {"type": "string"},
+    "rol_usuario": {"type": "string"},
+    "sede": {"type": "string"}
+  }
+}
+

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://medisalud.local/contracts/simulation-event.schema.json",
+  "title": "MediSaludSimulationEvent",
+  "type": "object",
+  "required": ["event_id", "occurred_at", "site", "role", "module", "event_type", "successful", "seed", "simulated"],
+  "properties": {
+    "event_id": {"type": "string", "pattern": "^EVT-[0-9]{6}$"},
+    "occurred_at": {"type": "string", "format": "date-time"},
+    "site": {"type": "string"},
+    "role": {"type": "string"},
+    "module": {"type": "string"},
+    "event_type": {"type": "string"},
+    "duration_seconds": {"type": "number", "minimum": 0},
+    "successful": {"type": "boolean"},
+    "error_code": {"type": "string"},
+    "iso_characteristic": {"type": "string"},
+    "seed": {"type": "integer"},
+    "simulated": {"const": true}
+  },
+  "additionalProperties": false
+}
+

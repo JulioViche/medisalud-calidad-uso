@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS clinical_notes (
+  note_id VARCHAR(40) PRIMARY KEY,
+  patient_id VARCHAR(40) NOT NULL,
+  doctor_id VARCHAR(40) NOT NULL,
+  site VARCHAR(80) NOT NULL,
+  note_text TEXT NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL
+);
+

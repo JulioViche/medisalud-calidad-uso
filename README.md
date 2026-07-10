@@ -1,44 +1,102 @@
-# MediSalud HIS — Taller de Calidad en Uso ISO/IEC 25022
+# MediSalud HIS - Calidad en Uso ISO/IEC 25022
 
-Evaluación de calidad en uso del sistema MediSalud HIS (historia clínica electrónica) aplicando el estándar **ISO/IEC 25022** sobre incidentes reales, logs de rendimiento y encuestas de satisfacción del período Ene–Feb 2025.
+Laboratorio local para observar tareas de MediSalud HIS, reproducir fallos controlados y medir calidad en uso. La aplicación genera evidencia académica; no representa un sistema clínico productivo.
 
-**Semáforo general:** 🟢 2 VERDE · 🟡 6 AMARILLO · 🔴 1 ROJO
+## Fuente de verdad
 
-## Estructura
+- El material principal está en `docs/Documento Padre`.
+- `data/original/incidentes_2025.csv` contiene una copia de trabajo de los 3.000 incidentes originales.
+- La copia y el archivo Padre comparten SHA-256 `814F3E5D8CF983A86BC125EC9C8461E3728C91DDCE1CFE8A5518ABD7A53CDC17`.
+- Los incidentes cubren del 2 de enero al 19 de diciembre de 2025.
+- Los eventos y encuestas adicionales son simulados para 2025 y declaran semilla y procedencia.
+- Los reportes y scripts anteriores se conservaron bajo carpetas `legacy`; no son fuente académica.
 
+## Componentes
+
+| Área | Implementación |
+|---|---|
+| Portal hospitalario | React, TypeScript, Vite y Recharts |
+| Aplicación del paciente | Flutter, Riverpod, GoRouter, Dio, Clean Architecture y Atomic Design |
+| Entrada común | Spring Cloud Gateway |
+| Servicios operativos | Spring Boot: HCE, citas y facturación |
+| Medición | FastAPI y paquete Python `analytics` |
+| Infraestructura | PostgreSQL, SQL Server y RabbitMQ |
+| Informe | XeLaTeX, 12 escenarios y reto integrador |
+
+## Ejecución en Ubuntu WSL
+
+Docker Engine y Compose se ejecutan dentro de la distribución `Ubuntu` de WSL 2.
+
+```powershell
+wsl -d Ubuntu
 ```
-data/                  Datasets (originales y generados)
-scripts/               Scripts Python (clasificación, pipeline, dashboard)
-reportes/              Reportes en markdown (escenarios 2–12 + reto final)
-dashboards/            Dashboard interactivo HTML (plotly)
-docs/                  Análisis inicial e instrucciones del taller
-```
-
-## Entregables
-
-| Archivo | Contenido |
-|---------|-----------|
-| [`docs/analisis_inicial.md`](docs/analisis_inicial.md) | Análisis del caso y 4 preguntas del taller |
-| [`reportes/escenario02_clasificacion_incidentes.md`](reportes/escenario02_clasificacion_incidentes.md) | 3,000 incidentes clasificados en 5 características |
-| [`reportes/escenario03_calidad_square.md`](reportes/escenario03_calidad_square.md) | Mapa SQuaRE y 3 niveles de calidad |
-| [`reportes/escenario04_atributos_utc.md`](reportes/escenario04_atributos_utc.md) | 12 atributos UTC para MediSalud |
-| [`reportes/escenario05_matriz_prioridades.md`](reportes/escenario05_matriz_prioridades.md) | Matriz tarea–característica–prioridad |
-| [`reportes/escenario06_catalogo_metricas.md`](reportes/escenario06_catalogo_metricas.md) | Catálogo de 10 métricas ISO/IEC 25022 |
-| [`reportes/escenario10_interpretacion_causa_raiz.md`](reportes/escenario10_interpretacion_causa_raiz.md) | Análisis de causa raíz |
-| [`reportes/escenario11_presentacion_ejecutiva.md`](reportes/escenario11_presentacion_ejecutiva.md) | Resumen para dirección de TI |
-| [`reportes/escenario12_plan_mejora_continua.md`](reportes/escenario12_plan_mejora_continua.md) | Ciclo PDCA con metas a Jul/Dic 2025 |
-| [`reportes/reto_final_telemedicina_2_0.md`](reportes/reto_final_telemedicina_2_0.md) | Extensión Telemedicina (10 métricas + roadmap) |
-| [`dashboards/dashboard_calidad_uso.html`](dashboards/dashboard_calidad_uso.html) | Dashboard interactivo con 7 KPI |
-
-## Stack
-
-- Python 3.12 + pandas, numpy, plotly
-- ISO/IEC 25022 (SQuaRE — Quality in Use)
-- Ciclo PDCA para mejora continua
-
-## Cómo re-ejecutar
 
 ```bash
-venv\Scripts\python scripts\pipeline_medicion.py      # Calcular métricas
-venv\Scripts\python scripts\generar_dashboard.py       # Regenerar dashboard
+cd /mnt/c/Users/mesia/Desktop/Universidad/Calidad/3P/Taller/1/medisalud-calidad-uso
+cp infrastructure/docker/.env.example infrastructure/docker/.env
+bash scripts/setup/start-wsl.sh
 ```
+
+URLs locales:
+
+- Portal HIS: <http://localhost:5173>
+- API Gateway: <http://localhost:8080>
+- Documentación OpenAPI de medición: <http://localhost:8080/docs>
+- RabbitMQ Management: <http://localhost:15672>
+
+Para detener los contenedores sin eliminar datos:
+
+```bash
+bash scripts/setup/stop-wsl.sh
+```
+
+## Analítica reproducible
+
+Desde la raíz en Windows o WSL:
+
+```bash
+python -m analytics.exporters.pipeline --seed 25022
+python -m unittest discover -s analytics/tests -v
+```
+
+La ejecución crea 6.000 eventos, 2.000 encuestas, la clasificación de 3.000 incidentes y diez métricas. `data/simulated` y `data/processed` son regenerables; los resúmenes seleccionados se conservan en `evidencias/resultados`.
+
+## Flutter
+
+Abrir `apps/mobile-patient` desde Android Studio. Para web:
+
+```powershell
+cd apps/mobile-patient
+flutter pub get
+flutter analyze
+flutter build web --no-wasm-dry-run
+flutter run -d chrome --dart-define=API_URL=http://localhost:8080
+```
+
+En el emulador Android la URL predeterminada es `http://10.0.2.2:8080`. Antes de ejecutar Android deben instalarse los `cmdline-tools` y aceptarse las licencias del SDK indicadas por `flutter doctor`.
+
+## Informe
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/reports/build-report.ps1
+```
+
+El PDF final se encuentra en [informe/entrega/medisalud_iso25022.pdf](informe/entrega/medisalud_iso25022.pdf). Los escenarios 1-3 siguen literalmente la copia recibida; los escenarios 4-12 y el reto están identificados como reconstruidos porque el Documento Padre parcial solo incluye sus títulos.
+
+## Pruebas
+
+```powershell
+python -m unittest discover -s analytics/tests -v
+python -m unittest discover -s tests/integration -v
+cd apps/web-his
+npm test
+npm run build
+```
+
+El portal, las APIs, la persistencia y los escenarios intencionales se validan con el stack activo. Los fallos simulados se activan mediante campos `scenario`; no se introducen vulnerabilidades reales ni defectos accidentales.
+
+## Datos versionados
+
+- Se versionan el dataset original, contratos, código, migraciones, evidencia seleccionada y PDF final.
+- Se ignoran secretos, builds, cachés, volúmenes y datos regenerables.
+- `infrastructure/docker/.env` es local; su plantilla versionada es `.env.example`.

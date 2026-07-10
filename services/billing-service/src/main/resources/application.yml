@@ -1,0 +1,12 @@
+server.port: 8083
+spring:
+  application.name: billing-service
+  datasource:
+    url: ${SQLSERVER_URL:jdbc:sqlserver://sqlserver:1433;databaseName=medisalud_finance;encrypt=false;trustServerCertificate=true}
+    username: ${SQLSERVER_USER:sa}
+    password: ${SQLSERVER_PASSWORD:MediSalud_2025_Local!}
+  sql.init.mode: always
+management:
+  endpoints.web.exposure.include: health,info
+  endpoint.health.probes.enabled: true
+

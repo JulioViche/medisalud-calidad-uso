@@ -1,0 +1,47 @@
+openapi: 3.1.0
+info:
+  title: MediSalud Local API
+  version: 1.0.0
+  description: Contrato publico para medicion ISO/IEC 25022 y portal del paciente.
+servers:
+  - url: http://localhost:8080
+paths:
+  /api/health:
+    get:
+      summary: Estado del stack
+      responses:
+        '200': {description: Operativo}
+  /api/incidentes:
+    get:
+      summary: Incidentes clasificados y filtrables
+      parameters:
+        - {name: site, in: query, schema: {type: string}}
+        - {name: module, in: query, schema: {type: string}}
+        - {name: role, in: query, schema: {type: string}}
+        - {name: characteristic, in: query, schema: {type: string}}
+      responses:
+        '200': {description: Pagina de incidentes}
+  /api/metricas:
+    get:
+      summary: Resultados de las metricas
+      responses:
+        '200': {description: Catalogo calculado}
+  /api/dashboard/resumen:
+    get:
+      summary: Resumen para el tablero
+      responses:
+        '200': {description: KPI e incidentes agregados}
+  /api/simulaciones:
+    post:
+      summary: Ejecutar simulacion reproducible
+      responses:
+        '201': {description: Simulacion completada}
+  /api/simulaciones/{id}:
+    get:
+      summary: Consultar simulacion
+      parameters:
+        - {name: id, in: path, required: true, schema: {type: string}}
+      responses:
+        '200': {description: Resultado}
+        '404': {description: No encontrada}
+
