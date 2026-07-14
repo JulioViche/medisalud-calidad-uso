@@ -1,0 +1,43 @@
+name: Medicion de Calidad en Uso
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 11 * * 1"
+  push:
+    paths:
+      - "apps/analytics/**"
+      - "apps/data/original/**"
+      - "data/incidentes_2025.csv"
+      - ".github/workflows/medicion-calidad.yml"
+
+jobs:
+  medir:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obtener repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Ejecutar pipeline ISO IEC 25022
+        run: python -m apps.analytics.exporters.pipeline --seed 25022
+
+      - name: Ejecutar pruebas analiticas
+        run: python -m unittest discover -s apps/analytics/tests -v
+
+      - name: Regenerar datos del dashboard
+        run: python scripts/reports/generate-dashboard-data.py
+
+      - name: Publicar evidencia
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidencia-iso-25022
+          path: |
+            apps/data/processed/
+            apps/data/simulated/manifest.json
+            reportes/evidencias/resultados/
+            dashboards/dashboard-data.js

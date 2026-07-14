@@ -13,11 +13,11 @@ Escenario & Actividad & Evidencia principal & Condición de origen \\
 1 & Análisis del caso & \texttt{docs/}\allowbreak\texttt{analisis\_inicial.md} & Literal \\
 2 & Clasificación ISO 25022 & CSV clasificado y resumen JSON & Literal \\
 3 & Niveles de calidad y SQuaRE & Mapa, SonarQube, JMeter y Figura \ref{fig:square} & Literal \\
-4 & Atributos UTC & Tabla \ref{tab:utc} & Reconstruido \\
-5 & Mapeo y prioridad & Matriz de tareas críticas & Reconstruido \\
-6 & Diseño de métricas & Catálogo, fórmulas y Tabla \ref{tab:catalog} & Reconstruido \\
-7 & Obtención de datos & Eventos, encuestas y manifiesto & Reconstruido \\
-8 & Automatización & Paquetes de \texttt{apps/analytics} & Reconstruido \\
+4 & Atributos UTC & Fichas \ref{tab:utc-hce}--\ref{tab:utc-facturacion} y Tabla \ref{tab:utc} & Guiado / aplicado \\
+5 & Mapeo y prioridad & Matriz \ref{tab:priority} & Guiado / aplicado \\
+6 & Diseño de métricas & Fichas, fórmulas y Tabla \ref{tab:catalog} & Guiado / aplicado \\
+7 & Obtención de datos & Tablas \ref{tab:event-types} y \ref{tab:data-validation}; manifiesto & Guiado / aplicado \\
+8 & Automatización & Figura \ref{fig:pipeline-phase8}, 19 pruebas ejecutadas y flujo CI & Guiado / aplicado \\
 9 & KPI y tablero & Tabla \ref{tab:results} y React gerencial & Reconstruido \\
 10 & Interpretación & Hipótesis de causa y prioridades & Reconstruido \\
 11 & Comunicación ejecutiva & Síntesis de decisiones & Reconstruido \\
@@ -47,6 +47,7 @@ Ruta & Responsabilidad \\
 \texttt{apps/backend} & Gateway, dominios clínicos y API de medición. \\
 \texttt{reportes/evidencias/}\allowbreak\texttt{resultados} & Resúmenes seleccionados para entrega. \\
 \texttt{reportes/evidencias/}\allowbreak\texttt{calidad} & Métricas SonarQube y resumen de la prueba JMeter. \\
+\texttt{reportes/evidencias/}\allowbreak\texttt{pruebas} & Acta Markdown y resumen JSON de las 19 pruebas ejecutadas el 13 de julio de 2026. \\
 \texttt{reportes/entrega} & PDF académico final. \\
 \bottomrule
 \end{tabularx}
@@ -66,6 +67,12 @@ Ruta & Responsabilidad \\
   \item Compilar este documento con XeLaTeX mediante \texttt{latexmk}.
   \item Renderizar todas las páginas y revisar portada, tablas, figuras, referencias y desbordamientos.
 \end{enumerate}
+
+\section{Acta de ejecución de pruebas}
+
+El 13 de julio de 2026 se ejecutaron de forma efectiva seis suites con 19 casos: analítica Python (5), API de medición (1), dominio HCE Java (1), portal React (8), integración Docker (3) y portal Flutter (1). Los 19 casos aprobaron. También finalizaron correctamente el pipeline de diez métricas, el análisis estático Flutter, las construcciones Vite y Flutter Web, el levantamiento saludable de la pila y una carga JMeter de 500 solicitudes sin errores.
+
+La evidencia detallada conserva comandos, versiones, tiempos, incidencias y resolución. El acta y su resumen estructurado están en \texttt{reportes/evidencias/pruebas}; la evidencia dinámica de rendimiento, incluido el archivo JTL, está en \texttt{reportes/evidencias/calidad/jmeter}.
 
 \section{Criterio de procedencia}
 

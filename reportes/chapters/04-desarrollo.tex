@@ -46,12 +46,12 @@ El diagnóstico confirma que los incidentes disponibles no bastan para explicar 
 
 \scenario{2}{Clasificación de 3.000 incidentes · fuente literal}
 
-La clasificación de la actividad asignó 1.849 casos a efectividad, 347 a eficiencia, 103 a satisfacción, 361 a libertad de riesgo y 340 a cobertura del contexto. Efectividad concentra el 61,63\% de los registros; sin embargo, la frecuencia no equivale a prioridad. Los 361 casos de libertad de riesgo requieren evaluación inmediata por la gravedad de sus consecuencias potenciales.
+La ejecución reproducible de la clasificación asignó 1.853 casos a efectividad, 347 a eficiencia, 102 a satisfacción, 359 a libertad de riesgo y 339 a cobertura del contexto. Efectividad concentra el 61,77\% de los registros; sin embargo, la frecuencia no equivale a prioridad. Los 359 casos de libertad de riesgo requieren evaluación inmediata por la gravedad de sus consecuencias potenciales.
 
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[x=0.0038cm,y=0.72cm]
-  \foreach \label/\value/\y/\barcolor in {Efectividad/1849/5/mediteal,Eficiencia/347/4/mediblue,Satisfacción/103/3/medigold,Libertad de riesgo/361/2/medicoral,Cobertura del contexto/340/1/medigrey}{
+  \foreach \label/\value/\y/\barcolor in {Efectividad/1853/5/mediteal,Eficiencia/347/4/mediblue,Satisfacción/102/3/medigold,Libertad de riesgo/359/2/medicoral,Cobertura del contexto/339/1/medigrey}{
     \fill[\barcolor!18] (0,\y-.22) rectangle (2000,\y+.22);
     \fill[\barcolor] (0,\y-.22) rectangle (\value,\y+.22);
     \node[anchor=east,font=\small] at (-25,\y) {\label};
@@ -153,7 +153,7 @@ y como vista previa PNG en la misma carpeta y en \texttt{docs/mapa-conceptual}.}
 Nivel & Actividad ejecutada & Evidencia obtenida \\
 \midrule
 Calidad interna & SonarQube Community Build sobre el servicio de facturación. & Complejidad ciclomática 8; cognitiva 3; 54 líneas; 0 bugs y 0 vulnerabilidades. \\
-Calidad externa & JMeter con 500 usuarios sincronizados consultando citas por el Gateway. & 500 respuestas correctas; 0\% de error; promedio 1.602 ms; P90 2.002 ms. \\
+Calidad externa & JMeter con 500 usuarios sincronizados consultando citas por el Gateway. & 500 respuestas correctas; 0\% de error; promedio 1.875,7 ms; P90 2.487 ms y P95 2.510 ms. \\
 Calidad en uso & Medición del registro HCE durante la simulación de consulta externa. & P90 de 11,71 s frente a la meta de 8 s; resultado amarillo. \\
 \bottomrule
 \end{tabularx}
@@ -178,110 +178,4 @@ Porque SonarQube analiza propiedades estáticas y defectos del código, pero no 
 
 La calidad en uso es la perspectiva más próxima al negocio y al paciente, pero se sostiene sobre la calidad interna y externa. SonarQube ayuda a conocer el estado estático del producto; JMeter muestra su comportamiento controlado; y las medidas ISO/IEC 25022 determinan si las personas logran sus objetivos en condiciones de uso. Ninguna de estas vistas sustituye a las demás.
 
-\subsection{Atributos, tareas y prioridades}
-
-\scenario{4--5}{Atributos UTC y mapeo tarea--característica · reconstrucción declarada}
-
-Se seleccionaron tareas observables que cubren los perfiles del caso y pueden producir evidencia. La prioridad combina impacto clínico, financiero, operativo y reputacional con la urgencia sugerida por los incidentes.
-
-\begin{longtable}{p{2.0cm}p{3.2cm}p{3.7cm}p{2.7cm}p{1.6cm}}
-\caption{Catálogo de tareas, contextos y atributos}\label{tab:utc}\\
-\toprule
-Usuario & Tarea & Contexto & Atributo observable & Prioridad \\
-\midrule
-\endfirsthead
-\toprule
-Usuario & Tarea & Contexto & Atributo observable & Prioridad \\
-\midrule
-\endhead
-Médico & Guardar nota HCE & Consulta, hora pico & P90 de duración & Crítica \\
-Médico & Revisar alergias & Antes de prescribir & Disponibilidad correcta & Crítica \\
-Paciente & Agendar cita & Móvil y 4G & Tasa de éxito & Alta \\
-Paciente & Realizar teleconsulta & WiFi doméstico & Tasa de caídas & Alta \\
-Admisión & Emitir factura & Seguro y cierre mensual & Tasa de error & Crítica \\
-Farmacia & Validar receta & Turno nocturno & Recetas correctas & Crítica \\
-Enfermería & Registrar signos & Tableta y red hospitalaria & Sincronización & Alta \\
-Médico & Cargar imagen & Dispositivo clínico & P90 de carga & Alta \\
-Paciente & Responder encuesta & Aplicación móvil & Abandono y CSAT & Media \\
-Gerencia & Revisar KPI & Consolidado multisede & Cobertura de datos & Alta \\
-\bottomrule
-\end{longtable}
-
-Las tareas críticas no son necesariamente las más frecuentes. La prescripción se prioriza por severidad; la HCE por su relación con la decisión clínica; y la facturación por el riesgo de cobros incorrectos. El portal de citas y la telemedicina tienen prioridad alta porque son puntos de acceso directo del paciente y dependen de contextos heterogéneos.
-
-\subsection{Diseño de métricas}
-
-\scenario{6}{Fichas de medida y criterios de decisión · reconstrucción declarada}
-
-Cada ficha incluye código, nombre, característica, objetivo, fórmula, unidad, fuente, periodicidad, meta y semáforo. El valor no se interpreta sin su meta: 96,52\% puede parecer alto para una función general, pero es rojo cuando el resultado restante representa recetas incorrectas.
-
-Las fórmulas principales son:
-
-\begin{align}
-\text{Éxito}(T) &= \frac{\text{tareas exitosas}}{\text{tareas iniciadas}}\times 100, \\
-\text{Error}(T) &= \frac{\text{tareas no exitosas}}{\text{tareas iniciadas}}\times 100, \\
-\text{Abandono} &= \frac{\text{encuestas no completadas}}{\text{encuestas iniciadas}}\times 100, \\
-\text{CSAT} &= \frac{\sum_{i=1}^{n} \text{puntuación}_{i}}{n}, \\
-\text{Variabilidad} &= \sigma\left(\overline{t}_{\text{sede }1},\ldots,\overline{t}_{\text{sede }5}\right).
-\end{align}
-
-El percentil 90 se define como el menor valor que contiene al 90\% de las observaciones ordenadas. Se eligió para HCE e imagenología porque hace visible la experiencia lenta del extremo superior sin depender de un único máximo atípico.
-
-\begin{longtable}{p{1.6cm}p{3.6cm}p{2.6cm}p{2.0cm}p{2.1cm}}
-\caption{Catálogo resumido de métricas}\label{tab:catalog}\\
-\toprule
-Código & Métrica & Característica & Unidad & Meta \\
-\midrule
-\endfirsthead
-\toprule
-Código & Métrica & Característica & Unidad & Meta \\
-\midrule
-\endhead
-M-EFI-01 & P90 registro HCE & Eficiencia & segundos & $\leq 8$ \\
-M-EFE-01 & Éxito de agendamiento & Efectividad & porcentaje & $\geq 95$ \\
-M-RIE-01 & Errores de facturación & Libertad de riesgo & porcentaje & $<1$ \\
-M-SAT-01 & Abandono de encuesta móvil & Satisfacción & porcentaje & $<10$ \\
-M-CC-01 & Variabilidad HCE entre sedes & Cobertura del contexto & segundos & $\leq 2$ \\
-M-RIE-02 & Incidentes de privacidad & Libertad de riesgo & incidentes & $=0$ \\
-M-SAT-02 & CSAT promedio & Satisfacción & escala 1--5 & $\geq 4$ \\
-M-EFE-02 & Recetas correctas & Efectividad & porcentaje & $=100$ \\
-M-EFI-02 & P90 carga de imagen & Eficiencia & segundos & $\leq 10$ \\
-M-CC-02 & Caídas de teleconsulta & Cobertura del contexto & porcentaje & $<5$ \\
-\bottomrule
-\end{longtable}
-
-\subsection{Datos, automatización y KPI}
-
-\scenario{7--9}{Obtención, procesamiento y visualización · reconstrucción declarada}
-
-La simulación instrumenta cada flujo con un identificador de auditoría y un escenario. En operación normal se registra la finalización esperada; en modo defectuoso se activa una regla controlada como demora, pérdida de guardado, pasos adicionales, doble facturación, dosis incompatible o desconexión. La probabilidad y la semilla permiten repetir la distribución sin convertir el fallo en una vulnerabilidad real.
-
-El pipeline analítico ejecuta cuatro responsabilidades separadas:
-
-\begin{enumerate}
-  \item \textbf{Clasificación:} carga los incidentes, normaliza campos y asigna característica y justificación.
-  \item \textbf{Simulación:} genera eventos y encuestas con periodo, sede, rol, módulo, origen y semilla.
-  \item \textbf{Medición:} agrupa observaciones, calcula porcentajes, percentiles, medias y desviación entre sedes.
-  \item \textbf{Exportación:} guarda CSV y JSON para que API, tablero e informe consuman la misma evidencia.
-\end{enumerate}
-
-La API de medición expone salud, incidentes, métricas, resumen y ejecuciones de simulación. React y Flutter acceden mediante el Gateway. El tablero permite leer valores agregados sin incorporar métricas académicas en las tareas del paciente. Esta separación conserva el carácter realista del HIS: la persona clínica atiende; el paciente gestiona su salud; gerencia observa tendencias.
-
-\begin{table}[H]
-\centering
-\caption{Relación entre fallo, evidencia y medida}
-\begin{tabularx}{\textwidth}{p{3.4cm}YY}
-\toprule
-Fallo controlado & Evidencia generada & KPI afectado \\
-\midrule
-Guardado HCE lento & Duración y resultado de \texttt{hce\_save} & M-EFI-01 \\
-Agendamiento prolongado & Inicio, pasos y finalización de \texttt{appointment} & M-EFE-01 \\
-Factura duplicada & Estado y bandera de duplicidad de \texttt{billing} & M-RIE-01 \\
-Dosis incorrecta & Resultado de validación de \texttt{prescription} & M-EFE-02 \\
-Imagen lenta & Duración de \texttt{imaging} & M-EFI-02 \\
-Teleconsulta interrumpida & Estado de \texttt{teleconsultation} & M-CC-02 \\
-\bottomrule
-\end{tabularx}
-\end{table}
-
-\evidence{La automatización reside en \texttt{apps/analytics}; los datos regenerables en \texttt{apps/data/simulated} y \texttt{apps/data/processed}; y los resúmenes seleccionados en \texttt{reportes/evidencias/resultados}.}
+\input{chapters/04-fases4-8}

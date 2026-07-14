@@ -66,7 +66,8 @@ apps/data/processed/*
 *.tmp
 *.log.*
 tmp/
-reportes/evidencias/calidad/jmeter/raw/
+# La evidencia JMeter (JTL y log) se conserva para auditoría académica.
+!reportes/evidencias/calidad/jmeter/raw/jmeter.log
 
 # IDE / OS
 .idea/

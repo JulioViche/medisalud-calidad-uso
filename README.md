@@ -101,7 +101,7 @@ python scripts/reports/generate-dashboard-data.py
 powershell -ExecutionPolicy Bypass -File scripts/reports/build-report.ps1
 ```
 
-El PDF final se encuentra en [reportes/entrega/medisalud_iso25022.pdf](reportes/entrega/medisalud_iso25022.pdf). Los escenarios 1-3 se basan en el material recibido del docente; los escenarios 4-12 y el reto integrador fueron reconstruidos por el equipo a partir de los títulos provistos.
+El PDF final se encuentra en [reportes/entrega/medisalud_iso25022.pdf](reportes/entrega/medisalud_iso25022.pdf). Los escenarios 1-8 se basan en las actividades y criterios recibidos del docente; los escenarios 9-12 y el reto integrador fueron reconstruidos por el equipo a partir de los títulos provistos.
 
 El mapa conceptual SQuaRE puede revisarse directamente en `reportes/mapa-conceptual/` o en `docs/mapa-conceptual/`, disponible como PNG y PDF vectorial.
 
