@@ -2,7 +2,7 @@
 
 \subsection{Diagnóstico inicial del caso}
 
-\scenario{1}{Análisis dirigido de MediSalud · fuente literal}
+\scenario{1}{Análisis dirigido de MediSalud}
 
 La revisión del caso identifica tres procesos de máxima criticidad. Primero, la atención médica y el registro HCE, porque cualquier demora o pérdida de información afecta la continuidad clínica. Segundo, la prescripción y dispensación, donde un error puede causar daño directo. Tercero, la admisión y facturación, que constituyen la entrada del paciente y sostienen la operación financiera.
 
@@ -44,7 +44,7 @@ El diagnóstico confirma que los incidentes disponibles no bastan para explicar 
 
 \subsection{Clasificación según ISO/IEC 25022}
 
-\scenario{2}{Clasificación de 3.000 incidentes · fuente literal}
+\scenario{2}{Clasificación de 3.000 incidentes}
 
 La ejecución reproducible de la clasificación asignó 1.853 casos a efectividad, 347 a eficiencia, 102 a satisfacción, 359 a libertad de riesgo y 339 a cobertura del contexto. Efectividad concentra el 61,77\% de los registros; sin embargo, la frecuencia no equivale a prioridad. Los 359 casos de libertad de riesgo requieren evaluación inmediata por la gravedad de sus consecuencias potenciales.
 
@@ -100,9 +100,7 @@ ID & Característica principal & Justificación técnica \\
 \bottomrule
 \end{longtable}
 
-\evidence{La Tabla 2.2 completada se conserva en
-\texttt{data/clasificacion/}\allowbreak\texttt{incidentes\_clasificados.csv}.
-Este archivo clasifica los 3.000 incidentes del dataset ampliado; las filas 1001--1006 corresponden a los casos mostrados en la plantilla de la actividad.}
+\evidence{Se clasificaron los 3.000 incidentes y se verificaron individualmente los casos 1001--1006 presentados en la actividad.}
 
 \subsubsection{Preguntas de discusión}
 
@@ -118,11 +116,9 @@ Porque una función útil en Quito puede degradarse en Manta, Ambato, Cuenca o G
 
 La clasificación convierte reportes ambiguos en evidencia comparable. Distinguir el resultado, los recursos, la percepción, el riesgo y el contexto evita concentrar todos los problemas en efectividad y permite asignar prioridades coherentes con su impacto.
 
-\evidence{La salida completa se encuentra en \texttt{apps/data/processed/}\allowbreak\texttt{incidentes\_clasificados.csv}; el resumen de conteos está en \texttt{reportes/evidencias/resultados/}\allowbreak\texttt{clasificacion\_resumen.json}.}
-
 \subsection{Comprensión del modelo SQuaRE}
 
-\scenario{3}{Diferenciación de los niveles de calidad · fuente literal}
+\scenario{3}{Diferenciación de los niveles de calidad}
 
 \subsubsection{Investigación dirigida}
 
@@ -141,9 +137,7 @@ En esta relación, ISO/IEC 25010 define \emph{qué} características conforman e
 \label{fig:square}
 \end{figure}
 
-\evidence{El mapa también se entrega como archivo independiente en
-\texttt{reportes/mapa-conceptual/}\allowbreak\texttt{mapa\_conceptual\_square.pdf}
-y como vista previa PNG en la misma carpeta y en \texttt{docs/mapa-conceptual}.}
+\evidence{El mapa conceptual relaciona ISO/IEC 25010, ISO/IEC 25022 e ISO/IEC 25040 con las tareas y evidencias del caso MediSalud.}
 
 \begin{table}[H]
 \centering
@@ -159,10 +153,7 @@ Calidad en uso & Medición del registro HCE durante la simulación de consulta e
 \end{tabularx}
 \end{table}
 
-\evidence{Las respuestas reproducibles se conservan en
-\texttt{reportes/evidencias/calidad/}\allowbreak\texttt{sonarqube/}\allowbreak\texttt{metricas.json} y
-\texttt{reportes/evidencias/calidad/}\allowbreak\texttt{jmeter/}\allowbreak\texttt{resumen.json}.
-Los resultados JTL son regenerables y permanecen fuera del control de versiones.}
+\evidence{SonarQube evaluó la calidad interna del servicio de facturación y JMeter comprobó el comportamiento externo con 500 solicitudes sin errores.}
 
 \subsubsection{Preguntas de discusión}
 

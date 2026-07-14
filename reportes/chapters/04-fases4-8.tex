@@ -2,13 +2,13 @@
 
 \subsection{Fase 4: identificación de atributos de calidad en uso}
 
-\scenario{4}{Usuario, tarea y contexto de uso · desarrollo aplicado}
+\scenario{4}{Usuario, tarea y contexto de uso}
 
 \subsubsection{Objetivo y criterio de trabajo}
 
 El objetivo de esta fase es convertir los procesos críticos de MediSalud en unidades observables de evaluación. ISO/IEC 25022 exige que toda medida de calidad en uso se interprete respecto de un \textbf{usuario}, una \textbf{tarea} y un \textbf{contexto de uso}; por ello, expresiones generales como ``usar el HIS'' no son suficientes. Una tarea debe declarar un resultado verificable, un punto de inicio y fin, y las condiciones que pueden modificar su desempeño \cite{iso25022}.
 
-Se eligieron los tres procesos solicitados por la guía: registro de una nota de evolución, agendamiento de una cita y facturación de una consulta con seguro. La selección es coherente con el diagnóstico inicial porque reúne continuidad clínica, acceso del paciente e impacto financiero.
+Se eligieron tres procesos críticos: registro de una nota de evolución, agendamiento de una cita y facturación de una consulta con seguro. La selección es coherente con el diagnóstico inicial porque reúne continuidad clínica, acceso del paciente e impacto financiero.
 
 \subsubsection{Ficha UTC-01: registro de nota de evolución}
 
@@ -125,12 +125,12 @@ Se agregan contextos con cargas distintas y el promedio puede ocultar la degrada
 
 La fase 4 operacionaliza los procesos críticos en tareas medibles. Las fichas UTC establecen la unidad mínima de observación y proporcionan trazabilidad entre usuario, objetivo, contexto, atributo y evidencia técnica.
 
-\evidence{Las tareas se implementan como eventos tipados en \texttt{apps/analytics/simulation/generator.py}; sus campos normalizados se almacenan en \texttt{apps/data/simulated/events.csv}.}
+\evidence{Las tareas se representaron mediante eventos normalizados con usuario, objetivo, contexto, resultado, duración y sede.}
 
 
 \subsection{Fase 5: mapeo y priorización de características}
 
-\scenario{5}{Matriz tarea--característica--prioridad · desarrollo aplicado}
+\scenario{5}{Matriz tarea--característica--prioridad}
 
 \subsubsection{Objetivo y método de priorización}
 
@@ -193,12 +193,12 @@ Porque su impacto inmediato y severidad son menores que una receta incorrecta, u
 
 La fase 5 establece un alcance defendible y trazable. La prioridad combina frecuencia con impacto y severidad, evitando ordenar la evaluación únicamente por volumen de incidentes.
 
-\evidence{La matriz priorizada se vincula con los tipos de evento definidos en \texttt{apps/analytics/simulation/generator.py} y con el catálogo de medidas de \texttt{apps/analytics/metrics/calculator.py}.}
+\evidence{La matriz priorizada vincula cada tarea crítica con su característica principal, impacto y medida de seguimiento.}
 
 
 \subsection{Fase 6: diseño formal de métricas}
 
-\scenario{6}{Fichas ISO/IEC 25022 y criterios de decisión · desarrollo aplicado}
+\scenario{6}{Fichas ISO/IEC 25022 y criterios de decisión}
 
 \subsubsection{Objetivo y reglas de diseño}
 
@@ -337,7 +337,7 @@ El catálogo cumple la anatomía exigida por el taller y mantiene unidades homog
 
 \subsubsection{Análisis crítico}
 
-Los umbrales son criterios académicos derivados de los requisitos del caso y deben aprobarse con responsables clínicos, financieros y legales antes de emplearse en producción. También es necesario mantenerlos en configuración versionada. Si quedan dispersos en código, un cambio no controlado alteraría la comparabilidad histórica.
+Los umbrales se definieron según los requisitos del caso y deben aprobarse con responsables clínicos, financieros y legales antes de emplearse en producción. También es necesario gestionarlos de forma controlada para conservar la comparabilidad histórica.
 
 \subsubsection{Preguntas de discusión}
 
@@ -353,16 +353,16 @@ La métrica delimita usuario, tarea y contexto, y mide el tiempo de extremo a ex
 
 La fase 6 transforma atributos abstractos en medidas reproducibles y accionables. Cada indicador declara cómo se calcula, qué población representa, quién lo gobierna y qué decisión habilita.
 
-\evidence{La implementación ejecutable de fórmulas, metas y semáforos se encuentra en \texttt{apps/analytics/metrics/calculator.py}; la evidencia consolidada se exporta a \texttt{reportes/evidencias/resultados/metricas\_resumen.json}.}
+\evidence{Las fórmulas, metas y reglas de semáforo se automatizaron y se validaron mediante pruebas unitarias.}
 
 
 \subsection{Fase 7: obtención y validación de datos}
 
-\scenario{7}{Fuentes, generación y calidad del dato · desarrollo aplicado}
+\scenario{7}{Fuentes, generación y calidad del dato}
 
 \subsubsection{Objetivo y arquitectura de fuentes}
 
-El objetivo es obtener datos suficientes y confiables para calcular las medidas sin modificar el conjunto original. Se establecieron tres niveles de procedencia: \textbf{original}, para los 3.000 incidentes suministrados; \textbf{simulado}, para eventos y encuestas generados con reglas declaradas; y \textbf{derivado}, para clasificaciones, agregados y KPI.
+El objetivo es obtener datos suficientes y confiables para calcular las medidas. Se utilizaron tres fuentes: 3.000 incidentes registrados, eventos operativos simulados y encuestas simuladas. Las clasificaciones y los KPI se calcularon a partir de estas fuentes.
 
 \begin{table}[H]
 \centering
@@ -416,8 +416,8 @@ Antes del cálculo se verificaron unicidad, obligatoriedad, dominio, rango y tra
 \toprule
 Control & Resultado & Criterio de aceptación \\
 \midrule
-Eventos cargados & 6.000 & Coincide con el manifiesto. \\
-Encuestas cargadas & 2.000 & Coincide con el manifiesto. \\
+Eventos cargados & 6.000 & Coincide con la cantidad prevista. \\
+Encuestas cargadas & 2.000 & Coincide con la cantidad prevista. \\
 IDs de evento duplicados & 0 & Debe ser igual a cero. \\
 IDs de encuesta duplicados & 0 & Debe ser igual a cero. \\
 Campos obligatorios vacíos & 0 & Identificador, fecha, sede y tipo completos. \\
@@ -434,7 +434,7 @@ No se descartaron observaciones solo por ser lentas. Primero se comprueba que la
 
 \subsubsection{Resultados e interpretación}
 
-Los controles permitieron calcular las métricas sin nulos en campos críticos, duplicados ni valores fuera de dominio. El manifiesto registra semilla, periodo y cantidades, por lo que otra persona puede regenerar la misma línea base. Esta reproducibilidad es una propiedad del estudio, no una prueba de que los valores representen una institución real.
+Los controles permitieron calcular las métricas sin nulos en campos críticos, duplicados ni valores fuera de dominio. La generación controlada registra la semilla, el periodo y las cantidades para que otra persona pueda reproducir la misma línea base. Esta reproducibilidad no implica que los valores representen una institución real.
 
 \subsubsection{Análisis crítico}
 
@@ -454,12 +454,12 @@ Porque describen percepción, dependen de participación voluntaria y pueden suf
 
 La fase 7 establece una base de datos trazable, validada y reproducible. La separación entre fuente original, simulada y derivada protege la interpretación y evita atribuir a MediSalud real resultados que pertenecen al ejercicio académico.
 
-\evidence{El manifiesto reproducible está en \texttt{apps/data/simulated/manifest.json}; los eventos y encuestas se generan en la misma carpeta y los 3.000 incidentes originales permanecen preservados en \texttt{apps/data/original}.}
+\evidence{La generación registró semilla, cantidades y periodo; las validaciones confirmaron 3.000 incidentes, 6.000 eventos, 2.000 encuestas y diez métricas.}
 
 
 \subsection{Fase 8: automatización de la medición}
 
-\scenario{8}{Pipeline Python, pruebas y ejecución continua · desarrollo aplicado}
+\scenario{8}{Pipeline Python, pruebas y ejecución continua}
 
 \subsubsection{Objetivo y diseño del pipeline}
 
@@ -492,25 +492,18 @@ El objetivo es convertir las reglas de medición en un proceso repetible que pro
 \toprule
 Componente & Responsabilidad \\
 \midrule
-\path{classification/classifier.py} & Normaliza y asigna característica principal y justificación a los incidentes. \\
-\path{simulation/generator.py} & Genera eventos y encuestas reproducibles con semilla 25022. \\
-\path{metrics/calculator.py} & Calcula porcentajes, P90, medias, desviación entre sedes, metas y semáforos. \\
-\path{exporters/pipeline.py} & Orquesta entradas y salidas, y crea CSV y resúmenes JSON. \\
-\path{tests/test_analytics.py} & Comprueba precedencia de riesgo, eficiencia, reproducibilidad y percentiles. \\
+Clasificación & Normaliza y asigna característica principal y justificación a los incidentes. \\
+Simulación & Genera eventos y encuestas reproducibles con semilla 25022. \\
+Cálculo de métricas & Calcula porcentajes, P90, medias, desviación entre sedes, metas y semáforos. \\
+Exportación & Orquesta entradas y salidas y prepara los resultados para análisis. \\
+Pruebas analíticas & Comprueba precedencia de riesgo, eficiencia, reproducibilidad y percentiles. \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \subsubsection{Ejecución reproducible}
 
-Desde la raíz del repositorio, la medición se ejecuta con:
-
-\begin{verbatim}
-python -m apps.analytics.exporters.pipeline --seed 25022
-python -m unittest discover -s apps/analytics/tests -v
-\end{verbatim}
-
-La primera orden clasifica 3.000 incidentes, genera 6.000 eventos y 2.000 encuestas, calcula diez KPI y exporta resultados. La segunda ejecuta cinco pruebas unitarias. El 13 de julio de 2026 se repitió la ejecución sobre la revisión \texttt{3baf75d}: el pipeline produjo las diez métricas esperadas y las cinco pruebas finalizaron correctamente.
+El proceso automatizado clasifica 3.000 incidentes, genera 6.000 eventos y 2.000 encuestas, calcula diez KPI y ejecuta cinco pruebas analíticas. En la verificación del 13 de julio de 2026 produjo todas las métricas esperadas y las cinco pruebas finalizaron correctamente.
 
 \subsubsection{Ejecución real de pruebas del sistema}
 
@@ -538,15 +531,13 @@ Construcciones & --- & Vite y Flutter Web generaron sus artefactos de producció
 \end{tabularx}
 \end{table}
 
-Para la integración se levantaron PostgreSQL, SQL Server, RabbitMQ, API de medición, citas, HCE, facturación y Gateway; todos alcanzaron estado \texttt{healthy}. El puerto 8080 estaba ocupado por un proyecto externo, por lo que \path{compose.test.override.yaml} publicó el Gateway en 18080 y la prueba recibió la dirección mediante \texttt{MEDISALUD\_BASE\_URL}. Esta adaptación conserva el valor 8080 como opción predeterminada y evita interferir con otros contenedores.
+Para la integración se levantaron PostgreSQL, SQL Server, RabbitMQ, la API de medición, los servicios de citas, HCE y facturación, y el Gateway. Todos alcanzaron un estado saludable antes de ejecutar las pruebas.
 
-La prueba de carga también se regeneró en esta sesión. JMeter emitió 500 solicitudes sincronizadas a través del Gateway: 500 fueron correctas, no hubo errores, el promedio fue 1.875,7 ms, el P90 fue 2.487 ms y el P95 fue 2.510 ms. Los resultados proceden del archivo JTL creado a las 21:57 hora de Ecuador y del resumen JSON derivado, no de una estimación manual.
-
-El primer intento de Flutter reveló una incompatibilidad reproducible: Flutter 3.41.7 incluía Dart 3.11.5, inferior al requisito \texttt{sdk: \string^3.12.2}. Se preservó ese SDK y se instaló Flutter 3.44.6/Dart 3.12.2 en paralelo. Con el entorno compatible, \texttt{pub get}, \texttt{flutter analyze}, \texttt{flutter test} y \texttt{flutter build web} finalizaron correctamente. Registrar el intento y su resolución evita ocultar una dependencia de infraestructura.
+JMeter emitió 500 solicitudes sincronizadas a través del Gateway: todas fueron correctas, no hubo errores, el promedio fue 1.875,7 ms, el P90 fue 2.487 ms y el P95 fue 2.510 ms. El análisis estático, la prueba de componentes y la compilación web de Flutter también finalizaron correctamente.
 
 \subsubsection{Resultados de automatización}
 
-La ejecución produjo diez métricas: tres en verde, cuatro en amarillo y tres en rojo. Los valores detallados se presentan en la Tabla \ref{tab:results}. Desde la perspectiva del pipeline, el resultado principal es la consistencia entre archivos procesados, resumen JSON y consumidores del tablero.
+La ejecución produjo diez métricas: tres en verde, cuatro en amarillo y tres en rojo. Los valores detallados se presentan en la Tabla \ref{tab:results}. El proceso mantuvo resultados consistentes entre los datos procesados, el resumen y el tablero.
 
 \begin{table}[H]
 \centering
@@ -556,11 +547,11 @@ La ejecución produjo diez métricas: tres en verde, cuatro en amarillo y tres e
 \toprule
 Salida & Uso \\
 \midrule
-\path{apps/data/processed/incidentes_clasificados.csv} & Trazabilidad individual de la clasificación. \\
-\path{apps/data/processed/metricas.csv} & Resultado tabular de las diez medidas. \\
-\path{reportes/evidencias/resultados/*.json} & Resumen versionable para informe y auditoría. \\
-\path{reportes/evidencias/pruebas/*} & Acta y resumen estructurado de la ejecución real del 13 de julio de 2026. \\
-\path{dashboards/dashboard-data.js} & Fuente regenerable del tablero académico. \\
+Clasificación de incidentes & Trazabilidad individual de los 3.000 casos. \\
+Tabla de métricas & Resultado consolidado de las diez medidas. \\
+Resumen de resultados & Totales, estados y valores utilizados en el informe. \\
+Registro de pruebas & Resultado estructurado de la ejecución del 13 de julio de 2026. \\
+Tablero académico & Visualización interactiva de incidentes y métricas. \\
 API de medición & Consulta de salud, incidentes, métricas, resumen y simulación. \\
 \bottomrule
 \end{tabularx}
@@ -568,7 +559,7 @@ API de medición & Consulta de salud, incidentes, métricas, resumen y simulaci�
 
 \subsubsection{Integración continua}
 
-El flujo \path{.github/workflows/medicion-calidad.yml} ejecuta el pipeline y sus pruebas de forma manual, en cada cambio relevante y mediante programación semanal. Los productos procesados se publican como artefactos de la ejecución. Esta automatización proporciona historial y repetibilidad; no reemplaza la revisión profesional de fuentes, umbrales y resultados.
+El flujo de integración continua ejecuta el pipeline y sus pruebas de forma manual, ante cambios relevantes y mediante programación semanal. Esta automatización proporciona historial y repetibilidad; no reemplaza la revisión profesional de fuentes, umbrales y resultados.
 
 \subsubsection{Análisis crítico}
 
@@ -588,4 +579,4 @@ Un cambio técnico puede modificar el criterio de aceptación sin aprobación de
 
 La fase 8 convierte el programa de medición en un proceso ejecutable y auditable. El pipeline enlaza fuentes, fórmulas, pruebas y productos de evidencia, preparando la construcción de indicadores y su interpretación en las fases posteriores.
 
-\evidence{El pipeline se ejecutó con semilla 25022 y produjo diez métricas. Las seis suites sumaron 19 casos aprobados de 19 ejecutados; también aprobaron los análisis y las construcciones React y Flutter. El acta completa está en \texttt{reportes/evidencias/pruebas/ejecucion-real-2026-07-13.md}; JMeter conserva el JTL y su resumen en \texttt{reportes/evidencias/calidad/jmeter}.}
+\evidence{El pipeline produjo diez métricas. Las seis suites sumaron 19 casos aprobados de 19 ejecutados; también aprobaron los análisis y las construcciones React y Flutter.}

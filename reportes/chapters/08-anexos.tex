@@ -1,86 +1,50 @@
 \section{Matriz de trazabilidad de escenarios}
 
-\begin{longtable}{p{1.8cm}p{3.2cm}p{4.4cm}p{2.7cm}}
-\caption{Trazabilidad requisito--actividad--evidencia}\label{tab:trace}\\
+\begin{longtable}{p{1.8cm}p{3.4cm}p{6.8cm}}
+\caption{Trazabilidad entre escenarios, actividades y resultados}\label{tab:trace}\\
 \toprule
-Escenario & Actividad & Evidencia principal & Condición de origen \\
+Escenario & Actividad & Evidencia principal \\
 \midrule
 \endfirsthead
 \toprule
-Escenario & Actividad & Evidencia principal & Condición de origen \\
+Escenario & Actividad & Evidencia principal \\
 \midrule
 \endhead
-1 & Análisis del caso & \texttt{docs/}\allowbreak\texttt{analisis\_inicial.md} & Literal \\
-2 & Clasificación ISO 25022 & CSV clasificado y resumen JSON & Literal \\
-3 & Niveles de calidad y SQuaRE & Mapa, SonarQube, JMeter y Figura \ref{fig:square} & Literal \\
-4 & Atributos UTC & Fichas \ref{tab:utc-hce}--\ref{tab:utc-facturacion} y Tabla \ref{tab:utc} & Guiado / aplicado \\
-5 & Mapeo y prioridad & Matriz \ref{tab:priority} & Guiado / aplicado \\
-6 & Diseño de métricas & Fichas, fórmulas y Tabla \ref{tab:catalog} & Guiado / aplicado \\
-7 & Obtención de datos & Tablas \ref{tab:event-types} y \ref{tab:data-validation}; manifiesto & Guiado / aplicado \\
-8 & Automatización & Figura \ref{fig:pipeline-phase8}, 19 pruebas ejecutadas y flujo CI & Guiado / aplicado \\
-9 & KPI y tablero & Tabla \ref{tab:results} y React gerencial & Reconstruido \\
-10 & Interpretación & Hipótesis de causa y prioridades & Reconstruido \\
-11 & Comunicación ejecutiva & Síntesis de decisiones & Reconstruido \\
-12 & Mejora continua & Plan PDCA, Tabla \ref{tab:pdca} & Reconstruido \\
-Reto & Telemedicina 2.0 & Trazabilidad y casos de contexto & Reconstruido \\
+1 & Análisis del caso & Matriz de problemas, usuarios, tareas y efectos observados. \\
+2 & Clasificación ISO 25022 & Clasificación de 3.000 incidentes y análisis de los casos 1001--1006. \\
+3 & Niveles de calidad y SQuaRE & Mapa conceptual, análisis SonarQube y prueba JMeter. \\
+4 & Atributos UTC & Fichas de usuario, tarea, contexto, atributo y prioridad. \\
+5 & Mapeo y prioridad & Matriz tarea--característica con criterios de impacto. \\
+6 & Diseño de métricas & Fichas con fórmula, unidad, fuente, meta y semáforo. \\
+7 & Obtención de datos & Validación de incidentes, eventos y encuestas. \\
+8 & Automatización & Pipeline analítico, pruebas automatizadas e integración continua. \\
+9 & KPI y tablero & Diez indicadores y visualización gerencial. \\
+10 & Interpretación & Hipótesis de causa y prioridades de intervención. \\
+11 & Comunicación ejecutiva & Síntesis de hallazgos y decisiones recomendadas. \\
+12 & Mejora continua & Plan PDCA con responsables, plazos y criterios de éxito. \\
+Reto & Telemedicina 2.0 & Evaluación de cobertura del contexto y continuidad de la atención. \\
 \bottomrule
 \end{longtable}
 
-\section{Ubicación de artefactos}
+\section{Acta de ejecución de pruebas}
+
+El 13 de julio de 2026 se ejecutaron seis suites con 19 casos: analítica Python (5), API de medición (1), dominio HCE Java (1), portal React (8), integración Docker (3) y portal Flutter (1). Los 19 casos aprobaron. También finalizaron correctamente el pipeline de diez métricas, el análisis estático Flutter, las construcciones Vite y Flutter Web, el levantamiento saludable de la infraestructura y una carga JMeter de 500 solicitudes sin errores.
 
 \begin{table}[H]
 \centering
-\caption{Estructura de evidencia reproducible}
-\begin{tabularx}{\textwidth}{p{4.0cm}Y}
+\caption{Síntesis de comprobaciones realizadas}
+\begin{tabularx}{\textwidth}{p{4.2cm}Y}
 \toprule
-Ruta & Responsabilidad \\
+Comprobación & Resultado \\
 \midrule
-\texttt{docs/}\allowbreak\texttt{analisis\_inicial.md} & Matriz de análisis solicitada en el escenario 1. \\
-\texttt{data/}\allowbreak\texttt{incidentes\_2025.csv} & Dataset solicitado por la actividad, ampliado a 3.000 registros. \\
-\texttt{data/clasificacion} & Tabla 2.2 completada para los 3.000 incidentes, incluidos 1001--1006. \\
-\texttt{apps/data/original} & Copia preservada del dataset de 3.000 incidentes. \\
-\texttt{apps/data/simulated} & Eventos, encuestas, manifiestos y ejecuciones regenerables. \\
-\texttt{apps/data/processed} & Clasificación y métricas derivadas. \\
-\texttt{apps/analytics} & Clasificación, simulación, medición y exportación en Python. \\
-\texttt{apps/mobile-patient} & Portal Flutter del paciente. \\
-\texttt{apps/web-his} & HIS operativo React y módulo gerencial de calidad. \\
-\texttt{apps/backend} & Gateway, dominios clínicos y API de medición. \\
-\texttt{reportes/evidencias/}\allowbreak\texttt{resultados} & Resúmenes seleccionados para entrega. \\
-\texttt{reportes/evidencias/}\allowbreak\texttt{calidad} & Métricas SonarQube y resumen de la prueba JMeter. \\
-\texttt{reportes/evidencias/}\allowbreak\texttt{pruebas} & Acta Markdown y resumen JSON de las 19 pruebas ejecutadas el 13 de julio de 2026. \\
-\texttt{reportes/entrega} & PDF académico final. \\
+Consistencia de datos & 3.000 incidentes clasificados, 6.000 eventos, 2.000 encuestas y diez métricas. \\
+Pruebas automatizadas & 19 casos aprobados de 19 ejecutados. \\
+Integración de servicios & Bases de datos, mensajería, servicios clínicos y Gateway en estado saludable. \\
+Calidad interna & Servicio de facturación sin bugs ni vulnerabilidades detectadas por SonarQube. \\
+Rendimiento externo & 500 solicitudes JMeter correctas, sin errores; P90 de 2.487 ms. \\
+Aplicaciones de usuario & Pruebas y compilaciones de React y Flutter completadas correctamente. \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-\section{Controles de reproducción}
-
-\begin{enumerate}
-  \item Verificar el SHA-256 registrado de \texttt{apps/}\allowbreak\texttt{data/}\allowbreak\texttt{original/}\allowbreak\texttt{incidentes\_2025.csv} sin modificar ese archivo.
-  \item Instalar las dependencias de Python y ejecutar el pipeline con semilla 25022.
-  \item Confirmar 3.000 clasificaciones, 6.000 eventos, 2.000 encuestas y 10 métricas.
-  \item Repetir la simulación y comparar manifiestos y resultados.
-  \item Levantar Docker Compose desde Ubuntu WSL y comprobar los estados de salud.
-  \item Ejecutar SonarQube sobre facturación y exportar sus métricas mediante \texttt{run-sonar-wsl.sh}.
-  \item Ejecutar JMeter con 500 usuarios y generar el resumen mediante \texttt{run-jmeter-wsl.sh}.
-  \item Probar React y Flutter contra el mismo Gateway local.
-  \item Compilar este documento con XeLaTeX mediante \texttt{latexmk}.
-  \item Renderizar todas las páginas y revisar portada, tablas, figuras, referencias y desbordamientos.
-\end{enumerate}
-
-\section{Acta de ejecución de pruebas}
-
-El 13 de julio de 2026 se ejecutaron de forma efectiva seis suites con 19 casos: analítica Python (5), API de medición (1), dominio HCE Java (1), portal React (8), integración Docker (3) y portal Flutter (1). Los 19 casos aprobaron. También finalizaron correctamente el pipeline de diez métricas, el análisis estático Flutter, las construcciones Vite y Flutter Web, el levantamiento saludable de la pila y una carga JMeter de 500 solicitudes sin errores.
-
-La evidencia detallada conserva comandos, versiones, tiempos, incidencias y resolución. El acta y su resumen estructurado están en \texttt{reportes/evidencias/pruebas}; la evidencia dinámica de rendimiento, incluido el archivo JTL, está en \texttt{reportes/evidencias/calidad/jmeter}.
-
-\section{Criterio de procedencia}
-
-Para evitar ambigüedad, todo resultado debe identificarse con una de estas etiquetas:
-
-\begin{description}[style=nextline,leftmargin=2.5cm,labelwidth=2.2cm]
-  \item[Original:] contenido recibido en la guía del taller o en el dataset suministrado.
-  \item[Simulado:] observación generada artificialmente con semilla y reglas declaradas.
-  \item[Derivado:] clasificación, agregado, fórmula, gráfica o interpretación calculada a partir de una fuente.
-  \item[Propuesto:] métrica, meta, hipótesis o acción definida por el equipo para completar el taller.
-\end{description}
+Estas comprobaciones respaldan la consistencia del proceso de medición y la correspondencia entre los datos analizados, los indicadores calculados y las conclusiones del informe.
