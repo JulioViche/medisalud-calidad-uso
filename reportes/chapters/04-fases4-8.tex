@@ -1,0 +1,591 @@
+% Continuacion detallada de los escenarios 4 a 8 del taller ISO/IEC 25022.
+
+\subsection{Fase 4: identificación de atributos de calidad en uso}
+
+\scenario{4}{Usuario, tarea y contexto de uso · desarrollo aplicado}
+
+\subsubsection{Objetivo y criterio de trabajo}
+
+El objetivo de esta fase es convertir los procesos críticos de MediSalud en unidades observables de evaluación. ISO/IEC 25022 exige que toda medida de calidad en uso se interprete respecto de un \textbf{usuario}, una \textbf{tarea} y un \textbf{contexto de uso}; por ello, expresiones generales como ``usar el HIS'' no son suficientes. Una tarea debe declarar un resultado verificable, un punto de inicio y fin, y las condiciones que pueden modificar su desempeño \cite{iso25022}.
+
+Se eligieron los tres procesos solicitados por la guía: registro de una nota de evolución, agendamiento de una cita y facturación de una consulta con seguro. La selección es coherente con el diagnóstico inicial porque reúne continuidad clínica, acceso del paciente e impacto financiero.
+
+\subsubsection{Ficha UTC-01: registro de nota de evolución}
+
+\begin{table}[H]
+\centering
+\caption{Ficha Usuario--Tarea--Contexto para el registro HCE}
+\label{tab:utc-hce}
+\begin{tabularx}{\textwidth}{p{3.5cm}Y}
+\toprule
+Campo & Definición operacional \\
+\midrule
+Proceso & Atención médica y registro de historia clínica electrónica. \\
+Usuario primario & Médico tratante con experiencia habitual en MediSalud HIS. \\
+Tarea representativa & Registrar y guardar una nota de evolución completa del paciente atendido. \\
+Inicio y fin & Inicia al abrir el formulario de evolución y finaliza cuando el HIS confirma el guardado persistente. \\
+Resultado esperado & Nota asociada al expediente correcto, con campos obligatorios completos y disponible para el equipo asistencial. \\
+Contexto de uso & Consulta externa, entre 10:00 y 12:00, sedes Quito o Guayaquil, red hospitalaria y alta concurrencia. \\
+Atributos relevantes & Completitud y precisión (efectividad), duración de la tarea (eficiencia), fluidez percibida (satisfacción) y ausencia de exposición cruzada (libertad de riesgo). \\
+Evidencia requerida & Evento \texttt{hce\_save}, duración en segundos, resultado, sede, rol, fecha, código de error y semilla. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{Ficha UTC-02: agendamiento de cita}
+
+\begin{table}[H]
+\centering
+\caption{Ficha Usuario--Tarea--Contexto para el portal de citas}
+\label{tab:utc-citas}
+\begin{tabularx}{\textwidth}{p{3.5cm}Y}
+\toprule
+Campo & Definición operacional \\
+\midrule
+Proceso & Agendamiento y admisión de pacientes. \\
+Usuario primario & Paciente que utiliza el portal web o la aplicación móvil. \\
+Tarea representativa & Buscar especialidad, elegir profesional y horario, y confirmar la reserva. \\
+Inicio y fin & Inicia al seleccionar ``Agendar cita'' y finaliza con un código de confirmación único. \\
+Resultado esperado & Cita registrada una sola vez, visible en el calendario y asociada al paciente y sede seleccionados. \\
+Contexto de uso & Teléfono móvil, red 4G o WiFi doméstico, cualquiera de las cinco sedes y distintos niveles de familiaridad digital. \\
+Atributos relevantes & Tasa de éxito (efectividad), pasos y tiempo invertido (eficiencia), claridad y confianza (satisfacción), y funcionamiento entre dispositivos y redes (cobertura del contexto). \\
+Evidencia requerida & Evento \texttt{appointment}, estado final, duración, sede, dispositivo o canal y código de error. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{Ficha UTC-03: facturación con seguro}
+
+\begin{table}[H]
+\centering
+\caption{Ficha Usuario--Tarea--Contexto para facturación}
+\label{tab:utc-facturacion}
+\begin{tabularx}{\textwidth}{p{3.5cm}Y}
+\toprule
+Campo & Definición operacional \\
+\midrule
+Proceso & Facturación y gestión de seguros. \\
+Usuario primario & Personal de admisión y caja. \\
+Tarea representativa & Emitir una factura correcta aplicando cobertura, copago y convenio del paciente. \\
+Inicio y fin & Inicia al recuperar la atención facturable y finaliza con una factura única, conciliable y entregada. \\
+Resultado esperado & Valores, identidad, convenio y saldo correctos; ausencia de duplicidad ante reintentos. \\
+Contexto de uso & Cierre de caja, alta carga transaccional e integración con aseguradora y módulo financiero heredado. \\
+Atributos relevantes & Exactitud (efectividad), reproceso (eficiencia), confianza del operador (satisfacción) y daño económico evitable (libertad de riesgo). \\
+Evidencia requerida & Evento \texttt{billing}, identificador de correlación, estado, reintentos, código de error y resultado de conciliación. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{Catálogo consolidado de tareas observables}
+
+Las tres fichas se ampliaron con tareas clínicas y de soporte para evitar que el programa quede limitado a un único flujo. La Tabla \ref{tab:utc} conserva usuario, tarea, contexto, atributo y prioridad como base del mapeo de la fase siguiente.
+
+\begin{longtable}{p{2.0cm}p{3.1cm}p{3.5cm}p{2.9cm}p{1.4cm}}
+\caption{Catálogo de tareas, contextos y atributos}\label{tab:utc}\\
+\toprule
+Usuario & Tarea & Contexto & Atributo observable & Nivel \\
+\midrule
+\endfirsthead
+\toprule
+Usuario & Tarea & Contexto & Atributo observable & Nivel \\
+\midrule
+\endhead
+Médico & Guardar nota HCE & Consulta y hora pico & P90, éxito y precisión & Crítica \\
+Paciente & Agendar cita & Móvil, 4G o WiFi & Éxito, pasos y confianza & Crítica \\
+Admisión & Emitir factura & Seguro y cierre de caja & Error y duplicidad & Crítica \\
+Médico & Validar prescripción & Antes de firmar receta & Exactitud de dosis & Crítica \\
+Paciente & Completar teleconsulta & Red doméstica variable & Continuidad de sesión & Alta \\
+Médico & Cargar imagen clínica & Estación o tableta & P90 de carga & Alta \\
+Enfermería & Registrar signos vitales & Tableta y red interna & Sincronización correcta & Alta \\
+Farmacia & Dispensar medicamento & Turno y stock concurrente & Concordancia con receta & Crítica \\
+Paciente & Consultar resultados & Portal y aplicación móvil & Acceso y comprensión & Media \\
+Gerencia & Revisar indicadores & Consolidado multisede & Cobertura de datos & Alta \\
+\bottomrule
+\end{longtable}
+
+\subsubsection{Resultados e interpretación}
+
+Las fichas hacen explícito que una misma función puede evaluarse desde varias características. El registro HCE puede ser efectivo porque guarda la nota y, al mismo tiempo, ineficiente si excede ocho segundos. La facturación puede concluir técnicamente, pero fallar en libertad de riesgo si duplica un cobro. El contexto tampoco es decorativo: sede, horario, red y dispositivo son variables de segmentación necesarias para interpretar diferencias.
+
+\subsubsection{Análisis crítico}
+
+La principal amenaza de esta fase es definir tareas demasiado amplias o contextos ideales. Si se midiera ``atender a un paciente'', no sería posible atribuir el resultado al formulario HCE, a la red o al proceso clínico. Asimismo, observar solo Quito en hora valle produciría una conclusión no generalizable a Manta, a la aplicación móvil o a las horas de mayor concurrencia. Por ello, cada ficha limita el objeto medido sin perder el entorno real que condiciona la tarea.
+
+\subsubsection{Preguntas de discusión}
+
+\textbf{1. ¿Por qué es incorrecto definir la tarea como ``usar el sistema HIS''?}
+
+Porque no identifica un objetivo, un resultado verificable ni límites temporales. Sin esos elementos no se puede decidir si la tarea terminó correctamente, cuánto recurso consumió ni qué evento debe instrumentarse.
+
+\textbf{2. ¿Qué ocurre si se mide eficiencia sin diferenciar hora pico y hora valle?}
+
+Se agregan contextos con cargas distintas y el promedio puede ocultar la degradación que experimenta el personal durante la atención más exigente. La medida pierde capacidad diagnóstica y puede conducir a una falsa aceptación del sistema.
+
+\subsubsection{Conclusión parcial}
+
+La fase 4 operacionaliza los procesos críticos en tareas medibles. Las fichas UTC establecen la unidad mínima de observación y proporcionan trazabilidad entre usuario, objetivo, contexto, atributo y evidencia técnica.
+
+\evidence{Las tareas se implementan como eventos tipados en \texttt{apps/analytics/simulation/generator.py}; sus campos normalizados se almacenan en \texttt{apps/data/simulated/events.csv}.}
+
+
+\subsection{Fase 5: mapeo y priorización de características}
+
+\scenario{5}{Matriz tarea--característica--prioridad · desarrollo aplicado}
+
+\subsubsection{Objetivo y método de priorización}
+
+El objetivo es relacionar las tareas UTC con las cinco características de ISO/IEC 25022 y seleccionar un alcance sostenible. Se evaluaron tres criterios: impacto en el negocio ($I$), frecuencia de ejecución ($F$) y severidad potencial ($S$). Cada criterio se valoró de 1 a 3 y se calculó:
+
+\begin{equation}
+P = I + F + S.
+\end{equation}
+
+Los valores de 8 a 9 corresponden a prioridad 1, de 6 a 7 a prioridad 2 y de 3 a 5 a prioridad 3. La puntuación orienta la decisión, pero no reemplaza el juicio clínico: una tarea poco frecuente puede permanecer en prioridad 1 si un fallo implica daño grave.
+
+\small
+\begin{longtable}{@{}p{3.3cm}p{1.15cm}p{1.2cm}p{4.0cm}p{0.6cm}p{1.0cm}@{}}
+\caption{Matriz de mapeo y priorización}\label{tab:priority}\\
+\toprule
+Tarea & Imp. & Frec. & Características & $P$ & Nivel \\
+\midrule
+\endfirsthead
+\toprule
+Tarea & Imp. & Frec. & Características & $P$ & Nivel \\
+\midrule
+\endhead
+Registrar nota de evolución & Alto & Alta & Eficiencia, efectividad, riesgo & 9 & 1 \\
+Agendar cita en portal & Alto & Alta & Efectividad, satisfacción, contexto & 8 & 1 \\
+Facturar consulta con seguro & Alto & Media & Libertad de riesgo, efectividad & 8 & 1 \\
+Validar y firmar prescripción & Alto & Alta & Libertad de riesgo, efectividad & 9 & 1 \\
+Completar teleconsulta & Alto & Media & Cobertura del contexto, efectividad & 7 & 2 \\
+Cargar estudio de imagen & Medio & Media & Eficiencia, cobertura del contexto & 6 & 2 \\
+Registrar signos vitales & Alto & Alta & Efectividad, eficiencia & 8 & 1 \\
+Dispensar medicamento & Alto & Alta & Libertad de riesgo, efectividad & 9 & 1 \\
+Consultar resultados & Medio & Alta & Satisfacción, eficiencia & 6 & 2 \\
+Revisar tablero gerencial & Medio & Media & Cobertura del contexto & 5 & 3 \\
+\bottomrule
+\end{longtable}
+\normalsize
+
+\subsubsection{Decisiones de alcance}
+
+El primer ciclo mide en profundidad HCE, agendamiento, facturación, prescripción, satisfacción y variación entre sedes. Telemedicina e imagenología se mantienen como medidas complementarias porque permiten comprobar cobertura del contexto y eficiencia fuera de los procesos centrales. El tablero gerencial se conserva como consumidor de evidencia, no como sustituto de la experiencia del paciente o del personal clínico.
+
+\subsubsection{Resultados e interpretación}
+
+Se obtuvieron seis tareas de prioridad 1, tres de prioridad 2 y una de prioridad 3. La concentración en prioridad 1 responde a la naturaleza hospitalaria: HCE, signos vitales, prescripción y dispensación intervienen en decisiones clínicas; facturación puede producir daño económico; y agendamiento condiciona el acceso al servicio. La matriz evita que la alta frecuencia de una tarea de bajo impacto desplace un riesgo clínico menos frecuente.
+
+\subsubsection{Análisis crítico}
+
+La puntuación depende de criterios definidos por el equipo y debe validarse con Dirección Médica, Calidad, Finanzas y representantes de pacientes antes de un uso productivo. También debe revisarse cuando cambien procesos o tecnología. Medir absolutamente todo desde el inicio elevaría el costo de instrumentación, generaría indicadores sin responsable y diluiría los hallazgos críticos.
+
+\subsubsection{Preguntas de discusión}
+
+\textbf{1. ¿Qué riesgo existe al medir todas las tareas desde el primer ciclo?}
+
+El programa puede producir más datos de los que la organización puede validar e interpretar. Esto aumenta ruido, retrasa acciones y crea métricas sin decisiones asociadas. Un alcance incremental permite comprobar primero la calidad de la evidencia y la utilidad de cada KPI.
+
+\textbf{2. ¿Por qué consultar resultados tiene menor prioridad pese a su frecuencia alta?}
+
+Porque su impacto inmediato y severidad son menores que una receta incorrecta, una exposición de datos o una factura duplicada. Sigue siendo relevante para satisfacción y eficiencia, pero no desplaza los riesgos clínicos y financieros del primer ciclo.
+
+\subsubsection{Conclusión parcial}
+
+La fase 5 establece un alcance defendible y trazable. La prioridad combina frecuencia con impacto y severidad, evitando ordenar la evaluación únicamente por volumen de incidentes.
+
+\evidence{La matriz priorizada se vincula con los tipos de evento definidos en \texttt{apps/analytics/simulation/generator.py} y con el catálogo de medidas de \texttt{apps/analytics/metrics/calculator.py}.}
+
+
+\subsection{Fase 6: diseño formal de métricas}
+
+\scenario{6}{Fichas ISO/IEC 25022 y criterios de decisión · desarrollo aplicado}
+
+\subsubsection{Objetivo y reglas de diseño}
+
+El objetivo es documentar una medida por cada característica de calidad en uso, especificando propósito, fórmula, variables, unidad, población, fuente, periodicidad, responsable, meta e interpretación. Los umbrales se fijan antes de observar los resultados para evitar ajustarlos retrospectivamente a conveniencia.
+
+\subsubsection{M-EFE-01: éxito de agendamiento}
+
+\begin{table}[H]
+\centering
+\caption{Ficha de métrica de efectividad}
+\begin{tabularx}{\textwidth}{p{3.3cm}Y}
+\toprule
+Campo & Especificación \\
+\midrule
+Propósito & Determinar la proporción de intentos que terminan con una cita confirmada. \\
+Fórmula & $X=\dfrac{A}{B}\times100$, donde $A$ son citas exitosas y $B$ intentos iniciados. \\
+Unidad y población & Porcentaje de eventos \texttt{appointment} del periodo. \\
+Meta y semáforo & Verde: $X\geq95\%$; amarillo: $85\%\leq X<95\%$; rojo: $X<85\%$. \\
+Fuente y frecuencia & Eventos del portal y aplicación; cálculo semanal y consolidación mensual. \\
+Responsable & Producto digital, Admisión y Aseguramiento de Calidad. \\
+Interpretación & Un valor bajo representa pacientes que no alcanzan el objetivo, independientemente de la disponibilidad del portal. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{M-EFI-01: P90 del registro HCE}
+
+\begin{table}[H]
+\centering
+\caption{Ficha de métrica de eficiencia}
+\begin{tabularx}{\textwidth}{p{3.3cm}Y}
+\toprule
+Campo & Especificación \\
+\midrule
+Propósito & Evaluar el tiempo que experimenta el extremo lento representativo del registro clínico. \\
+Fórmula & $X=P_{90}(t_1,t_2,\ldots,t_n)$, con $t_i$ en segundos desde apertura hasta confirmación. \\
+Unidad y población & Segundos; eventos \texttt{hce\_save} válidos y completos. \\
+Meta y semáforo & Verde: $X\leq8$ s; amarillo: $8<X\leq12$ s; rojo: $X>12$ s. \\
+Fuente y frecuencia & Trazas HCE; seguimiento diario y análisis por sede y hora. \\
+Responsable & Plataforma, HCE y Aseguramiento de Calidad. \\
+Interpretación & El P90 evita que un promedio favorable oculte esperas repetidas en la franja de peor experiencia. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{M-SAT-02: CSAT promedio}
+
+\begin{table}[H]
+\centering
+\caption{Ficha de métrica de satisfacción}
+\begin{tabularx}{\textwidth}{p{3.3cm}Y}
+\toprule
+Campo & Especificación \\
+\midrule
+Propósito & Medir la valoración declarada por los usuarios después de interactuar con MediSalud. \\
+Fórmula & $X=\dfrac{\sum_{i=1}^{n}c_i}{n}$, donde $c_i\in\{1,2,3,4,5\}$. \\
+Unidad y población & Escala de 1 a 5; respuestas válidas del periodo. \\
+Meta y semáforo & Verde: $X\geq4$; amarillo: $3\leq X<4$; rojo: $X<3$. \\
+Fuente y frecuencia & Encuesta posterior a la tarea; consolidación mensual y segmentación por sede y rol. \\
+Responsable & Experiencia del Paciente y Calidad. \\
+Interpretación & El indicador describe percepción; no demuestra por sí solo que la tarea sea correcta o segura. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{M-RIE-01: errores de facturación}
+
+\begin{table}[H]
+\centering
+\caption{Ficha de métrica de libertad de riesgo}
+\begin{tabularx}{\textwidth}{p{3.3cm}Y}
+\toprule
+Campo & Especificación \\
+\midrule
+Propósito & Cuantificar transacciones que pueden ocasionar cobros indebidos, reproceso o pérdida económica. \\
+Fórmula & $X=\dfrac{E}{T}\times100$, donde $E$ son facturaciones fallidas y $T$ facturaciones procesadas. \\
+Unidad y población & Porcentaje de eventos \texttt{billing}. \\
+Meta y semáforo & Verde: $X\leq1\%$; amarillo: $1<X\leq3\%$; rojo: $X>3\%$. \\
+Fuente y frecuencia & Eventos de facturación y conciliación; control diario y cierre mensual. \\
+Responsable & Finanzas, Facturación, TI y Calidad. \\
+Interpretación & Incluso una tasa pequeña exige revisar severidad, importe y reversibilidad; el porcentaje no sustituye la investigación individual. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{M-CC-01: variabilidad HCE entre sedes}
+
+\begin{table}[H]
+\centering
+\caption{Ficha de métrica de cobertura del contexto}
+\begin{tabularx}{\textwidth}{p{3.3cm}Y}
+\toprule
+Campo & Especificación \\
+\midrule
+Propósito & Verificar que el tiempo medio del registro HCE sea consistente entre las cinco sedes. \\
+Fórmula & $X=\sigma(\bar t_Q,\bar t_G,\bar t_C,\bar t_A,\bar t_M)$, desviación poblacional de las medias por sede. \\
+Unidad y población & Segundos; todos los eventos HCE válidos segmentados por sede. \\
+Meta y semáforo & Verde: $X\leq2$ s; amarillo: $2<X\leq4$ s; rojo: $X>4$ s. \\
+Fuente y frecuencia & Eventos \texttt{hce\_save}; consolidación semanal y mensual. \\
+Responsable & Infraestructura, líderes de sede y Calidad. \\
+Interpretación & Un valor bajo expresa consistencia relativa; debe leerse junto con el nivel absoluto del P90 para evitar declarar cobertura sobre un desempeño uniformemente deficiente. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{Catálogo ampliado}
+
+Las cinco fichas principales se complementan con medidas de privacidad, prescripción, carga de imagen, abandono y teleconsulta. Esto permite observar más de un indicador por característica sin perder la trazabilidad de cada fórmula.
+
+\begin{longtable}{p{1.6cm}p{3.7cm}p{2.6cm}p{1.9cm}p{2.0cm}}
+\caption{Catálogo resumido de métricas}\label{tab:catalog}\\
+\toprule
+Código & Métrica & Característica & Unidad & Meta \\
+\midrule
+\endfirsthead
+\toprule
+Código & Métrica & Característica & Unidad & Meta \\
+\midrule
+\endhead
+M-EFI-01 & P90 registro HCE & Eficiencia & segundos & $\leq 8$ \\
+M-EFE-01 & Éxito de agendamiento & Efectividad & porcentaje & $\geq 95$ \\
+M-RIE-01 & Errores de facturación & Libertad de riesgo & porcentaje & $<1$ \\
+M-SAT-01 & Abandono de encuesta móvil & Satisfacción & porcentaje & $<10$ \\
+M-CC-01 & Variabilidad HCE entre sedes & Cobertura del contexto & segundos & $\leq 2$ \\
+M-RIE-02 & Incidentes de privacidad & Libertad de riesgo & incidentes & $=0$ \\
+M-SAT-02 & CSAT promedio & Satisfacción & escala 1--5 & $\geq 4$ \\
+M-EFE-02 & Recetas correctas & Efectividad & porcentaje & $=100$ \\
+M-EFI-02 & P90 carga de imagen & Eficiencia & segundos & $\leq 10$ \\
+M-CC-02 & Caídas de teleconsulta & Cobertura del contexto & porcentaje & $<5$ \\
+\bottomrule
+\end{longtable}
+
+\subsubsection{Resultados e interpretación}
+
+El catálogo cumple la anatomía exigida por el taller y mantiene unidades homogéneas. La combinación de porcentajes, segundos, conteos y escalas es válida porque cada medida conserva su unidad y meta; no se suman valores incompatibles para producir una calificación artificial. La severidad determina metas más exigentes: prescripción y privacidad requieren ausencia de resultados inseguros.
+
+\subsubsection{Análisis crítico}
+
+Los umbrales son criterios académicos derivados de los requisitos del caso y deben aprobarse con responsables clínicos, financieros y legales antes de emplearse en producción. También es necesario mantenerlos en configuración versionada. Si quedan dispersos en código, un cambio no controlado alteraría la comparabilidad histórica.
+
+\subsubsection{Preguntas de discusión}
+
+\textbf{1. ¿Por qué se define la meta antes de calcular el valor?}
+
+Porque la decisión debe responder a una necesidad de calidad, no adaptarse al resultado observado. Cambiar la meta después del cálculo introduciría sesgo y permitiría declarar cumplimiento sin mejorar la experiencia.
+
+\textbf{2. ¿En qué se diferencia una métrica de eficiencia de un cronómetro del servidor?}
+
+La métrica delimita usuario, tarea y contexto, y mide el tiempo de extremo a extremo hasta que el usuario recibe confirmación. Un cronómetro del servidor puede excluir red, interfaz, validaciones y esfuerzo humano.
+
+\subsubsection{Conclusión parcial}
+
+La fase 6 transforma atributos abstractos en medidas reproducibles y accionables. Cada indicador declara cómo se calcula, qué población representa, quién lo gobierna y qué decisión habilita.
+
+\evidence{La implementación ejecutable de fórmulas, metas y semáforos se encuentra en \texttt{apps/analytics/metrics/calculator.py}; la evidencia consolidada se exporta a \texttt{reportes/evidencias/resultados/metricas\_resumen.json}.}
+
+
+\subsection{Fase 7: obtención y validación de datos}
+
+\scenario{7}{Fuentes, generación y calidad del dato · desarrollo aplicado}
+
+\subsubsection{Objetivo y arquitectura de fuentes}
+
+El objetivo es obtener datos suficientes y confiables para calcular las medidas sin modificar el conjunto original. Se establecieron tres niveles de procedencia: \textbf{original}, para los 3.000 incidentes suministrados; \textbf{simulado}, para eventos y encuestas generados con reglas declaradas; y \textbf{derivado}, para clasificaciones, agregados y KPI.
+
+\begin{table}[H]
+\centering
+\caption{Fuentes de datos por característica}
+\label{tab:data-sources}
+\begin{tabularx}{\textwidth}{p{3.0cm}p{3.6cm}Y}
+\toprule
+Característica & Fuente principal & Campos mínimos \\
+\midrule
+Efectividad & Eventos de tareas & Tipo, resultado, identificador, fecha, usuario y sede. \\
+Eficiencia & Trazas temporales & Inicio, fin o duración, tarea, contexto y resultado. \\
+Satisfacción & Encuestas & Puntaje, completitud, rol, sede, fecha y procedencia. \\
+Libertad de riesgo & Incidentes y eventos & Descripción, módulo, daño potencial, resultado y correlación. \\
+Cobertura del contexto & Metadatos de sesión & Sede, rol, canal, periodo, red o dispositivo cuando aplique. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{Generación reproducible}
+
+La clase \texttt{SimulationGenerator} utiliza la semilla 25022 y el periodo comprendido entre el 1 de enero y el 31 de diciembre de 2025. Genera 6.000 eventos y 2.000 encuestas. Cada fila declara la semilla y el indicador \texttt{simulated=true}; así se evita presentar observaciones sintéticas como registros clínicos reales.
+
+\begin{table}[H]
+\centering
+\caption{Distribución de eventos simulados por tarea}
+\label{tab:event-types}
+\begin{tabular}{lr@{\hspace{1.2cm}}lr}
+\toprule
+Tipo & Cantidad & Tipo & Cantidad \\
+\midrule
+Registro HCE & 1.905 & Agendamiento & 1.359 \\
+Facturación & 822 & Prescripción & 718 \\
+Imagenología & 459 & Teleconsulta & 737 \\
+\midrule
+\multicolumn{3}{r}{\textbf{Total}} & \textbf{6.000} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+La distribución geográfica incluye 1.981 eventos de Quito, 1.475 de Guayaquil, 1.011 de Cuenca, 821 de Ambato y 712 de Manta. Los pesos reflejan distintos volúmenes operativos y permiten comparar sedes sin asumir tamaños idénticos.
+
+\subsubsection{Reglas de validación}
+
+Antes del cálculo se verificaron unicidad, obligatoriedad, dominio, rango y trazabilidad. Las validaciones no eliminan automáticamente valores extremos válidos: una duración alta puede representar precisamente la experiencia que la métrica debe detectar.
+
+\begin{table}[H]
+\centering
+\caption{Resultado de los controles de calidad del dato}
+\label{tab:data-validation}
+\begin{tabularx}{\textwidth}{p{4.7cm}p{2.1cm}Y}
+\toprule
+Control & Resultado & Criterio de aceptación \\
+\midrule
+Eventos cargados & 6.000 & Coincide con el manifiesto. \\
+Encuestas cargadas & 2.000 & Coincide con el manifiesto. \\
+IDs de evento duplicados & 0 & Debe ser igual a cero. \\
+IDs de encuesta duplicados & 0 & Debe ser igual a cero. \\
+Campos obligatorios vacíos & 0 & Identificador, fecha, sede y tipo completos. \\
+Duraciones no positivas & 0 & Toda duración debe ser mayor que cero. \\
+CSAT fuera de 1--5 & 0 & Todo puntaje debe pertenecer al dominio. \\
+Semilla y procedencia & 100\% & Toda fila simulada declara semilla y origen. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{Tratamiento de valores atípicos}
+
+No se descartaron observaciones solo por ser lentas. Primero se comprueba que la duración sea positiva, que el evento tenga inicio lógico y que no exista duplicación. Después se reportan percentiles para limitar la influencia de máximos aislados. Una sesión abandonada debe distinguirse mediante su estado, no convertirse artificialmente en una duración normal.
+
+\subsubsection{Resultados e interpretación}
+
+Los controles permitieron calcular las métricas sin nulos en campos críticos, duplicados ni valores fuera de dominio. El manifiesto registra semilla, periodo y cantidades, por lo que otra persona puede regenerar la misma línea base. Esta reproducibilidad es una propiedad del estudio, no una prueba de que los valores representen una institución real.
+
+\subsubsection{Análisis crítico}
+
+La simulación ofrece control experimental, pero no reproduce toda la variabilidad humana, clínica y tecnológica. En una evaluación real se necesitarían consentimiento y minimización de datos, trazas del Gateway y servicios, definición de retención, anonimización y revisión ética. Además, la ausencia de nulos no garantiza exactitud semántica; los campos podrían estar completos y, aun así, mal etiquetados.
+
+\subsubsection{Preguntas de discusión}
+
+\textbf{1. ¿Qué ocurriría si se eliminan tiempos altos sin investigar su causa?}
+
+Se podría borrar la evidencia de horas pico, dispositivos lentos o sesiones problemáticas y producir un indicador artificialmente favorable. Los valores atípicos solo deben excluirse mediante una regla justificada y trazable.
+
+\textbf{2. ¿Por qué las encuestas requieren un tratamiento diferente a los logs?}
+
+Porque describen percepción, dependen de participación voluntaria y pueden sufrir sesgo de respuesta. Los logs capturan eventos operativos con mayor frecuencia, mientras las encuestas necesitan muestreo, contexto y análisis de representatividad.
+
+\subsubsection{Conclusión parcial}
+
+La fase 7 establece una base de datos trazable, validada y reproducible. La separación entre fuente original, simulada y derivada protege la interpretación y evita atribuir a MediSalud real resultados que pertenecen al ejercicio académico.
+
+\evidence{El manifiesto reproducible está en \texttt{apps/data/simulated/manifest.json}; los eventos y encuestas se generan en la misma carpeta y los 3.000 incidentes originales permanecen preservados en \texttt{apps/data/original}.}
+
+
+\subsection{Fase 8: automatización de la medición}
+
+\scenario{8}{Pipeline Python, pruebas y ejecución continua · desarrollo aplicado}
+
+\subsubsection{Objetivo y diseño del pipeline}
+
+El objetivo es convertir las reglas de medición en un proceso repetible que produzca la misma evidencia a partir de las mismas entradas. La automatización separa clasificación, simulación, cálculo y exportación; de esta forma cada responsabilidad puede probarse y reemplazarse sin alterar las demás.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=8mm and 7mm,
+  box/.style={rounded corners=2pt,draw=mediteal,fill=medilight,minimum height=1.25cm,text width=2.45cm,align=center,font=\small\bfseries},
+  arr/.style={-{Latex[length=2.2mm]},thick,draw=medigrey}
+]
+\node[box] (raw) {Datos\\originales y simulados};
+\node[box,right=of raw] (class) {Normalización\\y clasificación};
+\node[box,right=of class] (calc) {Cálculo de\\métricas};
+\node[box,right=of calc] (export) {CSV, JSON, API\\y tablero};
+\draw[arr] (raw) -- (class);
+\draw[arr] (class) -- (calc);
+\draw[arr] (calc) -- (export);
+\end{tikzpicture}
+\caption{Pipeline automatizado de medición de calidad en uso.}
+\label{fig:pipeline-phase8}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Responsabilidades de los componentes analíticos}
+\label{tab:pipeline-components}
+\begin{tabularx}{\textwidth}{p{4.3cm}Y}
+\toprule
+Componente & Responsabilidad \\
+\midrule
+\path{classification/classifier.py} & Normaliza y asigna característica principal y justificación a los incidentes. \\
+\path{simulation/generator.py} & Genera eventos y encuestas reproducibles con semilla 25022. \\
+\path{metrics/calculator.py} & Calcula porcentajes, P90, medias, desviación entre sedes, metas y semáforos. \\
+\path{exporters/pipeline.py} & Orquesta entradas y salidas, y crea CSV y resúmenes JSON. \\
+\path{tests/test_analytics.py} & Comprueba precedencia de riesgo, eficiencia, reproducibilidad y percentiles. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{Ejecución reproducible}
+
+Desde la raíz del repositorio, la medición se ejecuta con:
+
+\begin{verbatim}
+python -m apps.analytics.exporters.pipeline --seed 25022
+python -m unittest discover -s apps/analytics/tests -v
+\end{verbatim}
+
+La primera orden clasifica 3.000 incidentes, genera 6.000 eventos y 2.000 encuestas, calcula diez KPI y exporta resultados. La segunda ejecuta cinco pruebas unitarias. El 13 de julio de 2026 se repitió la ejecución sobre la revisión \texttt{3baf75d}: el pipeline produjo las diez métricas esperadas y las cinco pruebas finalizaron correctamente.
+
+\subsubsection{Ejecución real de pruebas del sistema}
+
+La comprobación no se limitó al módulo analítico. Se ejecutaron las suites disponibles de Python, Java, React, integración y Flutter, además de los análisis y compilaciones de producción. La Tabla \ref{tab:real-tests} diferencia casos de prueba de verificaciones de construcción para no inflar artificialmente el conteo.
+
+\begin{table}[H]
+\centering
+\caption{Resultados de pruebas ejecutadas el 13 de julio de 2026}
+\label{tab:real-tests}
+\small
+\begin{tabularx}{\textwidth}{p{3.25cm}p{2.0cm}Y}
+\toprule
+Suite o control & Casos & Evidencia observada \\
+\midrule
+Analítica Python & 5/5 & Clasificación, precedencia de riesgo, eficiencia, percentil y semilla reproducible. \\
+API de medición & 1/1 & Respuesta saludable del servicio FastAPI; 0 fallos y 0 errores. \\
+Dominio HCE Java & 1/1 & \texttt{ClinicalNoteTest}; Maven informó \texttt{BUILD SUCCESS}. \\
+Portal React & 8/8 & Autenticación, permisos por cinco roles, sesión y componente de estado. \\
+Integración Docker & 3/3 & Gateway, tablero, simulación y fallas controladas de citas, HCE y facturación. \\
+Portal Flutter & 1/1 & Prueba widget de \texttt{AppBadge}; análisis estático sin hallazgos. \\
+Construcciones & --- & Vite y Flutter Web generaron sus artefactos de producción. \\
+\midrule
+\textbf{Total de casos} & \textbf{19/19} & \textbf{0 fallos, 0 errores y 0 casos omitidos.} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Para la integración se levantaron PostgreSQL, SQL Server, RabbitMQ, API de medición, citas, HCE, facturación y Gateway; todos alcanzaron estado \texttt{healthy}. El puerto 8080 estaba ocupado por un proyecto externo, por lo que \path{compose.test.override.yaml} publicó el Gateway en 18080 y la prueba recibió la dirección mediante \texttt{MEDISALUD\_BASE\_URL}. Esta adaptación conserva el valor 8080 como opción predeterminada y evita interferir con otros contenedores.
+
+La prueba de carga también se regeneró en esta sesión. JMeter emitió 500 solicitudes sincronizadas a través del Gateway: 500 fueron correctas, no hubo errores, el promedio fue 1.875,7 ms, el P90 fue 2.487 ms y el P95 fue 2.510 ms. Los resultados proceden del archivo JTL creado a las 21:57 hora de Ecuador y del resumen JSON derivado, no de una estimación manual.
+
+El primer intento de Flutter reveló una incompatibilidad reproducible: Flutter 3.41.7 incluía Dart 3.11.5, inferior al requisito \texttt{sdk: \string^3.12.2}. Se preservó ese SDK y se instaló Flutter 3.44.6/Dart 3.12.2 en paralelo. Con el entorno compatible, \texttt{pub get}, \texttt{flutter analyze}, \texttt{flutter test} y \texttt{flutter build web} finalizaron correctamente. Registrar el intento y su resolución evita ocultar una dependencia de infraestructura.
+
+\subsubsection{Resultados de automatización}
+
+La ejecución produjo diez métricas: tres en verde, cuatro en amarillo y tres en rojo. Los valores detallados se presentan en la Tabla \ref{tab:results}. Desde la perspectiva del pipeline, el resultado principal es la consistencia entre archivos procesados, resumen JSON y consumidores del tablero.
+
+\begin{table}[H]
+\centering
+\caption{Productos generados por la automatización}
+\label{tab:pipeline-outputs}
+\begin{tabularx}{\textwidth}{p{5.1cm}Y}
+\toprule
+Salida & Uso \\
+\midrule
+\path{apps/data/processed/incidentes_clasificados.csv} & Trazabilidad individual de la clasificación. \\
+\path{apps/data/processed/metricas.csv} & Resultado tabular de las diez medidas. \\
+\path{reportes/evidencias/resultados/*.json} & Resumen versionable para informe y auditoría. \\
+\path{reportes/evidencias/pruebas/*} & Acta y resumen estructurado de la ejecución real del 13 de julio de 2026. \\
+\path{dashboards/dashboard-data.js} & Fuente regenerable del tablero académico. \\
+API de medición & Consulta de salud, incidentes, métricas, resumen y simulación. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{Integración continua}
+
+El flujo \path{.github/workflows/medicion-calidad.yml} ejecuta el pipeline y sus pruebas de forma manual, en cada cambio relevante y mediante programación semanal. Los productos procesados se publican como artefactos de la ejecución. Esta automatización proporciona historial y repetibilidad; no reemplaza la revisión profesional de fuentes, umbrales y resultados.
+
+\subsubsection{Análisis crítico}
+
+Automatizar una fórmula incorrecta solo permite producir errores con mayor rapidez. Por ello, el código mantiene funciones pequeñas y pruebas sobre reglas sensibles, como la precedencia de libertad de riesgo y el cálculo del percentil. Los umbrales todavía deberían migrarse a configuración gobernada para evitar cambios silenciosos. Además, una ejecución programada debe fallar si cambian columnas, cantidades esperadas o dominios de datos. La compilación React aprobó, aunque Vite advirtió un fragmento JavaScript superior a 500 kB; no invalida la prueba funcional, pero sí justifica una acción futura de división de código y control del presupuesto de carga.
+
+\subsubsection{Preguntas de discusión}
+
+\textbf{1. ¿Qué ventajas ofrece la ejecución continua frente al cálculo manual trimestral?}
+
+Proporciona periodicidad, trazabilidad, menor riesgo de transcripción, comparación histórica y detección temprana. También conserva la versión del código y la semilla que originaron cada resultado.
+
+\textbf{2. ¿Qué riesgo existe si los umbrales permanecen escritos directamente en el código?}
+
+Un cambio técnico puede modificar el criterio de aceptación sin aprobación de los responsables del proceso. Esto rompe comparabilidad y gobernanza. Los umbrales deben versionarse con propietario, justificación y fecha de vigencia.
+
+\subsubsection{Conclusión parcial}
+
+La fase 8 convierte el programa de medición en un proceso ejecutable y auditable. El pipeline enlaza fuentes, fórmulas, pruebas y productos de evidencia, preparando la construcción de indicadores y su interpretación en las fases posteriores.
+
+\evidence{El pipeline se ejecutó con semilla 25022 y produjo diez métricas. Las seis suites sumaron 19 casos aprobados de 19 ejecutados; también aprobaron los análisis y las construcciones React y Flutter. El acta completa está en \texttt{reportes/evidencias/pruebas/ejecucion-real-2026-07-13.md}; JMeter conserva el JTL y su resumen en \texttt{reportes/evidencias/calidad/jmeter}.}

@@ -1,15 +1,15 @@
 {
   "test": "Portal de citas - 500 usuarios concurrentes",
-  "started_at_utc": "2026-07-10T20:38:24.107000+00:00",
+  "started_at_utc": "2026-07-14T02:57:16.067000+00:00",
   "samples": 500,
   "successful": 500,
   "errors": 0,
   "error_rate_percent": 0.0,
-  "average_ms": 1602.27,
-  "min_ms": 663,
-  "max_ms": 2088,
-  "p90_ms": 2002,
-  "p95_ms": 2032,
-  "throughput_requests_second": 239.01,
-  "duration_seconds": 2.09
+  "average_ms": 1875.7,
+  "min_ms": 716,
+  "max_ms": 2603,
+  "p90_ms": 2487,
+  "p95_ms": 2510,
+  "throughput_requests_second": 191.2,
+  "duration_seconds": 2.62
 }

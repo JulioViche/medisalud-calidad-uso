@@ -1,0 +1,7 @@
+services:
+  rabbitmq:
+    ports: !override []
+
+  api-gateway:
+    ports: !override
+      - "18080:8080"

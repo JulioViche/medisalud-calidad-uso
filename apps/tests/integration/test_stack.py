@@ -1,13 +1,14 @@
 from __future__ import annotations
 
 import json
+import os
 import time
 import unittest
 import urllib.error
 import urllib.request
 
 
-BASE_URL = "http://localhost:8080"
+BASE_URL = os.environ.get("MEDISALUD_BASE_URL", "http://localhost:8080")
 
 
 def request(path: str, method: str = "GET", payload: dict[str, object] | None = None) -> object:
@@ -62,4 +63,3 @@ class StackIntegrationTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
