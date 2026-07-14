@@ -1,8 +1,12 @@
 {
-  "seed": 25022,
-  "period": "2025-01-01/2025-12-31",
-  "metrics": [
-    {
+  "metadata": {
+    "norma": "ISO/IEC 25022",
+    "periodo": "2025-01-01/2025-12-31",
+    "semilla": 25022,
+    "simulado": true
+  },
+  "metricas": {
+    "M-EFI-01": {
       "code": "M-EFI-01",
       "name": "P90 registro HCE",
       "characteristic": "Eficiencia",
@@ -12,7 +16,7 @@
       "status": "AMARILLO",
       "source": "events:hce_save"
     },
-    {
+    "M-EFE-01": {
       "code": "M-EFE-01",
       "name": "Exito de agendamiento",
       "characteristic": "Efectividad",
@@ -22,7 +26,7 @@
       "status": "AMARILLO",
       "source": "events:appointment"
     },
-    {
+    "M-RIE-01": {
       "code": "M-RIE-01",
       "name": "Errores de facturacion",
       "characteristic": "Libertad de Riesgo",
@@ -32,7 +36,7 @@
       "status": "ROJO",
       "source": "events:billing"
     },
-    {
+    "M-SAT-01": {
       "code": "M-SAT-01",
       "name": "Abandono de encuesta movil",
       "characteristic": "Satisfaccion",
@@ -42,7 +46,7 @@
       "status": "VERDE",
       "source": "surveys"
     },
-    {
+    "M-CC-01": {
       "code": "M-CC-01",
       "name": "Variabilidad HCE entre sedes",
       "characteristic": "Cobertura de Contexto",
@@ -52,7 +56,7 @@
       "status": "VERDE",
       "source": "events:hce_save"
     },
-    {
+    "M-RIE-02": {
       "code": "M-RIE-02",
       "name": "Incidentes de privacidad",
       "characteristic": "Libertad de Riesgo",
@@ -62,7 +66,7 @@
       "status": "ROJO",
       "source": "incidents"
     },
-    {
+    "M-SAT-02": {
       "code": "M-SAT-02",
       "name": "CSAT promedio",
       "characteristic": "Satisfaccion",
@@ -72,7 +76,7 @@
       "status": "AMARILLO",
       "source": "surveys"
     },
-    {
+    "M-EFE-02": {
       "code": "M-EFE-02",
       "name": "Recetas correctas",
       "characteristic": "Efectividad",
@@ -82,7 +86,7 @@
       "status": "ROJO",
       "source": "events:prescription"
     },
-    {
+    "M-EFI-02": {
       "code": "M-EFI-02",
       "name": "P90 carga de imagen",
       "characteristic": "Eficiencia",
@@ -92,7 +96,7 @@
       "status": "VERDE",
       "source": "events:imaging"
     },
-    {
+    "M-CC-02": {
       "code": "M-CC-02",
       "name": "Caidas de teleconsulta",
       "characteristic": "Cobertura de Contexto",
@@ -102,10 +106,27 @@
       "status": "AMARILLO",
       "source": "events:teleconsultation"
     }
-  ],
-  "status_summary": {
-    "AMARILLO": 4,
-    "ROJO": 3,
-    "VERDE": 3
-  }
+  },
+  "eficiencia_por_sede": [
+    {
+      "sede": "Ambato",
+      "tiempo_promedio_segundos": 7.04
+    },
+    {
+      "sede": "Cuenca",
+      "tiempo_promedio_segundos": 7.23
+    },
+    {
+      "sede": "Guayaquil",
+      "tiempo_promedio_segundos": 7.3
+    },
+    {
+      "sede": "Manta",
+      "tiempo_promedio_segundos": 8.69
+    },
+    {
+      "sede": "Quito",
+      "tiempo_promedio_segundos": 7.11
+    }
+  ]
 }

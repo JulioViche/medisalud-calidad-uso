@@ -1,50 +1,176 @@
 \section{Matriz de trazabilidad de escenarios}
 
-\begin{longtable}{p{1.8cm}p{3.4cm}p{6.8cm}}
-\caption{Trazabilidad entre escenarios, actividades y resultados}\label{tab:trace}\\
+La matriz relaciona cada actividad con un resultado verificable y con su ubicación. La trazabilidad cubre los ocho escenarios desarrollados en la guía recibida y conserva los escenarios posteriores del informe integral.
+
+\begin{longtable}{p{1.25cm}p{3.1cm}p{4.2cm}p{4.0cm}}
+\caption{Trazabilidad entre escenarios, resultados y evidencia}\label{tab:trace}\\
 \toprule
-Escenario & Actividad & Evidencia principal \\
+Esc. & Actividad & Resultado verificable & Evidencia / ubicación \\
 \midrule
 \endfirsthead
 \toprule
-Escenario & Actividad & Evidencia principal \\
+Esc. & Actividad & Resultado verificable & Evidencia / ubicación \\
 \midrule
 \endhead
-1 & Análisis del caso & Matriz de problemas, usuarios, tareas y efectos observados. \\
-2 & Clasificación ISO 25022 & Clasificación de 3.000 incidentes y análisis de los casos 1001--1006. \\
-3 & Niveles de calidad y SQuaRE & Mapa conceptual, análisis SonarQube y prueba JMeter. \\
-4 & Atributos UTC & Fichas de usuario, tarea, contexto, atributo y prioridad. \\
-5 & Mapeo y prioridad & Matriz tarea--característica con criterios de impacto. \\
-6 & Diseño de métricas & Fichas con fórmula, unidad, fuente, meta y semáforo. \\
-7 & Obtención de datos & Validación de incidentes, eventos y encuestas. \\
-8 & Automatización & Pipeline analítico, pruebas automatizadas e integración continua. \\
-9 & KPI y tablero & Diez indicadores y visualización gerencial. \\
-10 & Interpretación & Hipótesis de causa y prioridades de intervención. \\
-11 & Comunicación ejecutiva & Síntesis de hallazgos y decisiones recomendadas. \\
-12 & Mejora continua & Plan PDCA con responsables, plazos y criterios de éxito. \\
-Reto & Telemedicina 2.0 & Evaluación de cobertura del contexto y continuidad de la atención. \\
+1 & Análisis del caso & Cuatro preguntas guía y conclusión respondidas. & \path{docs/analisi.te los anexos? \\
+2 & Clasificación ISO 25022 & 3.000 IDs únicos; casos 1001--1006 justificados; cinco características cubiertas. & \path{data/incidentes_2025.csv} y \path{data/clasificacion/} \\
+3 & Niveles de calidad y SQuaRE & Diferenciación interna, externa y en uso; mapa de 25000, 25010, 25022 y 25040. & \path{docs/mapa-conceptual/} \\
+4 & Atributos UTC & Tres fichas completas para HCE, citas y facturación. & Tablas \ref{tab:utc-hce} y siguientes. \\
+5 & Mapeo y prioridad & Matriz con más de seis tareas, impacto, frecuencia, característica y prioridad. & Matriz de la fase 5. \\
+6 & Diseño de métricas & Cinco fichas formales y catálogo ampliado de diez métricas. & Tabla \ref{tab:catalog} y código analítico. \\
+7 & Obtención de datos & Incidentes, logs HCE y encuestas sin nulos críticos, duplicados ni rangos inválidos. & \path{data/} y Tabla \ref{tab:data-validation}. \\
+8 & Automatización & Pipeline, JSON, desglose por sede, pruebas y ejecución semanal. & \path{apps/analytics/}, \path{dashboards/indicadores.json} y \path{.github/workflows/}. \\
+9 & KPI y tablero & Diez indicadores con estado y visualización. & \path{dashboards/} \\
+10 & Interpretación & Causas, riesgos y prioridades de intervención. & Capítulo de resultados. \\
+11 & Comunicación ejecutiva & Síntesis de hallazgos y decisiones recomendadas. & Resumen ejecutivo. \\
+12 & Mejora continua & Plan PDCA con responsables y criterios de éxito. & Plan de mejora del informe. \\
+Reto & Telemedicina 2.0 & Evaluación de cobertura y continuidad asistencial. & Capítulo del reto integrador. \\
 \bottomrule
 \end{longtable}
 
+\section{Ubicación de artefactos}
+
+Todas las rutas son relativas a la raíz \path{calidad-sistema-medico/}. Los archivos regenerables se distinguen de las fuentes y de la evidencia preservada.
+
+\begin{longtable}{p{5.2cm}p{2.5cm}p{5.0cm}}
+\caption{Inventario auditable de artefactos}\label{tab:artifact-location}\\
+\toprule
+Ruta & Clase & Función verificable \\
+\midrule
+\endfirsthead
+\toprule
+Ruta & Clase & Función verificable \\
+\midrule
+\endhead
+\path{README.md} & Fuente & Instrucciones de instalación, ejecución y alcance. \\
+\path{docs/analisis_inicial.md} & Fuente & Matriz y discusión del escenario 1. \\
+\path{docs/mapa-conceptual/} & Fuente & Mapa SQuaRE en PNG y PDF vectorial. \\
+\path{data/incidentes_2025.csv} & Entrada provista & Registro académico de 3.000 incidentes, incluidos 1001--1006. \\
+\path{data/clasificacion/incidentes_clasificados.csv} & Derivado & Clasificación y justificación individual. \\
+\path{data/logs_hce.csv} & Simulado & Contrato literal de logs solicitado en el escenario 7. \\
+\path{data/encuesta_satisfaccion.csv} & Simulado & Respuestas CSAT con sede, rol y procedencia. \\
+\path{apps/analytics/simulation/generator.py} & Fuente & Generación determinista con semilla local. \\
+\path{apps/analytics/validation.py} & Fuente & Controles de esquema, unicidad, dominio y rango. \\
+\path{apps/analytics/metrics/calculator.py} & Fuente & Fórmulas, metas y semáforos de diez métricas. \\
+\path{apps/analytics/exporters/pipeline.py} & Fuente & Orquestación y exportación de resultados. \\
+\path{apps/analytics/tests/} & Prueba & Casos de fórmula, frontera, datos, pipeline y cumplimiento. \\
+\path{dashboards/indicadores.json} & Derivado & Métricas y eficiencia desagregada en cinco sedes. \\
+\path{reportes/evidencias/resultados/} & Evidencia & Resúmenes de clasificación y métricas. \\
+\path{reportes/evidencias/pruebas/} & Evidencia & Acta legible y resumen estructurado de ejecución. \\
+\path{reportes/evidencias/calidad/jmeter/} & Evidencia & JTL, log y resumen de 500 usuarios. \\
+\path{reportes/evidencias/calidad/sonarqube/} & Evidencia & Métricas preservadas de análisis estático. \\
+\path{reportes/entrega/medisalud_iso25022.pdf} & Entregable & Informe final compilado y verificado. \\
+\bottomrule
+\end{longtable}
+
+\section{Controles de reproducción}
+
+La reproducción se considera válida únicamente cuando se ejecuta desde la raíz del repositorio, con entradas sin modificación y sin reutilizar resultados ajenos. La Tabla \ref{tab:reproduction-controls} define controles previos, de ejecución y posteriores.
+
+\begin{longtable}{p{3.4cm}p{5.5cm}p{3.8cm}}
+\caption{Controles de reproducción y aceptación}\label{tab:reproduction-controls}\\
+\toprule
+Control & Regla aplicada & Criterio de aceptación \\
+\midrule
+\endfirsthead
+\toprule
+Control & Regla aplicada & Criterio de aceptación \\
+\midrule
+\endhead
+Directorio de trabajo & Ejecutar desde la raíz que contiene \path{apps/}, \path{data/} y \path{reportes/}. & Ninguna ruta resuelta fuera del proyecto. \\
+Intérprete & Python 3.11 o superior; dependencias declaradas en \path{requirements.txt}. & Importaciones y comandos con código de salida cero. \\
+Entrada controlada & Preservar los 3.000 incidentes y sus seis columnas obligatorias. & 3.000 IDs únicos, cinco sedes y cero vacíos críticos. \\
+Semilla & Usar \texttt{25022} en generación y pipeline. & La misma semilla produce filas y métricas idénticas. \\
+Periodo & Limitar la simulación al año 2025. & Fechas dentro del intervalo declarado. \\
+Volumen & Generar 6.000 eventos y 2.000 encuestas. & Cantidades exactas en manifiesto y archivos. \\
+Dominios & CSAT 1--5, NPS 0--10, booleanos válidos, duración HCE mayor que 0 y no mayor que 120 s. & Cero valores fuera de dominio. \\
+Unicidad & Validar IDs de evento, encuesta e incidente antes de calcular. & Cero duplicados. \\
+Procedencia & Conservar \texttt{seed} y \texttt{simulated} en cada fila generada. & 100\% de filas sintéticas etiquetadas. \\
+Fórmulas & Probar porcentajes, P90, medias, desviación y fronteras de semáforo con datos controlados. & Suite analítica sin fallos ni omisiones. \\
+Salidas & Regenerar CSV procesados, resumen JSON e indicadores. & Diez códigos únicos y cinco características presentes. \\
+CI & Disparadores manual, semanal y por cambios relevantes; publicación de artefactos. & Flujo contiene Python 3.11, pruebas y carga de evidencia. \\
+\bottomrule
+\end{longtable}
+
+\subsection*{Secuencia reproducible}
+
+\begin{verbatim}
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+python -m apps.analytics.exporters.pipeline --seed 25022
+python -m unittest discover -s apps/analytics/tests -v
+python -m unittest discover -s apps/backend/measurement-api/tests -v
+powershell -ExecutionPolicy Bypass -File scripts/reports/build-report.ps1
+\end{verbatim}
+
+Una segunda ejecución con la misma semilla debe conservar cantidades, IDs simulados, valores y estados. Las marcas de tiempo de un acta de ejecución pueden cambiar; no forman parte del resultado determinista de las métricas.
+
 \section{Acta de ejecución de pruebas}
 
-El 13 de julio de 2026 se ejecutaron seis suites con 19 casos: analítica Python (5), API de medición (1), dominio HCE Java (1), portal React (8), integración Docker (3) y portal Flutter (1). Los 19 casos aprobaron. También finalizaron correctamente el pipeline de diez métricas, el análisis estático Flutter, las construcciones Vite y Flutter Web, el levantamiento saludable de la infraestructura y una carga JMeter de 500 solicitudes sin errores.
+\textbf{Acta:} AC-25022-2026-07-14. \textbf{Proyecto:} MediSalud HIS. \textbf{Zona horaria:} America/Guayaquil (UTC-05:00). \textbf{Criterio de aprobación:} código de salida cero, sin fallos, errores ni casos omitidos; para compilaciones, generación efectiva del artefacto; para JMeter, 500 muestras y 0 errores.
 
-\begin{table}[H]
-\centering
-\caption{Síntesis de comprobaciones realizadas}
-\begin{tabularx}{\textwidth}{p{4.2cm}Y}
+La ejecución consolidada comprende la corrida integral del 13 de julio y la ampliación analítica del 14 de julio. La ampliación sustituyó cinco pruebas analíticas básicas por 36 pruebas detalladas de clasificación, fórmulas, fronteras, validación, reproducción, contratos y trazabilidad. Los resultados históricos de otras plataformas no se presentan como reejecutados el día 14: se conserva su fecha real.
+
+\begin{longtable}{p{2.0cm}p{3.1cm}p{2.0cm}p{5.6cm}}
+\caption{Acta consolidada de suites y controles}\label{tab:test-record}\\
 \toprule
-Comprobación & Resultado \\
+Fecha & Suite / control & Resultado & Alcance y evidencia \\
 \midrule
-Consistencia de datos & 3.000 incidentes clasificados, 6.000 eventos, 2.000 encuestas y diez métricas. \\
-Pruebas automatizadas & 19 casos aprobados de 19 ejecutados. \\
-Integración de servicios & Bases de datos, mensajería, servicios clínicos y Gateway en estado saludable. \\
-Calidad interna & Servicio de facturación sin bugs ni vulnerabilidades detectadas por SonarQube. \\
-Rendimiento externo & 500 solicitudes JMeter correctas, sin errores; P90 de 2.487 ms. \\
-Aplicaciones de usuario & Pruebas y compilaciones de React y Flutter completadas correctamente. \\
+\endfirsthead
+\toprule
+Fecha & Suite / control & Resultado & Alcance y evidencia \\
+\midrule
+\endhead
+14-07-2026 & Pipeline ISO 25022 & Aprobado & Diez métricas, 6.000 eventos, 2.000 encuestas, CSV de compatibilidad y JSON por sede con semilla 25022. \\
+14-07-2026 & Analítica Python ampliada & 36/36 & Clasificación 1001--1006, precedencia, fórmulas, P90, límites, dominios, duplicados, reproducción, archivos y requisitos de escenarios 1--8. \\
+14-07-2026 & API de medición & 1/1 & Salud FastAPI; cero fallos y errores. \\
+13-07-2026 & Dominio HCE Java & 1/1 & \texttt{ClinicalNoteTest}; Maven \texttt{BUILD SUCCESS}. \\
+13-07-2026 & Portal React & 8/8 & Autenticación, autorización por cinco roles, sesión y estado visual. \\
+13-07-2026 & Integración Docker & 3/3 & Gateway, tablero, simulación y fallos controlados en citas, HCE y facturación. \\
+13-07-2026 & Portal Flutter & 1/1 & Prueba widget; análisis estático y compilación web aprobados. \\
+13-07-2026 & JMeter & 500/500 & Cero errores; media 1.875,7 ms, P90 2.487 ms y P95 2.510 ms. \\
+13-07-2026 & SonarQube & Aprobado & Servicio de facturación sin bugs ni vulnerabilidades registrados. \\
+\midrule
+\multicolumn{2}{r}{\textbf{Catálogo automatizado consolidado}} & \textbf{50/50} & 36 casos analíticos actuales y 14 casos vigentes de API, Java, React, integración y Flutter. \\
 \bottomrule
-\end{tabularx}
-\end{table}
+\end{longtable}
 
-Estas comprobaciones respaldan la consistencia del proceso de medición y la correspondencia entre los datos analizados, los indicadores calculados y las conclusiones del informe.
+\textbf{Incidencias controladas.} La advertencia de tamaño de un fragmento React mayor de 500 kB no impidió la compilación. Las colisiones de puertos durante integración se aislaron mediante un archivo de sobreescritura; no se detuvieron servicios ajenos. Los datos clínicos son ficticios y las fallas se activan mediante escenarios explícitos.
+
+\textbf{Dictamen.} La evidencia disponible satisface los criterios técnicos de reproducción y trazabilidad del taller. La aprobación demuestra consistencia del ejercicio académico; no equivale a certificación de un sistema clínico productivo.
+
+\section{Criterio de procedencia}
+
+La procedencia se asigna por registro y por artefacto. Ninguna salida derivada cambia de categoría por ser presentada en una tabla o dashboard. Se aplican las siguientes clases:
+
+\begin{longtable}{p{2.7cm}p{4.8cm}p{5.1cm}}
+\caption{Clasificación de procedencia y reglas de uso}\label{tab:provenance}\\
+\toprule
+Clase & Criterio & Regla de interpretación \\
+\midrule
+\endfirsthead
+\toprule
+Clase & Criterio & Regla de interpretación \\
+\midrule
+\endhead
+Provisto & Archivo académico recibido para el taller o caso literal de la guía. & Se conserva sin atribuirlo a pacientes o instituciones reales; no se inventa su origen operacional. \\
+Simulado & Registro creado por algoritmo con semilla, periodo y distribución declarados. & Debe incluir \texttt{simulated=true} y semilla; sirve para probar medición, no para inferir desempeño real. \\
+Derivado & Clasificación, agregado, métrica, semáforo, tabla o gráfico calculado desde entradas identificadas. & Debe señalar fórmula, fuente y periodo; es reproducible, pero hereda las limitaciones de sus entradas. \\
+Ejecución real & Salida producida al ejecutar pruebas, compilaciones o herramientas sobre el proyecto. & Puede demostrar comportamiento del prototipo y entorno probado; no convierte los datos simulados en observaciones clínicas. \\
+Documental & Análisis, conclusión, plan o explicación redactada por el equipo. & Debe distinguir evidencia de interpretación y mantener referencia al artefacto que la sustenta. \\
+\bottomrule
+\end{longtable}
+
+\subsection*{Reglas de custodia y no confusión}
+
+\begin{enumerate}
+  \item No se emplean nombres, historias clínicas ni identificadores personales reales.
+  \item Los incidentes recibidos se describen como dataset académico provisto, no como extracción de producción verificada.
+  \item Todo evento o encuesta generado conserva semilla, periodo y bandera de simulación.
+  \item Las métricas se rotulan como derivadas y enlazan con su fuente mediante el campo \texttt{source}.
+  \item Los resultados JMeter, SonarQube y de pruebas son evidencia real de ejecución sobre el prototipo y el entorno documentado, no evidencia de calidad de una red hospitalaria real.
+  \item Una conclusión que combine clases debe declarar la limitación de cada una y no generalizar fuera del alcance académico.
+\end{enumerate}
+
+Este criterio evita la principal amenaza de validez del caso: confundir datos ficticios reproducibles con observaciones de producción. La trazabilidad queda cerrada como \emph{entrada identificada $\rightarrow$ transformación versionada $\rightarrow$ prueba $\rightarrow$ salida $\rightarrow$ interpretación}.

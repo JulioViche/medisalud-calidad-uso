@@ -50,14 +50,14 @@ class MetricsCalculator:
         return [
             self._metric("M-EFI-01", "P90 registro HCE", "Eficiencia", percentile(hce_times, 0.9), "segundos", "<= 8", "events:hce_save", 8, 12, lower=True),
             self._metric("M-EFE-01", "Exito de agendamiento", "Efectividad", self._success(appointments), "%", ">= 95", "events:appointment", 95, 85),
-            self._metric("M-RIE-01", "Errores de facturacion", "Libertad de Riesgo", self._failure(billing), "%", "< 1", "events:billing", 1, 3, lower=True),
-            self._metric("M-SAT-01", "Abandono de encuesta movil", "Satisfaccion", percentage(incomplete_surveys, len(surveys)), "%", "< 10", "surveys", 10, 20, lower=True),
+            self._metric("M-RIE-01", "Errores de facturacion", "Libertad de Riesgo", self._failure(billing), "%", "<= 1", "events:billing", 1, 3, lower=True),
+            self._metric("M-SAT-01", "Abandono de encuesta movil", "Satisfaccion", percentage(incomplete_surveys, len(surveys)), "%", "<= 10", "surveys", 10, 20, lower=True),
             self._metric("M-CC-01", "Variabilidad HCE entre sedes", "Cobertura de Contexto", round(pstdev([mean(v) for v in site_hce.values()]), 2), "segundos", "<= 2", "events:hce_save", 2, 4, lower=True),
             self._metric("M-RIE-02", "Incidentes de privacidad", "Libertad de Riesgo", float(privacy_count), "incidentes", "= 0", "incidents", 0, 1, lower=True),
             self._metric("M-SAT-02", "CSAT promedio", "Satisfaccion", round(mean(csat), 2), "1-5", ">= 4", "surveys", 4, 3),
             self._metric("M-EFE-02", "Recetas correctas", "Efectividad", self._success(prescriptions), "%", "= 100", "events:prescription", 99.9, 98),
             self._metric("M-EFI-02", "P90 carga de imagen", "Eficiencia", percentile([float(row["duration_seconds"]) for row in imaging], 0.9), "segundos", "<= 10", "events:imaging", 10, 15, lower=True),
-            self._metric("M-CC-02", "Caidas de teleconsulta", "Cobertura de Contexto", self._failure(teleconsultations), "%", "< 5", "events:teleconsultation", 5, 10, lower=True),
+            self._metric("M-CC-02", "Caidas de teleconsulta", "Cobertura de Contexto", self._failure(teleconsultations), "%", "<= 5", "events:teleconsultation", 5, 10, lower=True),
         ]
 
     @staticmethod

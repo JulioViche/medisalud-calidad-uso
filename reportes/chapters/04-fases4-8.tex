@@ -320,14 +320,14 @@ Código & Métrica & Característica & Unidad & Meta \\
 \endhead
 M-EFI-01 & P90 registro HCE & Eficiencia & segundos & $\leq 8$ \\
 M-EFE-01 & Éxito de agendamiento & Efectividad & porcentaje & $\geq 95$ \\
-M-RIE-01 & Errores de facturación & Libertad de riesgo & porcentaje & $<1$ \\
-M-SAT-01 & Abandono de encuesta móvil & Satisfacción & porcentaje & $<10$ \\
+M-RIE-01 & Errores de facturación & Libertad de riesgo & porcentaje & $\leq1$ \\
+M-SAT-01 & Abandono de encuesta móvil & Satisfacción & porcentaje & $\leq10$ \\
 M-CC-01 & Variabilidad HCE entre sedes & Cobertura del contexto & segundos & $\leq 2$ \\
 M-RIE-02 & Incidentes de privacidad & Libertad de riesgo & incidentes & $=0$ \\
 M-SAT-02 & CSAT promedio & Satisfacción & escala 1--5 & $\geq 4$ \\
 M-EFE-02 & Recetas correctas & Efectividad & porcentaje & $=100$ \\
 M-EFI-02 & P90 carga de imagen & Eficiencia & segundos & $\leq 10$ \\
-M-CC-02 & Caídas de teleconsulta & Cobertura del contexto & porcentaje & $<5$ \\
+M-CC-02 & Caídas de teleconsulta & Cobertura del contexto & porcentaje & $\leq5$ \\
 \bottomrule
 \end{longtable}
 
@@ -503,7 +503,7 @@ Pruebas analíticas & Comprueba precedencia de riesgo, eficiencia, reproducibili
 
 \subsubsection{Ejecución reproducible}
 
-El proceso automatizado clasifica 3.000 incidentes, genera 6.000 eventos y 2.000 encuestas, calcula diez KPI y ejecuta cinco pruebas analíticas. En la verificación del 13 de julio de 2026 produjo todas las métricas esperadas y las cinco pruebas finalizaron correctamente.
+El proceso automatizado clasifica 3.000 incidentes, genera 6.000 eventos y 2.000 encuestas y calcula diez KPI. El 14 de julio de 2026 la suite analítica ampliada ejecutó 36 pruebas de clasificación, fórmulas, fronteras, calidad del dato, reproducción, contratos y cumplimiento; todas finalizaron correctamente.
 
 \subsubsection{Ejecución real de pruebas del sistema}
 
@@ -511,14 +511,14 @@ La comprobación no se limitó al módulo analítico. Se ejecutaron las suites d
 
 \begin{table}[H]
 \centering
-\caption{Resultados de pruebas ejecutadas el 13 de julio de 2026}
+\caption{Resultados consolidados del ciclo 13--14 de julio de 2026}
 \label{tab:real-tests}
 \small
 \begin{tabularx}{\textwidth}{p{3.25cm}p{2.0cm}Y}
 \toprule
 Suite o control & Casos & Evidencia observada \\
 \midrule
-Analítica Python & 5/5 & Clasificación, precedencia de riesgo, eficiencia, percentil y semilla reproducible. \\
+Analítica Python & 36/36 & Clasificación, fórmulas, fronteras, datos, reproducción, contratos y escenarios 1--8. \\
 API de medición & 1/1 & Respuesta saludable del servicio FastAPI; 0 fallos y 0 errores. \\
 Dominio HCE Java & 1/1 & \texttt{ClinicalNoteTest}; Maven informó \texttt{BUILD SUCCESS}. \\
 Portal React & 8/8 & Autenticación, permisos por cinco roles, sesión y componente de estado. \\
@@ -526,7 +526,7 @@ Integración Docker & 3/3 & Gateway, tablero, simulación y fallas controladas d
 Portal Flutter & 1/1 & Prueba widget de \texttt{AppBadge}; análisis estático sin hallazgos. \\
 Construcciones & --- & Vite y Flutter Web generaron sus artefactos de producción. \\
 \midrule
-\textbf{Total de casos} & \textbf{19/19} & \textbf{0 fallos, 0 errores y 0 casos omitidos.} \\
+\textbf{Total consolidado} & \textbf{50/50} & \textbf{36 casos actuales y 14 casos vigentes del ciclo integral previo.} \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -579,4 +579,4 @@ Un cambio técnico puede modificar el criterio de aceptación sin aprobación de
 
 La fase 8 convierte el programa de medición en un proceso ejecutable y auditable. El pipeline enlaza fuentes, fórmulas, pruebas y productos de evidencia, preparando la construcción de indicadores y su interpretación en las fases posteriores.
 
-\evidence{El pipeline produjo diez métricas. Las seis suites sumaron 19 casos aprobados de 19 ejecutados; también aprobaron los análisis y las construcciones React y Flutter.}
+\evidence{El pipeline produjo diez métricas y la suite analítica ampliada aprobó 36 de 36 casos. El catálogo consolidado suma 50 de 50 casos con las demás suites del ciclo integral.}

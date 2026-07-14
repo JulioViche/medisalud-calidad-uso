@@ -41,3 +41,6 @@ jobs:
             apps/data/simulated/manifest.json
             reportes/evidencias/resultados/
             dashboards/dashboard-data.js
+            dashboards/indicadores.json
+            data/logs_hce.csv
+            data/encuesta_satisfaccion.csv

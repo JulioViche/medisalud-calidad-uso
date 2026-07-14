@@ -1,0 +1,23 @@
+{
+  "acta": "AC-25022-2026-07-14",
+  "project": "MediSalud HIS - ISO/IEC 25022 parte 2",
+  "date_local": "2026-07-14",
+  "timezone": "America/Guayaquil",
+  "pipeline": {"seed": 25022, "metrics": 10, "status": "passed"},
+  "current_run": {
+    "suite": "analytics-and-workshop-compliance",
+    "total": 36,
+    "passed": 36,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "duration_seconds": 1.989
+  },
+  "consolidated_catalog": {
+    "total": 50,
+    "passed": 50,
+    "current_analytics": 36,
+    "previous_integral_suites": 14
+  },
+  "provenance": "Current analytics run plus dated evidence from the 2026-07-13 integral run"
+}
